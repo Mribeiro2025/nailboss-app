@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NailBoss - Painel de Controle 360°</title>
+    <title>NailBoss - Gestão 360° para Nail Designers & SaaS Admin</title>
     <style>
         :root {
             --bg-dark: #0a0e1a;
@@ -14,12 +14,19 @@
             --pink-glow: rgba(255, 42, 133, 0.2);
             --gold-warning: #ffb800;
             --green-success: #00e676;
+            --danger: #ff4d4d;
             --text-main: #f1f5f9;
             --text-muted: #94a3b8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); display: flex; min-height: 100vh; }
+
+        /* TELA DE LOGIN / BOAS-VINDAS */
+        #login-screen { position: fixed; inset: 0; background: var(--bg-dark); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .login-card { background: var(--card-bg); border: 1px solid var(--card-border); padding: 40px; border-radius: 20px; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+        .login-card h2 { color: var(--pink-neon); margin-bottom: 8px; font-size: 1.8rem; }
+        .login-card p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 25px; }
 
         /* Sidebar Lateral */
         .sidebar { width: 260px; background-color: var(--sidebar-bg); border-right: 1px solid var(--card-border); padding: 20px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; }
@@ -32,39 +39,31 @@
         .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: 0.2s; }
         .nav-item:hover, .nav-item.active { background: #1c2438; color: var(--text-main); }
         .nav-item.active { border-left: 4px solid var(--pink-neon); border-radius: 0 10px 10px 0; color: white; font-weight: bold; }
-        .nav-item .lock { margin-left: auto; font-size: 0.8rem; }
 
         .sidebar-footer { display: flex; flex-direction: column; gap: 12px; }
-        .btn-upgrade-sidebar { background: linear-gradient(135deg, #ffb800, #ff8c00); color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .user-status { background: #161c2e; padding: 12px; border-radius: 10px; font-size: 0.8rem; color: var(--text-muted); border: 1px solid var(--card-border); cursor: pointer; }
+        .btn-upgrade-sidebar { background: linear-gradient(135deg, #ffb800, #ff8c00); color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 0.85rem; cursor: pointer; text-align: center; }
+        .user-status { background: #161c2e; padding: 12px; border-radius: 10px; font-size: 0.8rem; color: var(--text-muted); border: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; }
+        .btn-logout { background: transparent; border: 1px solid var(--danger); color: var(--danger); padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
 
         /* Main Content */
         .main-content { flex: 1; padding: 30px; overflow-y: auto; }
         .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .header-title h1 { font-size: 1.8rem; font-weight: 800; }
         .header-title h1 span { color: var(--pink-neon); }
-        .header-title p { color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; }
         .status-pill { background: rgba(0, 230, 118, 0.1); color: var(--green-success); border: 1px solid var(--green-success); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; }
-        .status-dot { width: 8px; height: 8px; background: var(--green-success); border-radius: 50%; }
 
         /* Views */
         .view-section { display: none; }
         .view-section.active { display: block; }
 
-        /* Metrics Cards */
+        /* Cards & Metrics */
         .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 25px; }
         .metric-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px; }
-        .metric-card.highlight { border-color: var(--green-success); }
-        .metric-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .metric-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
         .metric-value { font-size: 1.6rem; font-weight: 800; margin: 8px 0 4px; }
-        .metric-card.pink .metric-value { color: var(--pink-neon); }
-        .metric-card.gold .metric-value { color: var(--gold-warning); }
-        .metric-card.green .metric-value { color: var(--green-success); }
-        .metric-sub { font-size: 0.75rem; color: var(--text-muted); }
 
-        /* Forms and Tables */
         .content-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 25px; margin-bottom: 20px; }
-        .card-header { color: var(--pink-neon); font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+        .card-header { color: var(--pink-neon); font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
         
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
         .input-group label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
@@ -72,25 +71,38 @@
         
         .btn-action { background: linear-gradient(135deg, #ff2a85, #d6005d); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; }
         .btn-green { background: linear-gradient(135deg, #00e676, #00b0ff); color: #000; }
+        .btn-gold { background: linear-gradient(135deg, #ffb800, #ff8c00); color: #000; }
+        .btn-danger { background: var(--danger); color: white; }
 
         table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9rem; }
         th { text-align: left; padding: 12px; color: var(--text-muted); border-bottom: 1px solid var(--card-border); font-size: 0.75rem; text-transform: uppercase; }
         td { padding: 14px 12px; border-bottom: 1px solid #1c2438; }
 
-        /* Modal Upgrade */
-        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-        .modal-content { background: var(--card-bg); border: 1px solid var(--pink-neon); padding: 30px; border-radius: 20px; max-width: 420px; width: 100%; text-align: center; }
-        .pix-box { background: #0c101d; border: 2px dashed var(--pink-neon); padding: 15px; border-radius: 12px; margin: 20px 0; font-size: 0.85rem; word-break: break-all; }
+        /* MODAIS CUSTOMIZADOS CLEAN */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(4px); align-items: center; justify-content: center; z-index: 3000; padding: 20px; }
+        .modal-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 25px; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .modal-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; color: var(--pink-neon); }
+        .modal-msg { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; line-height: 1.4; }
+        .modal-actions { display: flex; gap: 10px; justify-content: center; }
+        .btn-modal-cancel { background: transparent; border: 1px solid var(--card-border); color: var(--text-muted); padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        .btn-modal-confirm { background: var(--pink-neon); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; }
-        }
+        @media (max-width: 768px) { body { flex-direction: column; } .sidebar { width: 100%; } }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar Lateral -->
+    <!-- TELA INICIAL / LOGIN -->
+    <div id="login-screen">
+        <div class="login-card">
+            <h2>💅 NailBoss</h2>
+            <p>Selecione seu perfil para acessar o sistema exclusivo</p>
+            <button class="btn-action" style="width: 100%; margin-bottom: 12px;" onclick="loginAs('studio')">Entrar como Studio (Nail Designer)</button>
+            <button class="btn-action btn-gold" style="width: 100%;" onclick="openMasterLoginModal()">👑 Painel Restrito Dono (SaaS)</button>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
     <aside class="sidebar">
         <div>
             <div class="brand">
@@ -104,81 +116,56 @@
             <nav class="nav-menu">
                 <a class="nav-item active" onclick="navigateTo('dash', this)">📊 Dashboard 360°</a>
                 <a class="nav-item" onclick="navigateTo('agenda', this)">📅 Agenda & Sinal</a>
-                <a class="nav-item" onclick="checkPermission('PRO', 'crm', this)">💬 Sumidas (CRM) <span class="lock">🔒</span></a>
+                <a class="nav-item" onclick="navigateTo('crm', this)">💬 Sumidas (CRM)</a>
                 <a class="nav-item" onclick="navigateTo('conciliacao', this)">💰 Conciliação & Salão</a>
-                <a class="nav-item" onclick="checkPermission('VIP', 'estoque', this)">📦 Estoque & CMV <span class="lock">🔒</span></a>
-                <a class="nav-item" onclick="navigateTo('admin', this)" style="margin-top: 15px; border-top: 1px solid var(--card-border); padding-top: 15px; color: var(--gold-warning);">👑 Painel Super Admin</a>
+                <a class="nav-item" onclick="navigateTo('estoque', this)">📦 Estoque & CMV</a>
+                
+                <!-- ABA EXCLUSIVA DO DONO DO SAAS (INVISÍVEL PARA MANICURES) -->
+                <a class="nav-item" id="nav-master-item" onclick="navigateTo('admin', this)" style="display:none; color: var(--gold-warning); border-top: 1px solid var(--card-border); margin-top: 12px; padding-top: 12px;">👑 Controle de Clientes & MRR</a>
             </nav>
         </div>
 
         <div class="sidebar-footer">
-            <button class="btn-upgrade-sidebar" onclick="openModal('PRO')">
-                👑 SEJA PRO OU VIP
+            <button class="btn-upgrade-sidebar" id="btnSidebarUpgrade" onclick="openUpgradeModal()">
+                👑 LIBERAR PLANO PRO/VIP
             </button>
             <div class="user-status">
-                <small style="display:block; color:var(--text-muted);">STUDIO CONECTADO</small>
-                <strong style="color:var(--pink-neon);" id="studioName">Studio Pro Designer</strong>
+                <div>
+                    <small style="display:block; color:var(--text-muted);">SESSÃO ATIVA</small>
+                    <strong style="color:var(--pink-neon);" id="userRoleName">Studio Pro</strong>
+                </div>
+                <button class="btn-logout" onclick="logout()">Sair 🚪</button>
             </div>
         </div>
     </aside>
 
-    <!-- Conteúdo Principal -->
+    <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
-        
-        <!-- TOP HEADER -->
         <div class="top-header">
             <div class="header-title">
                 <h1 id="pageTitle">Painel de Controle <span>360°</span></h1>
-                <p id="pageSub">Resumo diário de atendimentos, repasses de salão e lucro líquido.</p>
+                <p id="pageSub">Resumo financeiro e gestão completa do seu studio.</p>
             </div>
-            <div class="status-pill">
-                <div class="status-dot"></div>
-                API Online (Render)
-            </div>
+            <div class="status-pill">● Backend API Online (Render)</div>
         </div>
 
-        <!-- TELA 1: DASHBOARD 360° -->
+        <!-- TELA 1: DASHBOARD -->
         <div id="view-dash" class="view-section active">
             <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-label">Faturamento Bruto</div>
-                    <div class="metric-value">R$ 3.850,00</div>
-                    <div class="metric-sub" style="color: var(--green-success);">↗ +18% este mês</div>
-                </div>
-                <div class="metric-card pink">
-                    <div class="metric-label">Comissão Dona do Salão</div>
-                    <div class="metric-value">R$ 1.155,00</div>
-                    <div class="metric-sub">Regra: 30% sobre o Bruto</div>
-                </div>
-                <div class="metric-card gold">
-                    <div class="metric-label">Custo Insumos (CMV)</div>
-                    <div class="metric-value">R$ 320,00</div>
-                    <div class="metric-sub">Méd. R$ 12,80 por atendimento</div>
-                </div>
-                <div class="metric-card green highlight">
-                    <div class="metric-label">Lucro Real Manicure</div>
-                    <div class="metric-value">R$ 2.375,00</div>
-                    <div class="metric-sub">Limpo no seu bolso</div>
-                </div>
+                <div class="metric-card"><div class="metric-label">Faturamento Bruto</div><div class="metric-value" style="color:var(--text-main)" id="dashBruto">R$ 3.850,00</div></div>
+                <div class="metric-card"><div class="metric-label">Comissão Salão</div><div class="metric-value" style="color:var(--pink-neon)" id="dashSalao">R$ 1.155,00</div></div>
+                <div class="metric-card"><div class="metric-label">Insumos (CMV)</div><div class="metric-value" style="color:var(--gold-warning)" id="dashInsumos">R$ 320,00</div></div>
+                <div class="metric-card"><div class="metric-label">Lucro Limpo</div><div class="metric-value" style="color:var(--green-success)" id="dashLucro">R$ 2.375,00</div></div>
             </div>
 
             <div class="content-card">
                 <div class="card-header">🧮 Simulador Rápido de Repasse do Salão</div>
                 <div class="form-grid">
-                    <div class="input-group">
-                        <label>Valor do Serviço (R$)</label>
-                        <input type="number" id="inpValor" value="150">
-                    </div>
-                    <div class="input-group">
-                        <label>Insumos/CMV (R$)</label>
-                        <input type="number" id="inpCMV" value="15">
-                    </div>
-                    <div class="input-group">
-                        <label>Comissão Salão (%)</label>
-                        <input type="number" id="inpComissao" value="30">
-                    </div>
+                    <div class="input-group"><label>Valor Serviço (R$)</label><input type="number" id="inpValor" value="150"></div>
+                    <div class="input-group"><label>Insumos/CMV (R$)</label><input type="number" id="inpCMV" value="15"></div>
+                    <div class="input-group"><label>Comissão Salão (%)</label><input type="number" id="inpComissao" value="30"></div>
                     <div style="display:flex; align-items:flex-end;">
-                        <button class="btn-action" style="width:100%" onclick="calcularRepasse()">Calcular Divisão</button>
+                        <button class="btn-action" style="width:100%" onclick="calcularSimulacao()">Calcular Divisão</button>
                     </div>
                 </div>
                 <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:15px; background:#0c101d; padding:15px; border-radius:10px; text-align:center;">
@@ -192,26 +179,36 @@
         <!-- TELA 2: AGENDA & SINAL -->
         <div id="view-agenda" class="view-section">
             <div class="content-card">
-                <div class="card-header">📅 Agendar Atendimento com Sinal PIX</div>
+                <div class="card-header">📅 Novo Agendamento com Cobrança de Sinal PIX</div>
                 <div class="form-grid">
-                    <div class="input-group"><label>Nome da Cliente</label><input type="text" placeholder="Ex: Camila Silva"></div>
-                    <div class="input-group"><label>Serviço</label><input type="text" placeholder="Ex: Alongamento em Gel"></div>
-                    <div class="input-group"><label>Valor Total (R$)</label><input type="number" placeholder="150.00"></div>
-                    <div class="input-group"><label>Sinal PIX Cobrado (R$)</label><input type="number" placeholder="30.00"></div>
+                    <div class="input-group"><label>Nome da Cliente</label><input type="text" id="agNome" placeholder="Ex: Camila Silva"></div>
+                    <div class="input-group"><label>Serviço</label><input type="text" id="agServico" placeholder="Ex: Alongamento em Gel"></div>
+                    <div class="input-group"><label>Valor Total (R$)</label><input type="number" id="agValor" placeholder="150.00"></div>
+                    <div class="input-group"><label>Sinal PIX (R$)</label><input type="number" id="agSinal" placeholder="30.00"></div>
                 </div>
-                <button class="btn-action btn-green" onclick="alert('Agendamento salvo e cobrança de sinal enviada ao WhatsApp!')">Confirmar e Enviar Sinal PIX</button>
+                <button class="btn-action btn-green" onclick="salvarAgendamento()">Confirmar Agendamento e Gerar Sinal</button>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">📋 Agendamentos Confirmados</div>
+                <table>
+                    <thead><tr><th>Cliente</th><th>Serviço</th><th>Valor</th><th>Sinal Pago</th><th>Ações</th></tr></thead>
+                    <tbody id="tbAgenda">
+                        <tr><td>Camila Silva</td><td>Alongamento em Gel</td><td>R$ 150,00</td><td><span style="color:var(--green-success)">R$ 30,00 (Pago)</span></td><td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="cancelarAgendamento(this)">Cancelar</button></td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
         <!-- TELA 3: CRM SUMIDAS -->
         <div id="view-crm" class="view-section">
             <div class="content-card">
-                <div class="card-header">💬 Clientes Sumidas (+20 dias sem retorno)</div>
+                <div class="card-header">💬 Clientes Ausentes (+20 dias sem retorno)</div>
                 <table>
-                    <thead><tr><th>Cliente</th><th>Último Serviço</th><th>Dias Ausente</th><th>Ação WhatsApp</th></tr></thead>
+                    <thead><tr><th>Cliente</th><th>Último Serviço</th><th>Dias Ausente</th><th>Disparo WhatsApp</th></tr></thead>
                     <tbody>
-                        <tr><td>Fernanda Lima</td><td>Esmaltação em Gel</td><td>24 dias</td><td><button class="btn-action" style="padding:6px 12px; font-size:0.75rem;" onclick="openWhatsApp('Fernanda')">Enviar Mensagem</button></td></tr>
-                        <tr><td>Juliana Paes</td><td>Manutenção Fibra</td><td>31 dias</td><td><button class="btn-action" style="padding:6px 12px; font-size:0.75rem;" onclick="openWhatsApp('Juliana')">Enviar Mensagem</button></td></tr>
+                        <tr><td>Fernanda Lima</td><td>Esmaltação em Gel</td><td>24 dias</td><td><button class="btn-action btn-green" style="padding:6px 12px; font-size:0.75rem;" onclick="dispararWhats('Fernanda')">Enviar Mensagem</button></td></tr>
+                        <tr><td>Juliana Paes</td><td>Manutenção Fibra</td><td>31 dias</td><td><button class="btn-action btn-green" style="padding:6px 12px; font-size:0.75rem;" onclick="dispararWhats('Juliana')">Enviar Mensagem</button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -221,60 +218,109 @@
         <div id="view-conciliacao" class="view-section">
             <div class="content-card">
                 <div class="card-header">💰 Regras de Fechamento com o Salão</div>
-                <p style="color: var(--text-muted); font-size:0.85rem; margin-bottom:15px;">Configure aqui o percentual fixo cobrado pelo salão sobre cada serviço.</p>
                 <div class="form-grid">
-                    <div class="input-group"><label>Nome do Salão</label><input type="text" value="Studio Elegance"></div>
-                    <div class="input-group"><label>Taxa Salão (%)</label><input type="number" value="30"></div>
-                    <div class="input-group"><label>Aluguel Cadeira Fixo (R$)</label><input type="number" value="0.00"></div>
+                    <div class="input-group"><label>Nome do Salão</label><input type="text" id="concNome" value="Studio Elegance"></div>
+                    <div class="input-group"><label>Taxa do Salão (%)</label><input type="number" id="concTaxa" value="30"></div>
+                    <div class="input-group"><label>Aluguel Cadeira Fixo (R$)</label><input type="number" id="concAluguel" value="0.00"></div>
                 </div>
-                <button class="btn-action" onclick="alert('Regras de conciliação atualizadas com sucesso!')">Salvar Regras de Repasse</button>
+                <button class="btn-action" onclick="salvarConciliacao()">Atualizar Regras de Repasse</button>
             </div>
         </div>
 
         <!-- TELA 5: ESTOQUE & CMV -->
         <div id="view-estoque" class="view-section">
             <div class="content-card">
-                <div class="card-header">📦 Controle de Insumos & Custo por Atendimento</div>
+                <div class="card-header">📦 Controle de Insumos & Custo Ficha</div>
                 <table>
                     <thead><tr><th>Insumo</th><th>Rendimento Ficha</th><th>Custo p/ Aplicação</th><th>Ação</th></tr></thead>
-                    <tbody>
-                        <tr><td>Gel Vòlia 24g</td><td>20 Atendimentos</td><td>R$ 4,50</td><td><button class="btn-action" style="padding:4px 8px; font-size:0.75rem;">Editar</button></td></tr>
-                        <tr><td>Caixa de Fibra de Vidro</td><td>50 Atendimentos</td><td>R$ 1,20</td><td><button class="btn-action" style="padding:4px 8px; font-size:0.75rem;">Editar</button></td></tr>
+                    <tbody id="tbEstoque">
+                        <tr><td>Gel Vòlia 24g</td><td>20 Atendimentos</td><td>R$ 4,50</td><td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="removerInsumo(this)">Excluir</button></td></tr>
+                        <tr><td>Caixa Fibra de Vidro</td><td>50 Atendimentos</td><td>R$ 1,20</td><td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="removerInsumo(this)">Excluir</button></td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- TELA 6: SUPER ADMIN -->
+        <!-- TELA 6: PAINEL EXCLUSIVO DO ADMINISTRADOR SAAS (DONO DO SISTEMA) -->
         <div id="view-admin" class="view-section">
+            <div class="metrics-grid">
+                <div class="metric-card" style="border-color: var(--gold-warning);"><div class="metric-label">MRR (Faturamento Recorrente)</div><div class="metric-value" style="color:var(--green-success)">R$ 537,20/mês</div></div>
+                <div class="metric-card" style="border-color: var(--gold-warning);"><div class="metric-label">Total de Clientes Ativos</div><div class="metric-value" style="color:white">22 Estúdios</div></div>
+            </div>
+
+            <!-- PAINEL DE CONTROLE DE PERFIL DE CLIENTES -->
             <div class="content-card" style="border-color: var(--gold-warning);">
-                <div class="card-header" style="color: var(--gold-warning);">👑 Visão Geral do Proprietário SaaS</div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                    <div><small style="color:var(--text-muted)">MRR (RECEITA RECORRENTE)</small><br><strong style="font-size:1.5rem; color:var(--green-success)">R$ 438,80/mês</strong></div>
-                    <div><small style="color:var(--text-muted)">ASSINANTES ATIVOS</small><br><strong style="font-size:1.5rem; color:white">18 Estúdios</strong></div>
+                <div class="card-header" style="color: var(--gold-warning);">⚙️ Modificar Perfil / Ativar Acesso Exclusivo de Cliente</div>
+                <div class="form-grid">
+                    <div class="input-group"><label>Selecione o Estúdio / Cliente</label>
+                        <select id="admSelectClient">
+                            <option value="Studio Bella Unhas">Studio Bella Unhas (Atual: STARTER)</option>
+                            <option value="Elegance Nails">Elegance Nails (Atual: PRO)</option>
+                            <option value="Nails VIP Studio">Nails VIP Studio (Atual: VIP)</option>
+                        </select>
+                    </div>
+                    <div class="input-group"><label>Novo Plano / Perfil</label>
+                        <select id="admNewPlan">
+                            <option value="STARTER">Plano STARTER (Gratuito)</option>
+                            <option value="PRO">Plano PRO (R$ 19,90/mês)</option>
+                            <option value="VIP">Plano VIP (R$ 39,90/mês)</option>
+                            <option value="EXCLUSIVO">Acesso Cortesia Exclusivo (Vitalício)</option>
+                        </select>
+                    </div>
+                    <div class="input-group"><label>Status do Acesso</label>
+                        <select id="admStatus">
+                            <option value="ATIVO">Ativo / Liberado</option>
+                            <option value="BLOQUEADO">Bloqueado por Inadimplência</option>
+                        </select>
+                    </div>
                 </div>
-                <button class="btn-action btn-green" onclick="alert('Plano liberado manualmente com sucesso!')">Aprovar PIX Pendente no WhatsApp</button>
+                <button class="btn-action btn-gold" onclick="aplicarAlteracaoCliente()">Aplicar Alterações no Perfil do Cliente</button>
+            </div>
+
+            <div class="content-card" style="border-color: var(--gold-warning);">
+                <div class="card-header" style="color: var(--gold-warning);">💵 Cobranças Diretas & Liberação Manual via PIX</div>
+                <table>
+                    <thead><tr><th>Estúdio</th><th>Plano Solicitado</th><th>Valor</th><th>Status</th><th>Ação do Dono</th></tr></thead>
+                    <tbody>
+                        <tr><td>Studio Bella Unhas</td><td>Plano PRO</td><td>R$ 19,90</td><td><span style="color:var(--gold-warning)">Aguardando PIX</span></td><td><button class="btn-action btn-green" style="padding:6px 12px; font-size:0.75rem;" onclick="aprovarPixManual('Studio Bella Unhas')">Aprovar PIX Manual</button></td></tr>
+                        <tr><td>Elegance Nails</td><td>Plano VIP</td><td>R$ 39,90</td><td><span style="color:var(--green-success)">Ativo</span></td><td><button class="btn-action btn-danger" style="padding:6px 12px; font-size:0.75rem;" onclick="bloquearAcesso('Elegance Nails')">Bloquear Acesso</button></td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-
     </main>
 
-    <!-- Modal Upgrade PIX -->
-    <div class="modal" id="upgradeModal">
-        <div class="modal-content">
-            <h3 style="color: var(--pink-neon);" id="modalTitle">Liberar Plano PRO</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Faça o PIX e envie o comprovante no WhatsApp para ativação imediata!</p>
-            <div class="pix-box">
-                <strong>Chave PIX (E-mail):</strong><br>
-                <span>pagamentos@nailboss.com</span>
+    <!-- MODAL CUSTOMIZADO CLEAN (DUPLA CONFIRMAÇÃO) -->
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-card">
+            <div class="modal-title" id="modalTitle">Confirmação</div>
+            <div class="modal-msg" id="modalMsg">Deseja prosseguir com esta ação?</div>
+            <div class="modal-actions">
+                <button class="btn-modal-cancel" id="btnModalCancel">Cancelar</button>
+                <button class="btn-modal-confirm" id="btnModalConfirm">Confirmar</button>
             </div>
-            <button class="btn-action btn-green" style="width:100%;" onclick="window.open('https://wa.me/5511999999999?text=Fiz%20o%20PIX%20do%20NailBoss!')">Enviar Comprovante no WhatsApp</button>
-            <button class="btn-action" style="width:100%; margin-top:10px; background:transparent; border:1px solid var(--text-muted);" onclick="closeModal()">Fechar</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE DIGITAÇÃO DA SENHA MASTER -->
+    <div class="modal-overlay" id="masterPassModal">
+        <div class="modal-card" style="border-color: var(--gold-warning);">
+            <div class="modal-title" style="color: var(--gold-warning);">🔒 Autenticação do Proprietário SaaS</div>
+            <div class="modal-msg">Digite a senha restrita do administrador:</div>
+            <div class="input-group" style="margin-bottom: 20px;">
+                <input type="password" id="inpMasterPass" placeholder="Digite a Senha Master..." style="text-align: center;">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-modal-cancel" onclick="fecharMasterPassModal()">Cancelar</button>
+                <button class="btn-modal-confirm" style="background: var(--gold-warning); color: #000;" onclick="validarSenhaMaster()">Acessar Painel Master</button>
+            </div>
         </div>
     </div>
 
     <script>
-        let currentPlan = "STARTER"; // Pode ser 'STARTER', 'PRO' ou 'VIP'
+        let currentRole = 'studio'; // 'studio' ou 'master'
+        let currentPlan = 'PRO';    // 'STARTER', 'PRO', 'VIP', 'EXCLUSIVO'
+        let onConfirmCallback = null;
 
         function navigateTo(viewId, element) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
@@ -284,39 +330,149 @@
             if (element) element.classList.add('active');
         }
 
-        function checkPermission(requiredPlan, viewId, element) {
-            if (currentPlan === "STARTER" && (requiredPlan === "PRO" || requiredPlan === "VIP")) {
-                openModal(requiredPlan);
+        function loginAs(role) {
+            document.getElementById('login-screen').style.display = 'none';
+            currentRole = role;
+
+            if (role === 'master') {
+                document.getElementById('userRoleName').innerText = 'Proprietário SaaS 👑';
+                document.getElementById('nav-master-item').style.display = 'flex';
+                document.getElementById('btnSidebarUpgrade').style.display = 'none';
+                navigateTo('admin');
             } else {
-                navigateTo(viewId, element);
+                document.getElementById('userRoleName').innerText = 'Studio Pro';
+                document.getElementById('nav-master-item').style.display = 'none';
+                document.getElementById('btnSidebarUpgrade').style.display = 'block';
+                navigateTo('dash');
             }
         }
 
-        function openModal(plan) {
-            document.getElementById("modalTitle").innerText = `Liberar Plano ${plan}`;
-            document.getElementById("upgradeModal").style.display = "flex";
+        function openMasterLoginModal() {
+            document.getElementById('inpMasterPass').value = '';
+            document.getElementById('masterPassModal').style.display = 'flex';
         }
 
-        function closeModal() {
-            document.getElementById("upgradeModal").style.display = "none";
+        function fecharMasterPassModal() {
+            document.getElementById('masterPassModal').style.display = 'none';
         }
 
-        function calcularRepasse() {
+        function validarSenhaMaster() {
+            const senha = document.getElementById('inpMasterPass').value;
+            if (senha === 'admin123') {
+                fecharMasterPassModal();
+                loginAs('master');
+            } else {
+                showConfirm('Acesso Negado', 'Senha Master incorreta. Esta área é estritamente reservada ao proprietário do sistema.', null, false);
+            }
+        }
+
+        function logout() {
+            showConfirm('Encerrar Sessão', 'Deseja realmente sair e retornar à tela inicial?', () => {
+                document.getElementById('login-screen').style.display = 'flex';
+            });
+        }
+
+        /* MODAL CUSTOMIZADO COM DUPLA CONFIRMAÇÃO */
+        function showConfirm(title, message, callbackConfirm, showCancel = true) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMsg').innerText = message;
+            document.getElementById('btnModalCancel').style.display = showCancel ? 'inline-block' : 'none';
+            document.getElementById('customModal').style.display = 'flex';
+
+            onConfirmCallback = callbackConfirm;
+        }
+
+        document.getElementById('btnModalConfirm').onclick = function() {
+            document.getElementById('customModal').style.display = 'none';
+            if (onConfirmCallback) onConfirmCallback();
+        };
+
+        document.getElementById('btnModalCancel').onclick = function() {
+            document.getElementById('customModal').style.display = 'none';
+        };
+
+        /* FUNCIONALIDADES INTERATIVAS DO STUDIO */
+        function calcularSimulacao() {
             const valor = parseFloat(document.getElementById('inpValor').value) || 0;
             const cmv = parseFloat(document.getElementById('inpCMV').value) || 0;
-            const comissaoPct = parseFloat(document.getElementById('inpComissao').value) || 0;
+            const pct = parseFloat(document.getElementById('inpComissao').value) || 0;
 
-            const comissaoSalao = (valor * comissaoPct) / 100;
-            const lucroLimpo = valor - comissaoSalao - cmv;
+            const salao = (valor * pct) / 100;
+            const lucro = valor - salao - cmv;
 
-            document.getElementById('resSalao').innerText = `R$ ${comissaoSalao.toFixed(2).replace('.', ',')}`;
+            document.getElementById('resSalao').innerText = `R$ ${salao.toFixed(2).replace('.', ',')}`;
             document.getElementById('resInsumos').innerText = `R$ ${cmv.toFixed(2).replace('.', ',')}`;
-            document.getElementById('resLucro').innerText = `R$ ${lucroLimpo.toFixed(2).replace('.', ',')}`;
+            document.getElementById('resLucro').innerText = `R$ ${lucro.toFixed(2).replace('.', ',')}`;
         }
 
-        function openWhatsApp(nome) {
-            const msg = encodeURIComponent(`Oi ${nome}! Saudades de você aqui no estúdio. Vamos agendar sua manutenção essa semana?`);
-            window.open(`https://wa.me/?text=${msg}`, '_blank');
+        function salvarAgendamento() {
+            const nome = document.getElementById('agNome').value;
+            const servico = document.getElementById('agServico').value;
+            const valor = document.getElementById('agValor').value;
+            const sinal = document.getElementById('agSinal').value;
+
+            if (!nome || !servico || !valor) {
+                showConfirm('Atenção', 'Preencha o nome da cliente, serviço e valor.', null, false);
+                return;
+            }
+
+            showConfirm('Confirmar Agendamento', `Deseja confirmar o agendamento de ${nome} e gerar cobrança de R$ ${sinal || 0} via PIX?`, () => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${nome}</td><td>${servico}</td><td>R$ ${parseFloat(valor).toFixed(2)}</td><td><span style="color:var(--green-success)">R$ ${parseFloat(sinal || 0).toFixed(2)} (Pago)</span></td><td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="cancelarAgendamento(this)">Cancelar</button></td>`;
+                document.getElementById('tbAgenda').appendChild(tr);
+
+                document.getElementById('agNome').value = '';
+                document.getElementById('agServico').value = '';
+                document.getElementById('agValor').value = '';
+                document.getElementById('agSinal').value = '';
+            });
+        }
+
+        function cancelarAgendamento(btn) {
+            showConfirm('Cancelar Agendamento', 'Tem certeza que deseja cancelar este atendimento agendado?', () => {
+                btn.closest('tr').remove();
+            });
+        }
+
+        function dispararWhats(nome) {
+            showConfirm('Enviar WhatsApp', `Abrir conversa no WhatsApp com ${nome} para reativação?`, () => {
+                window.open(`https://wa.me/?text=Oi%20${nome}!%20Saudades%20de%20voce%20aqui%20no%20estudio.%20Vamos%20agendar?`, '_blank');
+            });
+        }
+
+        function salvarConciliacao() {
+            showConfirm('Salvar Conciliação', 'Deseja atualizar as regras de repasse do salão?', () => {});
+        }
+
+        function removerInsumo(btn) {
+            showConfirm('Remover Insumo', 'Deseja excluir este item do cálculo de CMV?', () => {
+                btn.closest('tr').remove();
+            });
+        }
+
+        /* FUNCIONALIDADES EXCLUSIVAS DO ADMINISTRADOR SAAS */
+        function aplicarAlteracaoCliente() {
+            const cliente = document.getElementById('admSelectClient').value;
+            const plano = document.getElementById('admNewPlan').value;
+            const status = document.getElementById('admStatus').value;
+
+            showConfirm('Modificar Perfil do Cliente', `Confirma alterar o perfil de "${cliente}" para o plano ${plano} com status ${status}?`, () => {
+                showConfirm('Sucesso', `Perfil do cliente ${cliente} atualizado com sucesso!`, null, false);
+            });
+        }
+
+        function aprovarPixManual(estudio) {
+            showConfirm('Aprovação Manual PIX', `Deseja aprovar manualmente o pagamento do ${estudio} e liberar o acesso?`, () => {});
+        }
+
+        function bloquearAcesso(estudio) {
+            showConfirm('Bloquear Cliente', `Deseja bloquear temporariamente o acesso do ${estudio} por inadimplência?`, () => {});
+        }
+
+        function openUpgradeModal() {
+            showConfirm('Upgrade de Plano', 'Deseja abrir o canal de suporte no WhatsApp para migrar para o Plano VIP?', () => {
+                window.open('https://wa.me/5511999999999?text=Quero%20fazer%20upgrade%20do%20NailBoss', '_blank');
+            });
         }
     </script>
 </body>
