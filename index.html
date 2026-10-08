@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NailBoss - Gestão para Nail Designers</title>
-    <!-- Responsividade & Ícone Mobile -->
     <meta name="theme-color" content="#b8336a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
         :root {
             --rose-bg: #fff5f7;
@@ -16,114 +13,187 @@
             --gold-accent: #d4af37;
             --card-white: #ffffff;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background: var(--rose-bg); color: var(--rose-dark); padding-bottom: 80px; }
         
-        /* TopBar Mobile/Desktop */
-        header { background: linear-gradient(135deg, #b8336a, #8c234e); color: white; padding: 20px; text-align: center; border-radius: 0 0 20px 20px; box-shadow: 0 4px 15px rgba(184,51,106,0.2); }
-        header h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; }
-        header p { font-size: 0.9rem; opacity: 0.9; margin-top: 4px; }
+        header { background: linear-gradient(135deg, #b8336a, #8c234e); color: white; padding: 15px 20px; text-align: center; border-radius: 0 0 20px 20px; box-shadow: 0 4px 15px rgba(184,51,106,0.2); }
+        header h1 { font-size: 1.6rem; font-weight: 700; }
+        
+        /* Bar de Seleção de Modo */
+        .mode-bar { display: flex; justify-content: center; gap: 10px; margin: 15px auto 5px; max-width: 600px; padding: 0 15px; }
+        .mode-btn { flex: 1; padding: 8px; border: 1px solid var(--rose-main); background: white; color: var(--rose-main); border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
+        .mode-btn.active { background: var(--rose-main); color: white; }
 
-        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
+        .container { max-width: 600px; margin: 10px auto; padding: 0 15px; }
 
-        /* Cards de Navegação / Planos */
         .card { background: var(--card-white); border-radius: 16px; padding: 20px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); border: 1px solid rgba(184,51,106,0.1); }
-        .card h2 { color: var(--rose-main); font-size: 1.2rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+        .card h2 { color: var(--rose-main); font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
         
         .badge { background: #ffe6ee; color: var(--rose-main); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
         .badge-lock { background: #eee; color: #777; }
+        .badge-admin { background: #d4af37; color: white; }
 
-        /* Botões de Ação */
-        .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; background: var(--rose-main); color: white; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.2s; text-align: center; display: block; text-decoration: none; margin-top: 10px; }
-        .btn:active { transform: scale(0.98); }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 10px; background: var(--rose-main); color: white; font-weight: bold; font-size: 0.95rem; cursor: pointer; transition: 0.2s; text-align: center; display: block; text-decoration: none; margin-top: 10px; }
         .btn-gold { background: linear-gradient(135deg, #d4af37, #b59226); }
         .btn-outline { background: transparent; border: 2px solid var(--rose-main); color: var(--rose-main); }
+        .btn-success { background: #25D366; }
 
-        /* Navegação Inferior Estilo App de Celular */
-        nav.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; box-shadow: 0 -4px 10px rgba(0,0,0,0.05); }
-        .nav-item { text-align: center; color: #888; font-size: 0.75rem; text-decoration: none; flex: 1; }
-        .nav-item.active { color: var(--rose-main); font-weight: bold; }
-        .nav-item icon { font-size: 1.4rem; display: block; margin-bottom: 2px; }
+        .view-section { display: none; }
+        .view-section.active { display: block; }
 
         /* Modal Upgrade PIX */
         .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
         .modal-content { background: white; padding: 25px; border-radius: 20px; max-width: 400px; width: 100%; text-align: center; }
-        .pix-box { background: #f8f9fa; border: 2px dashed var(--rose-main); padding: 15px; border-radius: 12px; margin: 15px 0; font-size: 0.85rem; word-break: break-all; }
+        .pix-box { background: #f8f9fa; border: 2px dashed var(--rose-main); padding: 12px; border-radius: 12px; margin: 15px 0; font-size: 0.85rem; word-break: break-all; }
+
+        nav.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #eee; }
+        .nav-item { text-align: center; color: #888; font-size: 0.75rem; text-decoration: none; flex: 1; cursor: pointer; }
+        .nav-item.active { color: var(--rose-main); font-weight: bold; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>💅 NailBoss</h1>
-        <p>Studio & Finanças na Palma da Mão</p>
+        <p style="font-size:0.85rem; opacity:0.9;">Studio & Finanças na Palma da Mão</p>
     </header>
 
-    <div class="container">
-        <!-- Card de Boas-Vindas & Plano Ativo -->
-        <div class="card">
-            <h2>Meu Studio <span class="badge">Plano STARTER (Gratuito)</span></h2>
-            <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">Acesse suas funções básicas ou faça upgrade para liberar automações no WhatsApp e Estoque.</p>
-            <button class="btn btn-gold" onclick="openModal()">Liberar Plano PRO (R$ 19,90/mês)</button>
-        </div>
-
-        <!-- Módulos Principais -->
-        <div class="card">
-            <h2>📅 Agenda & Atendimentos</h2>
-            <p style="font-size: 0.85rem; color: #666;">Organize seus horários e receba o sinal via PIX para evitar faltas.</p>
-            <a href="/docs" class="btn btn-outline">Abrir Agenda</a>
-        </div>
-
-        <div class="card">
-            <h2>💰 Conciliação de Salão <span class="badge">Ativo</span></h2>
-            <p style="font-size: 0.85rem; color: #666;">Cálculo automático do repasse (Bruto x Líquido) e aluguel de cadeira.</p>
-            <a href="/docs" class="btn btn-outline">Calcular Comissões</a>
-        </div>
-
-        <div class="card" style="opacity: 0.8;">
-            <h2>💬 CRM Clientes Sumidas <span class="badge badge-lock">🔒 Exclusivo PRO</span></h2>
-            <p style="font-size: 0.85rem; color: #666;">Mensagens personalizadas para reativar clientes no WhatsApp após 20 dias.</p>
-            <button class="btn" onclick="openModal()">Desbloquear no PRO (R$ 19,90)</button>
-        </div>
-
-        <div class="card" style="opacity: 0.8;">
-            <h2>📦 Estoque & CMV <span class="badge badge-lock">🔒 Exclusivo VIP</span></h2>
-            <p style="font-size: 0.85rem; color: #666;">Custo real de gel, fibra e esmaltes por atendimento.</p>
-            <button class="btn" onclick="openModal()">Desbloquear no VIP (R$ 39,90)</button>
-        </div>
+    <!-- Alternador de Visão para Testes no Notebook -->
+    <div class="mode-bar">
+        <button class="mode-btn active" id="btnModeStudio" onclick="switchMode('studio')">Visão Studio (Manicure)</button>
+        <button class="mode-btn" id="btnModeAdmin" onclick="switchMode('admin')">Visão Dono (Super Admin)</button>
     </div>
 
-    <!-- Modal de Assinatura via PIX + WhatsApp -->
-    <div class="modal" id="upgradeModal">
-        <div class="modal-content">
-            <h3 style="color: var(--rose-main);">Assinar NailBoss PRO</h3>
-            <p style="font-size: 0.85rem; color: #555; margin-top: 10px;">Faça o PIX de <strong>R$ 19,90</strong> e envie o comprovante no WhatsApp para ativação imediata!</p>
-            
-            <div class="pix-box">
-                <strong>Chave PIX (E-mail/Telefone):</strong><br>
-                <span id="pixKey">seu-pix-aqui@nailboss.com</span>
+    <div class="container">
+        
+        <!-- VISÃO 1: STUDIO (Nail Designer) -->
+        <div id="viewStudio" class="view-section active">
+            <div class="card">
+                <h2>Meu Studio <span class="badge" id="currentPlanBadge">Plano STARTER</span></h2>
+                <p style="font-size: 0.85rem; color: #666; margin-top: 5px;">Acesse suas funções básicas ou faça upgrade para liberar automações no WhatsApp e Estoque.</p>
+                <button class="btn btn-gold" onclick="openModal('PRO')">Liberar Plano PRO (R$ 19,90/mês)</button>
             </div>
 
-            <a href="https://wa.me/5511999999999?text=Oi!%20Acabei%20de%20fazer%20o%20PIX%20do%20NailBoss%20PRO,%20pode%20liberar%20minha%20conta?" target="_blank" class="btn" style="background: #25D366;">
+            <div class="card">
+                <h2>📅 Agenda & Atendimentos</h2>
+                <p style="font-size: 0.85rem; color: #666;">Organize seus horários e receba o sinal via PIX para evitar faltas.</p>
+                <button class="btn btn-outline" onclick="alert('Abre formulário de novo agendamento com sinal PIX.')">Abrir Agenda</button>
+            </div>
+
+            <div class="card">
+                <h2>💰 Conciliação de Salão <span class="badge">Ativo</span></h2>
+                <p style="font-size: 0.85rem; color: #666;">Cálculo automático do repasse (Bruto x Líquido) e aluguel de cadeira.</p>
+                <button class="btn btn-outline" onclick="openApiDocs()">Ver API Backend (Docs)</button>
+            </div>
+
+            <div class="card" style="opacity: 0.85;">
+                <h2>💬 CRM Clientes Sumidas <span class="badge badge-lock">🔒 Exclusivo PRO</span></h2>
+                <p style="font-size: 0.85rem; color: #666;">Mensagens personalizadas para reativar clientes no WhatsApp após 20 dias.</p>
+                <button class="btn" onclick="openModal('PRO')">Desbloquear no PRO (R$ 19,90)</button>
+            </div>
+
+            <div class="card" style="opacity: 0.85;">
+                <h2>📦 Estoque & CMV <span class="badge badge-lock">🔒 Exclusivo VIP</span></h2>
+                <p style="font-size: 0.85rem; color: #666;">Custo real de gel, fibra e esmaltes por atendimento.</p>
+                <button class="btn" onclick="openModal('VIP')">Desbloquear no VIP (R$ 39,90)</button>
+            </div>
+        </div>
+
+        <!-- VISÃO 2: SUPER ADMIN (Dono do SaaS) -->
+        <div id="viewAdmin" class="view-section">
+            <div class="card" style="background: #fffdf5; border-color: #d4af37;">
+                <h2>👑 Painel Super Admin <span class="badge badge-admin">MASTER</span></h2>
+                <p style="font-size: 0.85rem; color: #555; margin-top: 5px;">Gestão geral de assinantes e controle de receita recorrente (MRR).</p>
+            </div>
+
+            <div class="card">
+                <h2>📊 Métrica Recorrente (MRR)</h2>
+                <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.9rem;">
+                    <div><strong>Assinantes Ativos:</strong> <span id="adminTotalUsers">12</span></div>
+                    <div><strong>Faturamento Mês:</strong> <span style="color: #25D366; font-weight: bold;">R$ 318,80</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🏬 Estúdios Cadastrados</h2>
+                <div style="font-size: 0.85rem; margin-top: 10px;">
+                    <div style="padding: 8px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>Studio Bella Unhas</strong><br>
+                            <small style="color: #777;">Plano: PRO (Aguardando PIX)</small>
+                        </div>
+                        <button class="btn btn-gold" style="width: auto; padding: 6px 12px; font-size: 0.75rem;" onclick="activatePlan('Studio Bella Unhas')">Aprovar PIX</button>
+                    </div>
+                    <div style="padding: 8px 0; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>Elegance Nails</strong><br>
+                            <small style="color: #777;">Plano: VIP (Ativo)</small>
+                        </div>
+                        <span class="badge" style="background:#e6fffa; color:#047857;">Ativo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal Upgrade PIX + WhatsApp -->
+    <div class="modal" id="upgradeModal">
+        <div class="modal-content">
+            <h3 style="color: var(--rose-main);" id="modalTitle">Assinar NailBoss PRO</h3>
+            <p style="font-size: 0.85rem; color: #555; margin-top: 10px;">Faça o PIX e envie o comprovante no WhatsApp para liberação imediata!</p>
+            
+            <div class="pix-box">
+                <strong>Chave PIX (E-mail):</strong><br>
+                <span id="pixKey">pagamentos@nailboss.com</span>
+            </div>
+
+            <a href="https://wa.me/5511999999999?text=Oi!%20Fiz%20o%20PIX%20do%20NailBoss,%20pode%20liberar%20meu%20acesso?" target="_blank" class="btn btn-success">
                 Enviar Comprovante no WhatsApp
             </a>
             <button class="btn btn-outline" onclick="closeModal()" style="margin-top: 8px;">Fechar</button>
         </div>
     </div>
 
-    <!-- Navegação Estilo App Mobile -->
     <nav class="bottom-nav">
-        <a href="#" class="nav-item active"><icon>🏠</icon>Início</a>
-        <a href="#" class="nav-item"><icon>📅</icon>Agenda</a>
-        <a href="#" class="nav-item"><icon>💎</icon>Planos</a>
-        <a href="#" class="nav-item"><icon>⚙️</icon>Ajustes</a>
+        <div class="nav-item active" onclick="switchMode('studio')">🏠 Início</div>
+        <div class="nav-item" onclick="openApiDocs()">📄 API Docs</div>
+        <div class="nav-item" onclick="switchMode('admin')">👑 Master</div>
     </nav>
 
     <script>
-        function openModal() {
+        const API_URL = "https://nailboss-app.onrender.com";
+
+        function switchMode(mode) {
+            document.getElementById("viewStudio").classList.remove("active");
+            document.getElementById("viewAdmin").classList.remove("active");
+            document.getElementById("btnModeStudio").classList.remove("active");
+            document.getElementById("btnModeAdmin").classList.remove("active");
+
+            if (mode === "studio") {
+                document.getElementById("viewStudio").classList.add("active");
+                document.getElementById("btnModeStudio").classList.add("active");
+            } else {
+                document.getElementById("viewAdmin").classList.add("active");
+                document.getElementById("btnModeAdmin").classList.add("active");
+            }
+        }
+
+        function openModal(plan) {
+            document.getElementById("modalTitle").innerText = `Assinar NailBoss ${plan}`;
             document.getElementById("upgradeModal").style.display = "flex";
         }
+
         function closeModal() {
             document.getElementById("upgradeModal").style.display = "none";
+        }
+
+        function openApiDocs() {
+            window.open(`${API_URL}/docs`, "_blank");
+        }
+
+        function activatePlan(studioName) {
+            alert(`Plano do ${studioName} ativado com sucesso pelo Super Admin!`);
         }
     </script>
 </body>
