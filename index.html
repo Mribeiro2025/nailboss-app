@@ -22,7 +22,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; }
 
-        /* TELA DE LOGIN ESTILO MENU 2 MODERNIZADO */
+        /* LOGIN */
         #login-screen { position: fixed; inset: 0; background: rgba(10, 14, 26, 0.95); backdrop-filter: blur(10px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .login-card-v2 { background: var(--card-bg); border: 1px solid var(--pink-glow); padding: 40px; border-radius: 24px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 0 40px rgba(255, 42, 133, 0.15); }
         .login-icon-box { width: 64px; height: 64px; background: linear-gradient(135deg, var(--pink-neon), #d6005d); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.8rem; box-shadow: 0 8px 20px rgba(255, 42, 133, 0.4); }
@@ -58,9 +58,6 @@
         .header-title h1 span { color: var(--pink-neon); }
         .status-pill { background: rgba(0, 230, 118, 0.1); color: var(--green-success); border: 1px solid var(--green-success); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; }
 
-        /* Banner de Aviso de Pagamento */
-        .pay-warning-banner { background: rgba(255, 184, 0, 0.1); border: 1px solid var(--gold-warning); padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; color: var(--gold-warning); font-size: 0.85rem; display: none; align-items: center; justify-content: space-between; }
-
         /* Views */
         .view-section { display: none; }
         .view-section.active { display: block; }
@@ -74,7 +71,7 @@
         .content-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 25px; margin-bottom: 20px; }
         .card-header { color: var(--pink-neon); font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
         
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; }
         .input-group label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
         .input-group input, .input-group select { width: 100%; background: #0c101d; border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; color: var(--text-main); font-size: 0.95rem; }
         
@@ -86,6 +83,10 @@
         table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9rem; }
         th { text-align: left; padding: 12px; color: var(--text-muted); border-bottom: 1px solid var(--card-border); font-size: 0.75rem; text-transform: uppercase; }
         td { padding: 14px 12px; border-bottom: 1px solid #1c2438; }
+
+        .badge-status { padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; }
+        .badge-green { background: rgba(0,230,118,0.15); color: var(--green-success); }
+        .badge-gold { background: rgba(255,184,0,0.15); color: var(--gold-warning); }
 
         /* MODAIS CLEAN */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(4px); align-items: center; justify-content: center; z-index: 3000; padding: 20px; }
@@ -101,26 +102,18 @@
 </head>
 <body>
 
-    <!-- TELA INICIAL / LOGIN MODERNIZADA (MENU 2) -->
+    <!-- TELA INICIAL / LOGIN -->
     <div id="login-screen">
-        <div class="login-card-v2" id="loginFormContainer">
+        <div class="login-card-v2">
             <div class="login-icon-box">💅</div>
             <h2>NailBoss</h2>
             <p>Seja a chefe das suas finanças e horários</p>
             
             <div id="loginStepSelect">
-                <button class="btn-login-option btn-pink-gradient" onclick="showAuthInputs('studio')">
-                    🏪 Acessar Meu Studio
-                </button>
-                <button class="btn-login-option btn-outline-dark" onclick="showAuthInputs('master')">
-                    👑 Painel Dono do SaaS (Admin)
-                </button>
-                <div style="margin-top:20px; border-top:1px solid var(--card-border); padding-top:15px; font-size:0.8rem; color:var(--text-muted);">
-                    Plano Atual: <strong style="color:var(--gold-warning)">STARTER (Grátis)</strong>
-                </div>
+                <button class="btn-login-option btn-pink-gradient" onclick="showAuthInputs('studio')">🏪 Acessar Meu Studio</button>
+                <button class="btn-login-option btn-outline-dark" onclick="showAuthInputs('master')">👑 Painel Dono do SaaS (Admin)</button>
             </div>
 
-            <!-- Form de Login e Senha -->
             <div id="loginStepCredentials" style="display: none; text-align: left;">
                 <div class="input-group" style="margin-bottom: 12px;">
                     <label>E-mail / Usuário</label>
@@ -151,19 +144,17 @@
                 <a class="nav-item active" onclick="navigateTo('dash', this)">📊 Dashboard 360°</a>
                 <a class="nav-item" onclick="navigateTo('clientes', this)">👥 Clientes & Cadastro</a>
                 <a class="nav-item" onclick="navigateTo('agenda', this)">📅 Agenda & Sinal</a>
+                <a class="nav-item" onclick="navigateTo('financeiro', this)">💳 Financeiro 360°</a>
                 <a class="nav-item" onclick="navigateTo('crm', this)">💬 Sumidas (CRM)</a>
                 <a class="nav-item" onclick="navigateTo('conciliacao', this)">💰 Conciliação & Salão</a>
-                <a class="nav-item" onclick="navigateTo('estoque', this)">📦 Estoque & CMV</a>
+                <a class="nav-item" onclick="navigateTo('estoque', this)">📦 Estoque & Precificação</a>
                 
-                <!-- ABA EXCLUSIVA DO DONO DO SAAS -->
                 <a class="nav-item" id="nav-master-item" onclick="navigateTo('admin', this)" style="display:none; color: var(--gold-warning); border-top: 1px solid var(--card-border); margin-top: 12px; padding-top: 12px;">👑 Controle de Clientes & MRR</a>
             </nav>
         </div>
 
         <div class="sidebar-footer">
-            <button class="btn-upgrade-sidebar" id="btnSidebarUpgrade" onclick="openUpgradeModal()">
-                👑 LIBERAR PLANO PRO/VIP
-            </button>
+            <button class="btn-upgrade-sidebar" id="btnSidebarUpgrade" onclick="openUpgradeModal()">👑 LIBERAR PLANO PRO/VIP</button>
             <div class="user-status">
                 <div>
                     <small style="display:block; color:var(--text-muted);">SESSÃO ATIVA</small>
@@ -177,12 +168,6 @@
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
         
-        <!-- BANNER DE AVISO DE FATURA PRÓXIMA DO VENCIMENTO -->
-        <div class="pay-warning-banner" id="payWarningBanner">
-            <span>⚠️ <strong>Aviso de Assinatura:</strong> Sua mensalidade do NailBoss vence em <strong id="bannerDueDate">15/10/2026</strong>. Regularize para manter o acesso ativo.</span>
-            <button class="btn-action btn-gold" style="padding:6px 12px; font-size:0.75rem;" onclick="openUpgradeModal()">PAGAR AGORA</button>
-        </div>
-
         <div class="top-header">
             <div class="header-title">
                 <h1 id="pageTitle">Painel de Controle <span>360°</span></h1>
@@ -202,26 +187,9 @@
                 <div class="metric-card"><div class="metric-label">Insumos (CMV)</div><div class="metric-value" style="color:var(--gold-warning)" id="dashInsumos">R$ 320,00</div></div>
                 <div class="metric-card"><div class="metric-label">Lucro Limpo</div><div class="metric-value" style="color:var(--green-success)" id="dashLucro">R$ 2.375,00</div></div>
             </div>
-
-            <div class="content-card">
-                <div class="card-header">🧮 Simulador Rápido de Repasse do Salão</div>
-                <div class="form-grid">
-                    <div class="input-group"><label>Valor Serviço (R$)</label><input type="number" id="inpValor" value="150"></div>
-                    <div class="input-group"><label>Insumos/CMV (R$)</label><input type="number" id="inpCMV" value="15"></div>
-                    <div class="input-group"><label>Comissão Salão (%)</label><input type="number" id="inpComissao" value="30"></div>
-                    <div style="display:flex; align-items:flex-end;">
-                        <button class="btn-action" style="width:100%" onclick="calcularSimulacao()">Calcular Divisão</button>
-                    </div>
-                </div>
-                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:15px; background:#0c101d; padding:15px; border-radius:10px; text-align:center;">
-                    <div><small style="color:var(--text-muted)">DONA DO SALÃO</small><br><strong id="resSalao" style="color:var(--pink-neon)">R$ 45,00</strong></div>
-                    <div><small style="color:var(--text-muted)">INSUMOS</small><br><strong id="resInsumos" style="color:var(--gold-warning)">R$ 15,00</strong></div>
-                    <div><small style="color:var(--text-muted)">SEU LUCRO</small><br><strong id="resLucro" style="color:var(--green-success)">R$ 90,00</strong></div>
-                </div>
-            </div>
         </div>
 
-        <!-- TELA NOVA: CADASTRO DE CLIENTES (INTEGRADO À AGENDA) -->
+        <!-- TELA CADASTRO DE CLIENTES -->
         <div id="view-clientes" class="view-section">
             <div class="content-card">
                 <div class="card-header">👤 Cadastrar Novo Cliente</div>
@@ -229,7 +197,7 @@
                     <div class="input-group"><label>Nome Completo</label><input type="text" id="cliNome" placeholder="Ex: Ana Paula Ribeiro"></div>
                     <div class="input-group"><label>WhatsApp / Telefone</label><input type="text" id="cliWhats" placeholder="Ex: (11) 99999-8888"></div>
                     <div class="input-group"><label>Aniversário</label><input type="date" id="cliNiver"></div>
-                    <div class="input-group"><label>Preferência / Estilo</label><input type="text" id="cliPref" placeholder="Ex: Fibra de Vidro, Formato Almond"></div>
+                    <div class="input-group"><label>Preferência / Estilo</label><input type="text" id="cliPref" placeholder="Ex: Fibra de Vidro"></div>
                 </div>
                 <button class="btn-action btn-green" onclick="salvarCliente()">Salvar Cliente na Base</button>
             </div>
@@ -238,22 +206,22 @@
                 <div class="card-header">👥 Base de Clientes Cadastrados</div>
                 <table>
                     <thead><tr><th>Nome</th><th>WhatsApp</th><th>Preferências</th><th>Ações</th></tr></thead>
-                    <tbody id="tbClientes">
-                        <tr><td>Camila Silva</td><td>(11) 98888-7777</td><td>Alongamento em Gel</td><td><button class="btn-action" style="padding:4px 8px; font-size:0.75rem;" onclick="agendarParaCliente('Camila Silva')">📅 Agendar</button></td></tr>
-                    </tbody>
+                    <tbody id="tbClientes"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- TELA 2: AGENDA & SINAL -->
+        <!-- TELA 2: AGENDA & SINAL (COM DATA, VALOR PENDENTE E BAIXA) -->
         <div id="view-agenda" class="view-section">
             <div class="content-card">
                 <div class="card-header">📅 Novo Agendamento com Cobrança de Sinal PIX</div>
                 <div class="form-grid">
-                    <div class="input-group"><label>Nome da Cliente</label><input type="text" id="agNome" placeholder="Digite para buscar ou criar cliente..."></div>
+                    <div class="input-group"><label>Data do Serviço</label><input type="date" id="agData"></div>
+                    <div class="input-group"><label>Nome da Cliente</label><input type="text" id="agNome" placeholder="Digite ou selecione..."></div>
                     <div class="input-group"><label>Serviço</label><input type="text" id="agServico" placeholder="Ex: Alongamento em Gel"></div>
-                    <div class="input-group"><label>Valor Total (R$)</label><input type="number" id="agValor" placeholder="150.00"></div>
-                    <div class="input-group"><label>Sinal PIX (R$)</label><input type="number" id="agSinal" placeholder="30.00"></div>
+                    <div class="input-group"><label>Valor Total (R$)</label><input type="number" id="agValor" placeholder="150.00" oninput="atualizarPendenteForm()"></div>
+                    <div class="input-group"><label>Sinal PIX (R$)</label><input type="number" id="agSinal" placeholder="30.00" oninput="atualizarPendenteForm()"></div>
+                    <div class="input-group"><label>Valor Pendente (R$)</label><input type="text" id="agPendente" readonly value="R$ 0,00" style="color:var(--gold-warning); font-weight:bold;"></div>
                 </div>
                 <button class="btn-action btn-green" onclick="salvarAgendamento()">Confirmar Agendamento e Gerar Sinal</button>
             </div>
@@ -261,10 +229,25 @@
             <div class="content-card">
                 <div class="card-header">📋 Agendamentos Confirmados</div>
                 <table>
-                    <thead><tr><th>Cliente</th><th>Serviço</th><th>Valor</th><th>Sinal Pago</th><th>Ações</th></tr></thead>
-                    <tbody id="tbAgenda">
-                        <tr><td>Camila Silva</td><td>Alongamento em Gel</td><td>R$ 150,00</td><td><span style="color:var(--green-success)">R$ 30,00 (Pago)</span></td><td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="cancelarAgendamento(this)">Cancelar</button></td></tr>
-                    </tbody>
+                    <thead><tr><th>Data</th><th>Cliente</th><th>Serviço</th><th>Valor Total</th><th>Sinal Pago</th><th>Pendente</th><th>Status / Ações</th></tr></thead>
+                    <tbody id="tbAgenda"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TELA NOVA: FINANCEIRO 360° -->
+        <div id="view-financeiro" class="view-section">
+            <div class="metrics-grid">
+                <div class="metric-card"><div class="metric-label">Sinais Recebidos</div><div class="metric-value" style="color:var(--green-success)" id="finSinaisTotal">R$ 30,00</div></div>
+                <div class="metric-card"><div class="metric-label">A Receber (Pendente)</div><div class="metric-value" style="color:var(--gold-warning)" id="finPendenteTotal">R$ 120,00</div></div>
+                <div class="metric-card"><div class="metric-label">Faturamento Quitado</div><div class="metric-value" style="color:var(--text-main)" id="finQuitadoTotal">R$ 150,00</div></div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">💳 Extrato e Status de Entradas Por Data</div>
+                <table>
+                    <thead><tr><th>Data</th><th>Cliente</th><th>Serviço</th><th>Sinal Antecipado</th><th>Valor Restante</th><th>Status Geral</th></tr></thead>
+                    <tbody id="tbFinanceiro"></tbody>
                 </table>
             </div>
         </div>
@@ -277,96 +260,79 @@
                     <thead><tr><th>Cliente</th><th>Último Serviço</th><th>Dias Ausente</th><th>Disparo WhatsApp</th></tr></thead>
                     <tbody>
                         <tr><td>Fernanda Lima</td><td>Esmaltação em Gel</td><td>24 dias</td><td><button class="btn-action btn-green" style="padding:6px 12px; font-size:0.75rem;" onclick="dispararWhats('Fernanda')">Enviar Mensagem</button></td></tr>
-                        <tr><td>Juliana Paes</td><td>Manutenção Fibra</td><td>31 dias</td><td><button class="btn-action btn-green" style="padding:6px 12px; font-size:0.75rem;" onclick="dispararWhats('Juliana')">Enviar Mensagem</button></td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- TELA 4: CONCILIAÇÃO & SALÃO -->
+        <!-- TELA 4: CONCILIAÇÃO DE SALÃO (POR MÊS E SEMANA) -->
         <div id="view-conciliacao" class="view-section">
             <div class="content-card">
-                <div class="card-header">💰 Regras de Fechamento com o Salão</div>
+                <div class="card-header">💰 Fechamento de Repasses por Período</div>
                 <div class="form-grid">
-                    <div class="input-group"><label>Nome do Salão</label><input type="text" id="concNome" value="Studio Elegance"></div>
-                    <div class="input-group"><label>Taxa do Salão (%)</label><input type="number" id="concTaxa" value="30"></div>
-                    <div class="input-group"><label>Aluguel Cadeira Fixo (R$)</label><input type="number" id="concAluguel" value="0.00"></div>
+                    <div class="input-group"><label>Filtrar Período</label>
+                        <select id="concPeriodo" onchange="atualizarConciliacaoPeriodo()">
+                            <option value="semana">Esta Semana</option>
+                            <option value="mes" selected>Este Mês</option>
+                        </select>
+                    </div>
+                    <div class="input-group"><label>Taxa do Salão (%)</label><input type="number" id="concTaxa" value="30" oninput="atualizarConciliacaoPeriodo()"></div>
+                    <div class="input-group"><label>Aluguel Cadeira Fixo (R$)</label><input type="number" id="concAluguel" value="0.00" oninput="atualizarConciliacaoPeriodo()"></div>
                 </div>
-                <button class="btn-action" onclick="salvarConciliacao()">Atualizar Regras de Repasse</button>
+
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:15px; background:#0c101d; padding:20px; border-radius:12px; text-align:center; margin-top:15px;">
+                    <div><small style="color:var(--text-muted)">FATURAMENTO BRUTO PERÍODO</small><br><strong id="concBrutoPeriodo" style="font-size:1.3rem; color:var(--text-main)">R$ 150,00</strong></div>
+                    <div><small style="color:var(--text-muted)">COMISSÃO RETIDA DONA SALÃO</small><br><strong id="concSalaoPeriodo" style="font-size:1.3rem; color:var(--pink-neon)">R$ 45,00</strong></div>
+                    <div><small style="color:var(--text-muted)">REPASSE LÍQUIDO MANICURE</small><br><strong id="concManicurePeriodo" style="font-size:1.3rem; color:var(--green-success)">R$ 105,00</strong></div>
+                </div>
             </div>
         </div>
 
-        <!-- TELA 5: ESTOQUE & CMV -->
+        <!-- TELA 5: ESTOQUE & PRECIFICAÇÃO INTELIGENTE -->
         <div id="view-estoque" class="view-section">
             <div class="content-card">
-                <div class="card-header">📦 Controle de Insumos & Custo Ficha</div>
+                <div class="card-header">➕ Incluir Produto / Insumo no Estoque</div>
+                <div class="form-grid">
+                    <div class="input-group"><label>Nome do Produto/Insumo</label><input type="text" id="estNome" placeholder="Ex: Gel Vòlia Hard 24g"></div>
+                    <div class="input-group"><label>Preço de Custo Total (R$)</label><input type="number" id="estCusto" placeholder="90.00"></div>
+                    <div class="input-group"><label>Rendimento (Atendimentos)</label><input type="number" id="estRendimento" placeholder="20"></div>
+                </div>
+                <button class="btn-action btn-green" onclick="salvarInsumoEstoque()">Cadastrar Produto no Estoque</button>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">📦 Controle de Insumos & Custo por Atendimento (CMV)</div>
                 <table>
-                    <thead><tr><th>Insumo</th><th>Rendimento Ficha</th><th>Custo p/ Aplicação</th><th>Ação</th></tr></thead>
-                    <tbody id="tbEstoque">
-                        <tr><td>Gel Vòlia 24g</td><td>20 Atendimentos</td><td>R$ 4,50</td><td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="removerInsumo(this)">Excluir</button></td></tr>
-                        <tr><td>Caixa Fibra de Vidro</td><td>50 Atendimentos</td><td>R$ 1,20</td><td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="removerInsumo(this)">Excluir</button></td></tr>
-                    </tbody>
+                    <thead><tr><th>Insumo</th><th>Custo Total</th><th>Rendimento Ficha</th><th>Custo p/ Aplicação</th><th>Ação</th></tr></thead>
+                    <tbody id="tbEstoque"></tbody>
                 </table>
+            </div>
+
+            <!-- CALCULADORA DE PRECIFICAÇÃO INTELIGENTE -->
+            <div class="content-card" style="border-color: var(--pink-neon);">
+                <div class="card-header">🧠 Formador de Preço Inteligente do Serviço</div>
+                <div class="form-grid">
+                    <div class="input-group"><label>Insumos Utilizados (CMV R$)</label><input type="number" id="prCmv" value="5.70"></div>
+                    <div class="input-group"><label>Margem de Lucro Desejada (R$)</label><input type="number" id="prLucro" value="90.00"></div>
+                    <div class="input-group"><label>Comissão do Salão (%)</label><input type="number" id="prComissao" value="30"></div>
+                </div>
+                <button class="btn-action" onclick="calcularPrecoSugerido()">Calcular Preço Sugerido</button>
+
+                <div style="background:#0c101d; padding:15px; border-radius:10px; margin-top:15px; text-align:center;">
+                    <small style="color:var(--text-muted)">PREÇO SUGERIDO DE VENDA DO SERVIÇO</small><br>
+                    <strong id="resPrecoSugerido" style="font-size:1.6rem; color:var(--green-success)">R$ 136,71</strong>
+                </div>
             </div>
         </div>
 
-        <!-- TELA 6: PAINEL EXCLUSIVO DO ADMINISTRADOR SAAS (DONO DO SISTEMA) -->
+        <!-- TELA 6: ADMIN SAAS -->
         <div id="view-admin" class="view-section">
             <div class="metrics-grid">
                 <div class="metric-card" style="border-color: var(--gold-warning);"><div class="metric-label">MRR (Faturamento Recorrente)</div><div class="metric-value" style="color:var(--green-success)">R$ 537,20/mês</div></div>
                 <div class="metric-card" style="border-color: var(--gold-warning);"><div class="metric-label">Total de Clientes SaaS Ativos</div><div class="metric-value" style="color:white">22 Estúdios</div></div>
             </div>
-
-            <!-- HISTÓRICO DE PAGAMENTOS E STATUS -->
-            <div class="content-card" style="border-color: var(--gold-warning);">
-                <div class="card-header" style="color: var(--gold-warning);">📊 Histórico de Pagamentos & Pendências SaaS</div>
-                <table>
-                    <thead><tr><th>Estúdio</th><th>Plano</th><th>Vencimento</th><th>Valor</th><th>Status</th><th>Ações de Liberação</th></tr></thead>
-                    <tbody id="tbSaasPayments">
-                        <tr><td>Studio Bella Unhas</td><td>PRO</td><td>10/10/2026</td><td>R$ 19,90</td><td><span style="color:var(--gold-warning)">Aguardando PIX</span></td><td><button class="btn-action btn-green" style="padding:4px 8px; font-size:0.75rem;" onclick="aprovarPixManual('Studio Bella Unhas')">Aprovar PIX</button></td></tr>
-                        <tr><td>Elegance Nails</td><td>VIP</td><td>25/10/2026</td><td>R$ 39,90</td><td><span style="color:var(--green-success)">Ativo / Quitado</span></td><td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="bloquearAcesso('Elegance Nails')">Bloquear</button></td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- PAINEL DE CONTROLE DE PERFIL DE CLIENTES -->
-            <div class="content-card" style="border-color: var(--gold-warning);">
-                <div class="card-header" style="color: var(--gold-warning);">⚙️ Modificar Perfil / Conceder Acesso Exclusivo</div>
-                <div class="form-grid">
-                    <div class="input-group"><label>Selecione o Estúdio</label>
-                        <select id="admSelectClient">
-                            <option value="Studio Bella Unhas">Studio Bella Unhas</option>
-                            <option value="Elegance Nails">Elegance Nails</option>
-                        </select>
-                    </div>
-                    <div class="input-group"><label>Novo Plano / Perfil</label>
-                        <select id="admNewPlan">
-                            <option value="STARTER">STARTER (Grátis)</option>
-                            <option value="PRO">PRO (R$ 19,90/mês)</option>
-                            <option value="VIP">VIP (R$ 39,90/mês)</option>
-                            <option value="EXCLUSIVO">Acesso Cortesia Exclusivo (Vitalício)</option>
-                        </select>
-                    </div>
-                    <div class="input-group"><label>Nova Data de Vencimento</label>
-                        <input type="date" id="admNewDueDate">
-                    </div>
-                </div>
-                <button class="btn-action btn-gold" onclick="aplicarAlteracaoCliente()">Aplicar Alterações no Perfil</button>
-            </div>
         </div>
     </main>
-
-    <!-- MODAL BLOQUEIO AUTOMÁTICO POR INADIMPLÊNCIA -->
-    <div class="modal-overlay" id="blockModal">
-        <div class="modal-card" style="border-color: var(--danger);">
-            <div class="modal-title" style="color: var(--danger);">⛔ Acesso Suspenso por Vencimento</div>
-            <div class="modal-msg">Sua mensalidade do NailBoss venceu em <strong id="blockDueDateStr">05/10/2026</strong> e o pagamento não foi identificado. Faça a liquidação para reativar seu estúdio.</div>
-            <div class="modal-actions" style="flex-direction:column;">
-                <button class="btn-action btn-green" onclick="openUpgradeModal()">Pagar via PIX e Reativar</button>
-                <button class="btn-modal-cancel" onclick="logout()" style="margin-top:8px;">Voltar ao Login</button>
-            </div>
-        </div>
-    </div>
 
     <!-- MODAL CUSTOMIZADO CLEAN -->
     <div class="modal-overlay" id="customModal">
@@ -384,14 +350,8 @@
     <div class="modal-overlay" id="changePassModal">
         <div class="modal-card">
             <div class="modal-title">🔑 Alterar Senha de Acesso</div>
-            <div class="input-group" style="margin-bottom: 12px; text-align:left;">
-                <label>Senha Atual</label>
-                <input type="password" id="passCurrent">
-            </div>
-            <div class="input-group" style="margin-bottom: 20px; text-align:left;">
-                <label>Nova Senha</label>
-                <input type="password" id="passNew">
-            </div>
+            <div class="input-group" style="margin-bottom: 12px; text-align:left;"><label>Senha Atual</label><input type="password" id="passCurrent"></div>
+            <div class="input-group" style="margin-bottom: 20px; text-align:left;"><label>Nova Senha</label><input type="password" id="passNew"></div>
             <div class="modal-actions">
                 <button class="btn-modal-cancel" onclick="closeChangePasswordModal()">Cancelar</button>
                 <button class="btn-modal-confirm" onclick="saveNewPassword()">Salvar Nova Senha</button>
@@ -404,9 +364,13 @@
         let targetAuthRole = 'studio';
         let onConfirmCallback = null;
 
-        // DADOS SIMULADOS DE CLIENTES MULTITENANT
-        let baseClientes = [
-            { nome: "Camila Silva", whats: "(11) 98888-7777", pref: "Alongamento em Gel" }
+        let baseClientes = [{ nome: "Camila Silva", whats: "(11) 98888-7777", pref: "Alongamento em Gel" }];
+        let baseEstoque = [
+            { nome: "Gel Vòlia 24g", custo: 90, rendimento: 20, custoAplicacao: 4.50 },
+            { nome: "Caixa Fibra de Vidro", custo: 60, rendimento: 50, custoAplicacao: 1.20 }
+        ];
+        let baseAgenda = [
+            { id: 1, data: "2026-10-08", cliente: "Camila Silva", servico: "Alongamento em Gel", total: 150, sinal: 30, pendente: 120, quitado: false }
         ];
 
         function navigateTo(viewId, element) {
@@ -429,22 +393,11 @@
         }
 
         function executeLogin() {
-            const email = document.getElementById('loginEmail').value;
             const pass = document.getElementById('loginPassword').value;
-
             if (targetAuthRole === 'master') {
-                if (pass === 'admin123') {
-                    loginAs('master');
-                } else {
-                    showConfirm('Acesso Negado', 'Senha Master incorreta.', null, false);
-                }
+                if (pass === 'admin123') loginAs('master');
+                else showConfirm('Acesso Negado', 'Senha Master incorreta.', null, false);
             } else {
-                // Simulação de verificação de bloqueio por inadimplência
-                const isBlocked = false; // Altere para true para testar o modal de bloqueio
-                if (isBlocked) {
-                    document.getElementById('blockModal').style.display = 'flex';
-                    return;
-                }
                 loginAs('studio');
             }
         }
@@ -462,25 +415,25 @@
                 document.getElementById('userRoleName').innerText = 'Studio Pro';
                 document.getElementById('nav-master-item').style.display = 'none';
                 document.getElementById('btnSidebarUpgrade').style.display = 'block';
+                renderTabelaClientes();
+                renderTabelaEstoque();
+                renderAgendaEFinanceiro();
                 navigateTo('dash');
             }
         }
 
         function logout() {
             showConfirm('Encerrar Sessão', 'Deseja realmente sair do sistema?', () => {
-                document.getElementById('blockModal').style.display = 'none';
                 resetLoginStep();
                 document.getElementById('login-screen').style.display = 'flex';
             });
         }
 
-        /* MODAL CUSTOMIZADO */
         function showConfirm(title, message, callbackConfirm, showCancel = true) {
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalMsg').innerText = message;
             document.getElementById('btnModalCancel').style.display = showCancel ? 'inline-block' : 'none';
             document.getElementById('customModal').style.display = 'flex';
-
             onConfirmCallback = callbackConfirm;
         }
 
@@ -493,25 +446,20 @@
             document.getElementById('customModal').style.display = 'none';
         };
 
-        /* FUNCIONALIDADES DE CLIENTES x AGENDA */
+        /* CLIENTES */
         function salvarCliente() {
             const nome = document.getElementById('cliNome').value;
             const whats = document.getElementById('cliWhats').value;
             const pref = document.getElementById('cliPref').value;
 
-            if (!nome) {
-                showConfirm('Atenção', 'Informe ao menos o nome do cliente.', null, false);
-                return;
-            }
+            if (!nome) { showConfirm('Atenção', 'Informe ao menos o nome do cliente.', null, false); return; }
 
             baseClientes.push({ nome, whats, pref });
             renderTabelaClientes();
-
             document.getElementById('cliNome').value = '';
             document.getElementById('cliWhats').value = '';
             document.getElementById('cliPref').value = '';
-
-            showConfirm('Sucesso', `Cliente ${nome} cadastrado com sucesso!`, null, false);
+            showConfirm('Sucesso', `Cliente ${nome} cadastrado!`, null, false);
         }
 
         function renderTabelaClientes() {
@@ -529,81 +477,163 @@
             navigateTo('agenda');
         }
 
+        /* AGENDA & FINANCEIRO CONECTADOS */
+        function atualizarPendenteForm() {
+            const total = parseFloat(document.getElementById('agValor').value) || 0;
+            const sinal = parseFloat(document.getElementById('agSinal').value) || 0;
+            const pendente = Math.max(0, total - sinal);
+            document.getElementById('agPendente').value = `R$ ${pendente.toFixed(2).replace('.', ',')}`;
+        }
+
         function salvarAgendamento() {
+            const data = document.getElementById('agData').value || "2026-10-08";
             const nome = document.getElementById('agNome').value;
             const servico = document.getElementById('agServico').value;
-            const valor = document.getElementById('agValor').value;
-            const sinal = document.getElementById('agSinal').value;
+            const total = parseFloat(document.getElementById('agValor').value) || 0;
+            const sinal = parseFloat(document.getElementById('agSinal').value) || 0;
+            const pendente = Math.max(0, total - sinal);
 
-            if (!nome || !servico || !valor) {
-                showConfirm('Atenção', 'Preencha o nome da cliente, serviço e valor.', null, false);
+            if (!nome || !servico || total <= 0) {
+                showConfirm('Atenção', 'Preencha a data, cliente, serviço e valor total.', null, false);
                 return;
             }
 
-            // Vínculo Reverso: Cadastra cliente automaticamente se não existir
             if (!baseClientes.some(c => c.nome.toLowerCase() === nome.toLowerCase())) {
                 baseClientes.push({ nome, whats: '', pref: servico });
                 renderTabelaClientes();
             }
 
-            showConfirm('Confirmar Agendamento', `Deseja confirmar o agendamento de ${nome} e gerar cobrança de R$ ${sinal || 0} via PIX?`, () => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${nome}</td><td>${servico}</td><td>R$ ${parseFloat(valor).toFixed(2)}</td><td><span style="color:var(--green-success)">R$ ${parseFloat(sinal || 0).toFixed(2)} (Pago)</span></td><td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="cancelarAgendamento(this)">Cancelar</button></td>`;
-                document.getElementById('tbAgenda').appendChild(tr);
+            baseAgenda.push({ id: Date.now(), data, cliente: nome, servico, total, sinal, pendente, quitado: false });
+            renderAgendaEFinanceiro();
 
-                document.getElementById('agNome').value = '';
-                document.getElementById('agServico').value = '';
-                document.getElementById('agValor').value = '';
-                document.getElementById('agSinal').value = '';
+            document.getElementById('agNome').value = '';
+            document.getElementById('agServico').value = '';
+            document.getElementById('agValor').value = '';
+            document.getElementById('agSinal').value = '';
+            document.getElementById('agPendente').value = 'R$ 0,00';
+            showConfirm('Agendamento Confirmado', `Atendimento salvo para ${nome}. Sinal de R$ ${sinal.toFixed(2)} registrado!`, null, false);
+        }
+
+        function darBaixaRecebimento(id) {
+            showConfirm('Dar Baixa de Recebimento', 'Confirmar a quitação do valor pendente deste atendimento?', () => {
+                const item = baseAgenda.find(a => a.id === id);
+                if (item) {
+                    item.quitado = true;
+                    item.pendente = 0;
+                    renderAgendaEFinanceiro();
+                }
             });
         }
 
-        /* DEMAIS FUNÇÕES DO SISTEMA */
+        function renderAgendaEFinanceiro() {
+            const tbAgenda = document.getElementById('tbAgenda');
+            const tbFin = document.getElementById('tbFinanceiro');
+            tbAgenda.innerHTML = '';
+            tbFin.innerHTML = '';
+
+            let totalSinais = 0;
+            let totalPendentes = 0;
+            let totalQuitado = 0;
+
+            baseAgenda.forEach(item => {
+                totalSinais += item.sinal;
+                totalPendentes += item.pendente;
+                if (item.quitado) totalQuitado += item.total;
+                else totalQuitado += item.sinal;
+
+                // Linha Agenda
+                const trAg = document.createElement('tr');
+                const btnBaixa = item.quitado 
+                    ? `<span class="badge-status badge-green">Quitado ✓</span>`
+                    : `<button class="btn-action btn-green" style="padding:4px 8px; font-size:0.75rem;" onclick="darBaixaRecebimento(${item.id})">💵 Dar Baixa</button>`;
+
+                trAg.innerHTML = `<td>${item.data}</td><td>${item.cliente}</td><td>${item.servico}</td><td>R$ ${item.total.toFixed(2)}</td><td style="color:var(--green-success)">R$ ${item.sinal.toFixed(2)}</td><td style="color:var(--gold-warning)">R$ ${item.pendente.toFixed(2)}</td><td>${btnBaixa}</td>`;
+                tbAgenda.appendChild(trAg);
+
+                // Linha Financeiro
+                const trFin = document.createElement('tr');
+                const statusFin = item.quitado 
+                    ? `<span class="badge-status badge-green">Integralmente Quitado</span>`
+                    : `<span class="badge-status badge-gold">Sinal Recebido (Pendente R$ ${item.pendente.toFixed(2)})</span>`;
+
+                trFin.innerHTML = `<td>${item.data}</td><td>${item.cliente}</td><td>${item.servico}</td><td style="color:var(--green-success)">R$ ${item.sinal.toFixed(2)}</td><td style="color:var(--gold-warning)">R$ ${item.pendente.toFixed(2)}</td><td>${statusFin}</td>`;
+                tbFin.appendChild(trFin);
+            });
+
+            document.getElementById('finSinaisTotal').innerText = `R$ ${totalSinais.toFixed(2).replace('.', ',')}`;
+            document.getElementById('finPendenteTotal').innerText = `R$ ${totalPendentes.toFixed(2).replace('.', ',')}`;
+            document.getElementById('finQuitadoTotal').innerText = `R$ ${totalQuitado.toFixed(2).replace('.', ',')}`;
+
+            atualizarConciliacaoPeriodo();
+        }
+
+        /* CONCILIAÇÃO POR PERÍODO */
+        function atualizarConciliacaoPeriodo() {
+            const taxa = parseFloat(document.getElementById('concTaxa').value) || 0;
+            let brutoTotal = 0;
+
+            baseAgenda.forEach(item => {
+                brutoTotal += item.total;
+            });
+
+            const salao = (brutoTotal * taxa) / 100;
+            const manicure = brutoTotal - salao;
+
+            document.getElementById('concBrutoPeriodo').innerText = `R$ ${brutoTotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById('concSalaoPeriodo').innerText = `R$ ${salao.toFixed(2).replace('.', ',')}`;
+            document.getElementById('concManicurePeriodo').innerText = `R$ ${manicure.toFixed(2).replace('.', ',')}`;
+        }
+
+        /* ESTOQUE & PRECIFICAÇÃO */
+        function salvarInsumoEstoque() {
+            const nome = document.getElementById('estNome').value;
+            const custo = parseFloat(document.getElementById('estCusto').value) || 0;
+            const rendimento = parseFloat(document.getElementById('estRendimento').value) || 1;
+
+            if (!nome || custo <= 0) { showConfirm('Atenção', 'Preencha o nome e o preço de custo do produto.', null, false); return; }
+
+            const custoAplicacao = custo / rendimento;
+            baseEstoque.push({ nome, custo, rendimento, custoAplicacao });
+            renderTabelaEstoque();
+
+            document.getElementById('estNome').value = '';
+            document.getElementById('estCusto').value = '';
+            document.getElementById('estRendimento').value = '';
+            showConfirm('Sucesso', `Produto ${nome} incluído no estoque!`, null, false);
+        }
+
+        function renderTabelaEstoque() {
+            const tbody = document.getElementById('tbEstoque');
+            tbody.innerHTML = '';
+            baseEstoque.forEach((e, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${e.nome}</td><td>R$ ${e.custo.toFixed(2)}</td><td>${e.rendimento} Atendimentos</td><td style="color:var(--gold-warning); font-weight:bold;">R$ ${e.custoAplicacao.toFixed(2)}</td><td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="excluirInsumo(${idx})">Excluir</button></td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function excluirInsumo(idx) {
+            showConfirm('Excluir Produto', 'Remover este produto do cálculo de estoque?', () => {
+                baseEstoque.splice(idx, 1);
+                renderTabelaEstoque();
+            });
+        }
+
+        function calcularPrecoSugerido() {
+            const cmv = parseFloat(document.getElementById('prCmv').value) || 0;
+            const lucroDesejado = parseFloat(document.getElementById('prLucro').value) || 0;
+            const comissaoPct = parseFloat(document.getElementById('prComissao').value) || 0;
+
+            const precoIdeal = (cmv + lucroDesejado) / (1 - (comissaoPct / 100));
+            document.getElementById('resPrecoSugerido').innerText = `R$ ${precoIdeal.toFixed(2).replace('.', ',')}`;
+        }
+
+        /* OUTROS */
         function openChangePasswordModal() { document.getElementById('changePassModal').style.display = 'flex'; }
         function closeChangePasswordModal() { document.getElementById('changePassModal').style.display = 'none'; }
-        function saveNewPassword() {
-            closeChangePasswordModal();
-            showConfirm('Sucesso', 'Sua senha de acesso foi alterada com sucesso!', null, false);
-        }
-
-        function calcularSimulacao() {
-            const valor = parseFloat(document.getElementById('inpValor').value) || 0;
-            const cmv = parseFloat(document.getElementById('inpCMV').value) || 0;
-            const pct = parseFloat(document.getElementById('inpComissao').value) || 0;
-            const salao = (valor * pct) / 100;
-            const lucro = valor - salao - cmv;
-
-            document.getElementById('resSalao').innerText = `R$ ${salao.toFixed(2).replace('.', ',')}`;
-            document.getElementById('resInsumos').innerText = `R$ ${cmv.toFixed(2).replace('.', ',')}`;
-            document.getElementById('resLucro').innerText = `R$ ${lucro.toFixed(2).replace('.', ',')}`;
-        }
-
-        function cancelarAgendamento(btn) {
-            showConfirm('Cancelar Agendamento', 'Deseja cancelar este agendamento?', () => btn.closest('tr').remove());
-        }
-
-        function dispararWhats(nome) {
-            window.open(`https://wa.me/?text=Oi%20${nome}!%20Saudades%20de%20voce%20aqui%20no%20estudio.`, '_blank');
-        }
-
-        function salvarConciliacao() { showConfirm('Salvar', 'Regras salvas com sucesso!', null, false); }
-        function removerInsumo(btn) { showConfirm('Remover', 'Excluir item?', () => btn.closest('tr').remove()); }
-
-        function aplicarAlteracaoCliente() {
-            showConfirm('Sucesso', 'Perfil do cliente atualizado no banco de dados SaaS!', null, false);
-        }
-
-        function aprovarPixManual(estudio) {
-            showConfirm('Aprovação PIX', `Aprovar liquidação e liberar acesso para ${estudio}?`, () => {});
-        }
-
-        function bloquearAcesso(estudio) {
-            showConfirm('Bloquear', `Bloquear acesso do ${estudio}?`, () => {});
-        }
-
-        function openUpgradeModal() {
-            window.open('https://wa.me/5511999999999?text=Quero%20regularizar%20ou%20migrar%20meu%20plano%20NailBoss', '_blank');
-        }
+        function saveNewPassword() { closeChangePasswordModal(); showConfirm('Sucesso', 'Senha alterada com sucesso!', null, false); }
+        function dispararWhats(nome) { window.open(`https://wa.me/?text=Oi%20${nome}!`, '_blank'); }
+        function openUpgradeModal() { window.open('https://wa.me/5511999999999?text=Quero%20fazer%20upgrade', '_blank'); }
     </script>
 </body>
 </html>
