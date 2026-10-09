@@ -22,7 +22,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; }
 
-        /* OVERLAY DE LOGIN / REGISTRO / PLANOS DE AUTOATIVAÇÃO */
+        /* OVERLAY DE LOGIN / REGISTRO / AUTOATIVAÇÃO */
         #login-screen { position: fixed; inset: 0; background: rgba(10, 14, 26, 0.96); backdrop-filter: blur(12px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .login-card-v2 { background: var(--card-bg); border: 1px solid var(--pink-glow); padding: 35px; border-radius: 24px; max-width: 520px; width: 100%; text-align: center; box-shadow: 0 0 40px rgba(255, 42, 133, 0.15); max-height: 90vh; overflow-y: auto; }
         .login-icon-box { width: 60px; height: 60px; background: linear-gradient(135deg, var(--pink-neon), #d6005d); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 1.8rem; box-shadow: 0 8px 20px rgba(255, 42, 133, 0.4); }
@@ -62,7 +62,7 @@
         .view-section { display: none; position: relative; }
         .view-section.active { display: block; }
 
-        /* BANNER DE BLOQUEIO POR PLANO */
+        /* BANNER DE BLOQUEIO DE PLANO (OVERLAY) */
         .plan-lock-overlay { position: absolute; inset: 0; background: rgba(10, 14, 26, 0.88); backdrop-filter: blur(6px); z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; text-align: center; border-radius: 16px; border: 1px dashed var(--gold-warning); }
         .plan-lock-card { max-width: 420px; background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid var(--card-border); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 
@@ -98,7 +98,7 @@
         .time-slot-card.occupied { border-color: var(--pink-neon); background: rgba(255, 42, 133, 0.12); }
         .time-slot-card.blocked { border-color: var(--danger); background: rgba(255, 77, 77, 0.12); }
 
-        /* MODAIS CLEAN */
+        /* MODAIS */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(4px); align-items: center; justify-content: center; z-index: 3000; padding: 20px; }
         .modal-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; padding: 25px; max-width: 540px; width: 100%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .modal-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; color: var(--pink-neon); }
@@ -322,7 +322,7 @@
             </div>
         </div>
 
-        <!-- TELA 3: AGENDA (LIMPA E SEM BOTOES DO FINANCEIRO) -->
+        <!-- TELA 3: AGENDA -->
         <div id="view-agenda" class="view-section">
             <div class="content-card">
                 <div class="card-header">📅 Agendamento & Bloqueio de Horário</div>
@@ -343,6 +343,14 @@
                 </div>
             </div>
             <div class="content-card">
+                <div class="card-header">🔍 Filtros da Agenda de Atendimentos</div>
+                <div class="form-grid">
+                    <div class="input-group"><label>Buscar por Cliente</label><input type="text" id="filAgCliente" placeholder="Digite o nome..." oninput="renderAgendaEFinanceiro()"></div>
+                    <div class="input-group"><label>Filtrar Data Inicial</label><input type="date" id="filAgDe" onchange="renderAgendaEFinanceiro()"></div>
+                    <div class="input-group"><label>Filtrar Data Final</label><input type="date" id="filAgAte" onchange="renderAgendaEFinanceiro()"></div>
+                </div>
+            </div>
+            <div class="content-card">
                 <div class="card-header">📋 Agendamentos Registrados (Datas PT-BR)</div>
                 <table>
                     <thead>
@@ -354,6 +362,7 @@
                             <th>Sinal Hoje</th>
                             <th>Pendente Dia</th>
                             <th>Status Atendimento</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody id="tbAgenda"></tbody>
@@ -361,7 +370,7 @@
             </div>
         </div>
 
-        <!-- TELA 4: TESOURARIA DFC (COM ANTI-DUPLICIDADE E DAR BAIXA UNICO) -->
+        <!-- TELA 4: TESOURARIA DFC -->
         <div id="view-financeiro" class="view-section">
             <div class="metrics-grid">
                 <div class="metric-card"><div class="metric-label">Caixa Liquidado</div><div class="metric-value" style="color:var(--green-success)" id="finCaixaHoje">R$ 0,00</div></div>
@@ -369,6 +378,34 @@
                 <div class="metric-card"><div class="metric-label">Saídas / Despesas</div><div class="metric-value" style="color:var(--danger)" id="finDespesas">R$ 0,00</div></div>
                 <div class="metric-card"><div class="metric-label">Saldo Liquido DFC</div><div class="metric-value" style="color:var(--text-main)" id="finSaldoLiquido">R$ 0,00</div></div>
             </div>
+
+            <div class="content-card">
+                <div class="card-header">🔍 Filtro da Tesouraria por Descrição & Período</div>
+                <div class="form-grid">
+                    <div class="input-group"><label>Filtrar por Descrição / Texto</label><input type="text" id="finFilDesc" placeholder="Ex: Salão, Camila, Energia..." oninput="renderAgendaEFinanceiro()"></div>
+                    <div class="input-group"><label>Data Inicial</label><input type="date" id="finFilDe" value="2026-10-01" onchange="renderAgendaEFinanceiro()"></div>
+                    <div class="input-group"><label>Data Final</label><input type="date" id="finFilAte" value="2026-10-31" onchange="renderAgendaEFinanceiro()"></div>
+                    <div class="input-group"><label>Status Tesouraria</label>
+                        <select id="finFilStatus" onchange="renderAgendaEFinanceiro()">
+                            <option value="TODOS">Todos os Status</option>
+                            <option value="LIQUIDADO">Somente Liquidados</option>
+                            <option value="PENDENTE">Somente Pendentes / Inadimplentes</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">💸 Lançamento Manual no Fluxo de Caixa (DFC)</div>
+                <div class="form-grid">
+                    <div class="input-group"><label>Tipo</label><select id="dfcTipo"><option value="despesa">Despesa (Saída)</option><option value="receita">Receita (Entrada)</option></select></div>
+                    <div class="input-group"><label>Descrição</label><input type="text" id="dfcDesc" placeholder="Ex: Aluguel Cadeira"></div>
+                    <div class="input-group"><label>Valor (R$)</label><input type="number" id="dfcValor" placeholder="50.00"></div>
+                    <div class="input-group"><label>Data Lançamento</label><input type="date" id="dfcData"></div>
+                </div>
+                <button class="btn-action" onclick="salvarLancamentoDFC()">Lançar na Tesouraria (Como Pendente)</button>
+            </div>
+
             <div class="content-card">
                 <div class="card-header">📊 Demonstrativo de Fluxo de Caixa (DFC)</div>
                 <table>
@@ -387,19 +424,19 @@
             </div>
         </div>
 
-        <!-- TELA 5: CRM (COM BLOQUEIO POR PLANO SE STARTER) -->
+        <!-- TELA 5: CRM -->
         <div id="view-crm" class="view-section">
             <div id="lockCrm" class="plan-lock-overlay" style="display:none;">
                 <div class="plan-lock-card">
                     <h3 style="color:var(--gold-warning); margin-bottom:10px;">🔒 Recurso do Plano PRO e VIP</h3>
-                    <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">O CRM de Recuperação de Clientes Ausentes não está disponível no plano de degustação STARTER.</p>
+                    <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">O CRM de Recuperação de Clientes Ausentes exige a assinatura do plano PRO ou VIP.</p>
                     <button class="btn-action btn-gold" onclick="navigateTo('planos')">Faça Upgrade Agora</button>
                 </div>
             </div>
-            <div class="content-card"><div class="card-header">💬 Clientes Ausentes (+20 dias sem retorno)</div><table><thead><tr><th>Cliente</th><th>Último Serviço</th><th>Dias Ausente</th><th>Disparo WhatsApp</th></tr></thead><tbody><tr><td>Fernanda Lima</td><td>Esmaltação em Gel</td><td>24 dias</td><td><button class="btn-action btn-green" style="padding:6px 12px; font-size:0.75rem;" onclick="dispararWhats('Fernanda')">Enviar Mensagem</button></td></tr></tbody></table></div>
+            <div class="content-card"><div class="card-header">💬 Clientes Ausentes (+20 dias sem retorno)</div><table><thead><tr><th>Cliente</th><th>Último Serviço</th><th>Dias Ausente</th><th>Disparo WhatsApp</th></tr></thead><tbody id="tbCrmAusentes"></tbody></table></div>
         </div>
 
-        <!-- TELA 6: CONCILIAÇÃO SALÃO (COM BLOQUEIO SE STARTER) -->
+        <!-- TELA 6: CONCILIAÇÃO SALÃO -->
         <div id="view-conciliacao" class="view-section">
             <div id="lockConc" class="plan-lock-overlay" style="display:none;">
                 <div class="plan-lock-card">
@@ -408,10 +445,23 @@
                     <button class="btn-action btn-gold" onclick="navigateTo('planos')">Upgrade para VIP</button>
                 </div>
             </div>
-            <div class="content-card"><div class="card-header">💰 Fechamento de Repasse do Salão (Seleção por Datas)</div><div class="form-grid"><div class="input-group"><label>Data Inicial</label><input type="date" id="concDataDe" value="2026-10-01" onchange="atualizarConciliacaoPeriodo()"></div><div class="input-group"><label>Data Final</label><input type="date" id="concDataAte" value="2026-10-09" onchange="atualizarConciliacaoPeriodo()"></div><div class="input-group"><label>Taxa Salão (%)</label><input type="number" id="concTaxa" value="30" oninput="atualizarConciliacaoPeriodo()"></div></div><button class="btn-action btn-gold" style="margin-top:15px; width:100%;" onclick="lancarDespesaSalaoNoFinanceiro()">Lançar Repasse no DFC</button></div>
+            <div class="content-card">
+                <div class="card-header">💰 Fechamento de Repasse do Salão (Seleção por Datas)</div>
+                <div class="form-grid">
+                    <div class="input-group"><label>Data Inicial</label><input type="date" id="concDataDe" value="2026-10-01" onchange="atualizarConciliacaoPeriodo()"></div>
+                    <div class="input-group"><label>Data Final</label><input type="date" id="concDataAte" value="2026-10-09" onchange="atualizarConciliacaoPeriodo()"></div>
+                    <div class="input-group"><label>Taxa Salão (%)</label><input type="number" id="concTaxa" value="30" oninput="atualizarConciliacaoPeriodo()"></div>
+                </div>
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:15px; background:#0c101d; padding:20px; border-radius:12px; text-align:center; margin-top:15px;">
+                    <div><small style="color:var(--text-muted)">FATURAMENTO NO PERÍODO</small><br><strong id="concBrutoPeriodo" style="font-size:1.3rem; color:var(--text-main)">R$ 0,00</strong></div>
+                    <div><small style="color:var(--text-muted)">COMISSÃO DONA SALÃO</small><br><strong id="concSalaoPeriodo" style="font-size:1.3rem; color:var(--pink-neon)">R$ 0,00</strong></div>
+                    <div><small style="color:var(--text-muted)">LÚCRO LÍQUIDO MANICURE</small><br><strong id="concManicurePeriodo" style="font-size:1.3rem; color:var(--green-success)">R$ 0,00</strong></div>
+                </div>
+                <button class="btn-action btn-gold" style="margin-top:15px; width:100%;" onclick="lancarDespesaSalaoNoFinanceiro()">Lançar Repasse no DFC</button>
+            </div>
         </div>
 
-        <!-- TELA 7: ESTOQUE (COM BLOQUEIO SE STARTER) -->
+        <!-- TELA 7: ESTOQUE & PRECIFICAÇÃO -->
         <div id="view-estoque" class="view-section">
             <div id="lockEst" class="plan-lock-overlay" style="display:none;">
                 <div class="plan-lock-card">
@@ -420,14 +470,72 @@
                     <button class="btn-action btn-gold" onclick="navigateTo('planos')">Ver Planos de Assinatura</button>
                 </div>
             </div>
-            <div class="content-card"><div class="card-header">📦 Estoque & Precificação</div><table><thead><tr><th>Insumo</th><th>Estoque</th><th>Custo Total</th><th>Aplicações</th><th>Custo/Aplicação</th><th>Ação</th></tr></thead><tbody id="tbEstoque"></tbody></table></div>
+            <div class="content-card">
+                <div class="card-header">➕ Incluir Produto no Estoque</div>
+                <div class="form-grid">
+                    <div class="input-group"><label>Nome do Insumo</label><input type="text" id="estNome" placeholder="Ex: Gel Vòlia 24g"></div>
+                    <div class="input-group"><label>Qtd. Comprada</label><input type="number" id="estQtd" placeholder="5"></div>
+                    <div class="input-group"><label>Preço Custo Total (R$)</label><input type="number" id="estCusto" placeholder="90.00"></div>
+                    <div class="input-group"><label>Rendimento (Aplicações)</label><input type="number" id="estRendimento" placeholder="20"></div>
+                </div>
+                <button class="btn-action btn-green" onclick="salvarInsumoEstoque()">Cadastrar Produto</button>
+            </div>
+            <div class="content-card">
+                <div class="card-header">📦 Estoque Atual & Alertas de Quantidade</div>
+                <table>
+                    <thead><tr><th>Insumo</th><th>Estoque</th><th>Custo Total</th><th>Aplicações</th><th>Custo/Aplicação</th><th>Ação</th></tr></thead>
+                    <tbody id="tbEstoque"></tbody>
+                </table>
+            </div>
+            <div class="content-card" style="border-color: var(--pink-neon);">
+                <div class="card-header">🧠 Precificação Combinada por Insumos Usados</div>
+                <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:15px;">Selecione os produtos utilizados no atendimento para calcular o custo exato por aplicação (CMV):</p>
+                <div id="checkEstoqueProdutos" style="display:flex; flex-direction:column; gap:8px; margin-bottom:15px;"></div>
+                <div class="form-grid">
+                    <div class="input-group"><label>CMV Total Combinado (R$)</label><input type="text" id="prCmvCombinado" readonly value="R$ 0,00" style="color:var(--gold-warning); font-weight:bold;"></div>
+                    <div class="input-group"><label>Margem de Lucro Desejada (R$)</label><input type="number" id="prLucro" value="90.00" oninput="calcularPrecoMacroSugerido()"></div>
+                    <div class="input-group"><label>Comissão do Salão (%)</label><input type="number" id="prComissao" value="30" oninput="calcularPrecoMacroSugerido()"></div>
+                </div>
+                <div style="background:#0c101d; padding:15px; border-radius:10px; text-align:center;">
+                    <small style="color:var(--text-muted)">PREÇO FINAL SUGERIDO DE VENDA</small><br>
+                    <strong id="resPrecoMacroSugerido" style="font-size:1.6rem; color:var(--green-success)">R$ 0,00</strong>
+                </div>
+            </div>
         </div>
 
+        <!-- TELA 8: PLANOS DENTRO DO PAINEL -->
         <div id="view-planos" class="view-section">
-            <div class="content-card" style="border-color:var(--gold-warning);"><div class="card-header" style="color:var(--gold-warning);">👑 Escolha seu Plano NailBoss</div><div style="background:#0c101d; border:2px dashed var(--pink-neon); padding:20px; border-radius:12px; margin-top:20px; text-align:center;"><strong style="color:var(--gold-warning); font-size:1.1rem;">🔑 CHAVE PIX CONECTADA: 55-11-94788-7105</strong><br><button class="btn-action btn-green" style="width:100%; max-width:320px; margin-top:10px;" onclick="enviarComprovanteWhatsApp()">📲 ENVIAR COMPROVANTE WHATSAPP</button></div></div>
+            <div class="content-card" style="border-color:var(--gold-warning);">
+                <div class="card-header" style="color:var(--gold-warning);">👑 Escolha ou Renove seu Plano NailBoss</div>
+                <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:15px;">Efetue o pagamento via PIX e envie o comprovante para liberação imediata do seu acesso.</p>
+                
+                <div class="plans-grid">
+                    <div class="plan-card">
+                        <h3>Plano STARTER</h3>
+                        <div class="plan-price">R$ 0,00</div>
+                        <p style="font-size:0.8rem; color:var(--text-muted);">Agenda básica e controle inicial de clientes.</p>
+                    </div>
+                    <div class="plan-card highlight">
+                        <h3>Plano PRO</h3>
+                        <div class="plan-price" id="panelPricePro">R$ 19,90/mês</div>
+                        <p style="font-size:0.8rem; color:var(--text-muted);">Tesouraria DFC, CRM e Controle de Sinal PIX.</p>
+                    </div>
+                    <div class="plan-card">
+                        <h3>Plano VIP</h3>
+                        <div class="plan-price" id="panelPriceVip">R$ 39,90/mês</div>
+                        <p style="font-size:0.8rem; color:var(--text-muted);">Acesso total, Precificação Combinada e Repasses de Salão.</p>
+                    </div>
+                </div>
+
+                <div style="background:#0c101d; border:2px dashed var(--pink-neon); padding:20px; border-radius:12px; margin-top:20px; text-align:center;">
+                    <strong style="color:var(--gold-warning); font-size:1.1rem;">🔑 CHAVE PIX CONECTADA:</strong><br>
+                    <span style="font-size:1.4rem; font-weight:800; color:white; letter-spacing:1px; display:block; margin:8px 0;">55-11-94788-7105</span>
+                    <button class="btn-action btn-green" style="width:100%; max-width:320px; margin-top:10px;" onclick="enviarComprovanteWhatsApp()">📲 ENVIAR COMPROVANTE NO WHATSAPP</button>
+                </div>
+            </div>
         </div>
 
-        <!-- TELA MASTER SAAS 2.0 REDESENHADA -->
+        <!-- TELA 9: MASTER SAAS 2.0 (HQ EXECUTIVO) -->
         <div id="view-admin" class="view-section">
             <div class="metrics-grid">
                 <div class="metric-card" style="border-color: var(--pink-neon);"><div class="metric-label">MRR (Faturamento Recorrente Mensal)</div><div class="metric-value" style="color:var(--green-success)" id="masterMrrVal">R$ 0,00/mês</div></div>
@@ -477,7 +585,7 @@
         </div>
     </main>
 
-    <!-- MODAL SLOTS DO DIA COM SELETOR DE DATA DINÂMICO -->
+    <!-- MODAIS E POPUPS -->
     <div class="modal-overlay" id="slotsModal">
         <div class="modal-card">
             <div class="modal-title" id="slotsTitle">Visão dos Slots do Dia</div>
@@ -497,7 +605,7 @@
     <div class="modal-overlay" id="changePassModal"><div class="modal-card"><div class="modal-title">🔑 Alterar Senha</div><div class="input-group" style="margin-bottom:12px; text-align:left;"><label>Senha Atual</label><input type="password" id="passCurrent"></div><div class="input-group" style="margin-bottom:20px; text-align:left;"><label>Nova Senha</label><input type="password" id="passNew"></div><div class="modal-actions"><button class="btn-modal-cancel" onclick="closeChangePasswordModal()">Cancelar</button><button class="btn-modal-confirm" onclick="saveNewPassword()">Salvar</button></div></div></div>
 
     <script>
-        let currentTenantId = "demo";
+        let currentTenantId = "";
         let currentPlan = "STARTER";
         let currentRole = "studio";
         let targetAuthRole = "studio";
@@ -511,13 +619,15 @@
             return dateStr;
         }
 
-        // ISOLAMENTO DE DADOS MULTITENANT POR TENANT
+        // ISOLAMENTO DE LOCALSTORAGE POR ESTÚDIO (VAZAMENTO CORRIGIDO)
         function getTenantData(key, defaultData) {
+            if (!currentTenantId) return defaultData;
             const raw = localStorage.getItem(`nailboss_${currentTenantId}_${key}`);
             return raw ? JSON.parse(raw) : defaultData;
         }
 
         function setTenantData(key, data) {
+            if (!currentTenantId) return;
             localStorage.setItem(`nailboss_${currentTenantId}_${key}`, JSON.stringify(data));
         }
 
@@ -549,7 +659,6 @@
             applyPlanPermissions();
         }
 
-        // CONTROLADOR DE RESTRIÇÃO POR PLANO (STARTER X PRO X VIP)
         function applyPlanPermissions() {
             document.getElementById('planBadge').innerText = currentPlan;
 
@@ -570,7 +679,7 @@
                 if (lockEst) lockEst.style.display = 'flex';
             } else if (currentPlan === 'PRO') {
                 if (lockCrm) lockCrm.style.display = 'none';
-                if (lockConc) lockConc.style.display = 'flex'; // Exige VIP
+                if (lockConc) lockConc.style.display = 'flex';
                 if (lockEst) lockEst.style.display = 'none';
             } else {
                 if (lockCrm) lockCrm.style.display = 'none';
@@ -645,13 +754,13 @@
             
             const valorPlano = regSelectedPlan === 'VIP' ? masterPrices.VIP : (regSelectedPlan === 'PRO' ? masterPrices.PRO : 0);
             if (valorPlano > 0) {
-                basePagamentosSaaS.push({ id: Date.now(), data: "2026-10-09", estudio: studio, plano: regSelectedPlan, valor: valorPlano, status: "PENDENTE" });
+                basePagamentosSaaS.push({ id: Date.now(), data: new Date().toISOString().split('T')[0], estudio: studio, plano: regSelectedPlan, valor: valorPlano, status: "PENDENTE" });
             }
 
             saveMasterGlobal();
             resetLoginStep();
 
-            showConfirm('Cadastro Enviado!', 'Realize o PIX e envie o comprovante no WhatsApp para liberação imediata!', () => {
+            showConfirm('Cadastro Enviado!', 'Realize o PIX e envie o comprovante no WhatsApp para ativação expressa!', () => {
                 enviarComprovanteWhatsApp();
             }, false);
         }
@@ -684,7 +793,7 @@
                     return;
                 }
 
-                currentTenantId = email.replace(/[^a-zA-Z0-9]/g, '');
+                currentTenantId = email.toLowerCase().replace(/[^a-z0-9]/g, '');
                 currentPlan = user.plano || "STARTER";
                 loginAs('studio', user.estudio);
             }
@@ -705,16 +814,20 @@
                 document.getElementById('nav-master-item').style.display = 'none';
                 document.getElementById('btnSidebarUpgrade').style.display = 'block';
                 applyPlanPermissions();
+                
+                // CARREGA DADOS ISOLADOS DO ESTÚDIO
                 renderTabelaClientes();
                 renderTabelaEstoque();
                 renderAgendaEFinanceiro();
                 renderDashboardData();
+                renderCrmAusentes();
                 navigateTo('dash');
             }
         }
 
         function logout() {
             showConfirm('Encerrar Sessão', 'Deseja realmente sair?', () => {
+                currentTenantId = "";
                 resetLoginStep();
                 document.getElementById('login-screen').style.display = 'flex';
             });
@@ -737,11 +850,19 @@
             document.getElementById('customModal').style.display = 'none';
         };
 
-        /* CLIENTES, AGENDA, FINANCEIRO DFC */
+        /* CÁLCULO DE VALOR PENDENTE NA AGENDA */
+        function atualizarPendenteForm() {
+            const total = parseFloat(document.getElementById('agValor').value) || 0;
+            const sinal = parseFloat(document.getElementById('agSinal').value) || 0;
+            const pendente = Math.max(0, total - sinal);
+            document.getElementById('agPendente').value = `R$ ${pendente.toFixed(2).replace('.', ',')}`;
+        }
+
+        /* CLIENTES */
         function salvarCliente() {
             const nome = document.getElementById('cliNome').value;
             const whats = document.getElementById('cliWhats').value;
-            const desde = document.getElementById('cliDesde').value || "2026-10-09";
+            const desde = document.getElementById('cliDesde').value || new Date().toISOString().split('T')[0];
             const pref = document.getElementById('cliPref').value;
             if (!nome) { showConfirm('Atenção', 'Informe o nome.', null, false); return; }
 
@@ -751,6 +872,8 @@
 
             renderTabelaClientes();
             document.getElementById('cliNome').value = '';
+            document.getElementById('cliWhats').value = '';
+            document.getElementById('cliPref').value = '';
             showConfirm('Sucesso', 'Cliente cadastrado!', null, false);
         }
 
@@ -770,7 +893,7 @@
             let agenda = getTenantData('agenda', []);
             const itens = agenda.filter(a => a.cliente.toLowerCase() === nome.toLowerCase());
             let html = itens.length === 0 ? '<p>Nenhum atendimento registrado.</p>' : '';
-            itens.forEach(i => { html += `<div style="border-bottom:1px solid #1c2438; padding:8px 0;"><strong>Data:</strong> ${formatDateBR(i.data)}<br><strong>Serviço:</strong> ${i.servico}</div>`; });
+            itens.forEach(i => { html += `<div style="border-bottom:1px solid #1c2438; padding:8px 0;"><strong>Data:</strong> ${formatDateBR(i.data)}<br><strong>Serviço:</strong> ${i.servico}<br><strong>Total:</strong> R$ ${i.total.toFixed(2)}</div>`; });
             document.getElementById('histContent').innerHTML = html;
             document.getElementById('historyModal').style.display = 'flex';
         }
@@ -778,9 +901,32 @@
         function fecharHistoricoModal() { document.getElementById('historyModal').style.display = 'none'; }
         function fecharSlotsModal() { document.getElementById('slotsModal').style.display = 'none'; }
 
-        // SLOTS DO DIA COM SELETOR DINÂMICO
+        /* AGENDA & SLOTS POPUP */
+        function renderGradeHorarios() {
+            const dataSel = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
+            let agenda = getTenantData('agenda', []);
+            const slots = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
+            const container = document.getElementById('slotsContainer');
+            if (container) {
+                container.innerHTML = '';
+                slots.forEach(h => {
+                    const item = agenda.find(a => a.data === dataSel && a.horaInicio === h);
+                    const div = document.createElement('div');
+                    let statusClass = '';
+                    let label = 'Livre';
+                    if (item) {
+                        if (item.cliente === 'BLOQUEADO') { statusClass = 'blocked'; label = 'Bloqueado'; }
+                        else { statusClass = 'occupied'; label = item.cliente; }
+                    }
+                    div.className = `time-slot-card ${statusClass}`;
+                    div.innerHTML = `<strong>${h}</strong><br><small style="font-size:0.7rem;">${label}</small>`;
+                    container.appendChild(div);
+                });
+            }
+        }
+
         function abrirPopupGradeDia() {
-            const dataSel = document.getElementById('agData').value || "2026-10-10";
+            const dataSel = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
             document.getElementById('modalSlotsDataSel').value = dataSel;
             renderGradeHorariosModal(dataSel);
             document.getElementById('slotsModal').style.display = 'flex';
@@ -811,8 +957,19 @@
             });
         }
 
+        function bloquearHorarioGrade() {
+            const data = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
+            const hora = document.getElementById('agHoraInicio').value;
+            showConfirm('Bloquear Horário', `Bloquear horário das ${hora} no dia ${formatDateBR(data)}?`, () => {
+                let agenda = getTenantData('agenda', []);
+                agenda.push({ id: Date.now(), data, horaInicio: hora, horaFim: hora, cliente: "BLOQUEADO", servico: "Intervalo / Indisponível", total: 0, sinal: 0, pendente: 0, quitado: true });
+                setTenantData('agenda', agenda);
+                renderAgendaEFinanceiro();
+            });
+        }
+
         function salvarAgendamento() {
-            const data = document.getElementById('agData').value || "2026-10-10";
+            const data = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
             const horaInicio = document.getElementById('agHoraInicio').value;
             const nome = document.getElementById('agNome').value;
             const servico = document.getElementById('agServico').value;
@@ -820,7 +977,7 @@
             const sinal = parseFloat(document.getElementById('agSinal').value) || 0;
             const pendente = Math.max(0, total - sinal);
 
-            if (!nome || !servico || total <= 0) { showConfirm('Atenção', 'Preencha os dados do agendamento.', null, false); return; }
+            if (!nome || !servico || total <= 0) { showConfirm('Atenção', 'Preencha cliente, serviço e valor total.', null, false); return; }
 
             let agenda = getTenantData('agenda', []);
             let dfc = getTenantData('dfc', []);
@@ -828,18 +985,62 @@
             const agId = Date.now();
             agenda.push({ id: agId, data, horaInicio, cliente: nome, servico, total, sinal, pendente, quitado: false });
 
-            if (sinal > 0) dfc.push({ id: Date.now(), agId: agId, data: "2026-10-09", desc: `Sinal PIX - ${nome}`, tipo: "receita", valor: sinal, status: "LIQUIDADO" });
+            // REGISTRO DINÂMICO DE SINAL E PENDÊNCIA NO DFC DO ESTÚDIO
+            if (sinal > 0) dfc.push({ id: Date.now(), agId: agId, data: data, desc: `Sinal PIX - ${nome}`, tipo: "receita", valor: sinal, status: "LIQUIDADO" });
             if (pendente > 0) dfc.push({ id: Date.now() + 1, agId: agId, data: data, desc: `Saldo Pendente - ${nome}`, tipo: "receita", valor: pendente, status: "PENDENTE" });
 
             setTenantData('agenda', agenda);
             setTenantData('dfc', dfc);
 
+            // LIMPA FORMULÁRIO
+            document.getElementById('agNome').value = '';
+            document.getElementById('agServico').value = '';
+            document.getElementById('agValor').value = '';
+            document.getElementById('agSinal').value = '';
+            atualizarPendenteForm();
+
             renderAgendaEFinanceiro();
             renderDashboardData();
-            showConfirm('Sucesso', 'Agendamento salvo!', null, false);
+            showConfirm('Sucesso', 'Agendamento gravado com sucesso!', null, false);
         }
 
-        // TESOURARIA - BAIXA ÚNICA E ANTI-DUPLICIDADE
+        function excluirAgendamento(agId) {
+            showConfirm('Excluir Agendamento', 'Deseja realmente remover este agendamento?', () => {
+                let agenda = getTenantData('agenda', []);
+                let dfc = getTenantData('dfc', []);
+
+                agenda = agenda.filter(a => a.id !== agId);
+                dfc = dfc.filter(d => d.agId !== agId);
+
+                setTenantData('agenda', agenda);
+                setTenantData('dfc', dfc);
+
+                renderAgendaEFinanceiro();
+                renderDashboardData();
+            });
+        }
+
+        /* TESOURARIA - LANÇAMENTO MANUAL & BAIXA ÚNICA */
+        function salvarLancamentoDFC() {
+            const tipo = document.getElementById('dfcTipo').value;
+            const desc = document.getElementById('dfcDesc').value;
+            const valor = parseFloat(document.getElementById('dfcValor').value) || 0;
+            const data = document.getElementById('dfcData').value || new Date().toISOString().split('T')[0];
+
+            if (!desc || valor <= 0) { showConfirm('Atenção', 'Informe a descrição e o valor.', null, false); return; }
+
+            let dfc = getTenantData('dfc', []);
+            dfc.push({ id: Date.now(), data, desc, tipo, valor, status: "PENDENTE" });
+            setTenantData('dfc', dfc);
+
+            document.getElementById('dfcDesc').value = '';
+            document.getElementById('dfcValor').value = '';
+
+            renderAgendaEFinanceiro();
+            renderDashboardData();
+            showConfirm('Lançado', 'Lançamento registrado no caixa como PENDENTE!', null, false);
+        }
+
         function darBaixaDFC(id) {
             showConfirm('Dar Baixa na Tesouraria', 'Confirmar o recebimento e quitação do valor pendente?', () => {
                 let dfc = getTenantData('dfc', []);
@@ -875,8 +1076,16 @@
             let agenda = getTenantData('agenda', []);
             let dfc = getTenantData('dfc', []);
 
-            // TABELA DA AGENDA (SEM BOTÕES DO FINANCEIRO)
+            // AGENDA
+            const filCliente = document.getElementById('filAgCliente') ? document.getElementById('filAgCliente').value.toLowerCase() : '';
+            const filAgDe = document.getElementById('filAgDe') ? document.getElementById('filAgDe').value : '';
+            const filAgAte = document.getElementById('filAgAte') ? document.getElementById('filAgAte').value : '';
+
             agenda.forEach(item => {
+                if (filCliente && !item.cliente.toLowerCase().includes(filCliente)) return;
+                if (filAgDe && item.data < filAgDe) return;
+                if (filAgAte && item.data > filAgAte) return;
+
                 const trAg = document.createElement('tr');
                 trAg.innerHTML = `
                     <td>${formatDateBR(item.data)} (${item.horaInicio})</td>
@@ -886,16 +1095,27 @@
                     <td style="color:var(--green-success)">R$ ${item.sinal.toFixed(2)}</td>
                     <td style="color:var(--gold-warning)">R$ ${item.pendente.toFixed(2)}</td>
                     <td>${item.quitado ? '<span class="badge-status badge-green">Liquidado ✓</span>' : '<span class="badge-status badge-gold">Pendente Caixa</span>'}</td>
+                    <td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="excluirAgendamento(${item.id})">Remover</button></td>
                 `;
                 tbAgenda.appendChild(trAg);
             });
 
-            // TABELA DA TESOURARIA (COM BOTÃO DE BAIXA ÚNICO)
+            // TESOURARIA (DFC)
+            const finDesc = document.getElementById('finFilDesc') ? document.getElementById('finFilDesc').value.toLowerCase() : '';
+            const finDe = document.getElementById('finFilDe') ? document.getElementById('finFilDe').value : '';
+            const finAte = document.getElementById('finFilAte') ? document.getElementById('finFilAte').value : '';
+            const finStatus = document.getElementById('finFilStatus') ? document.getElementById('finFilStatus').value : 'TODOS';
+
             let caixaTotal = 0;
             let pendenteTotal = 0;
             let despesasTotal = 0;
 
             dfc.forEach(d => {
+                if (finDesc && !d.desc.toLowerCase().includes(finDesc)) return;
+                if (finDe && d.data < finDe) return;
+                if (finAte && d.data > finAte) return;
+                if (finStatus !== 'TODOS' && d.status !== finStatus) return;
+
                 if (d.status === 'LIQUIDADO') {
                     if (d.tipo === 'receita') caixaTotal += d.valor;
                     else despesasTotal += d.valor;
@@ -923,13 +1143,195 @@
             document.getElementById('finPendenteFuturo').innerText = `R$ ${pendenteTotal.toFixed(2).replace('.', ',')}`;
             document.getElementById('finDespesas').innerText = `R$ ${despesasTotal.toFixed(2).replace('.', ',')}`;
             document.getElementById('finSaldoLiquido').innerText = `R$ ${(caixaTotal - despesasTotal).toFixed(2).replace('.', ',')}`;
+
+            atualizarConciliacaoPeriodo();
         }
 
+        /* CRM DE CLIENTES AUSENTES DO ESTÚDIO */
+        function renderCrmAusentes() {
+            const tbody = document.getElementById('tbCrmAusentes');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            let agenda = getTenantData('agenda', []);
+            const hoje = new Date();
+
+            const ultimosAtend = {};
+            agenda.forEach(a => {
+                if (a.cliente === 'BLOQUEADO') return;
+                const d = new Date(a.data);
+                if (!ultimosAtend[a.cliente] || d > ultimosAtend[a.cliente].data) {
+                    ultimosAtend[a.cliente] = { data: d, servico: a.servico, dataStr: a.data };
+                }
+            });
+
+            Object.keys(ultimosAtend).forEach(c => {
+                const diffTime = Math.abs(hoje - ultimosAtend[c].data);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                if (diffDays >= 20) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${c}</td><td>${ultimosAtend[c].servico}</td><td>${diffDays} dias</td><td><button class="btn-action btn-green" style="padding:6px 12px; font-size:0.75rem;" onclick="dispararWhats('${c}')">Enviar Mensagem</button></td>`;
+                    tbody.appendChild(tr);
+                }
+            });
+
+            if (tbody.children.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted)">Nenhuma cliente ausente há mais de 20 dias.</td></tr>';
+            }
+        }
+
+        /* DASHBOARD KPIS & RANKING */
         function renderDashboardData() {
             let agenda = getTenantData('agenda', []);
-            let bruto = 0; 
-            agenda.forEach(a => bruto += a.total);
+            let dfc = getTenantData('dfc', []);
+
+            const de = document.getElementById('dashDataDe').value;
+            const ate = document.getElementById('dashDataAte').value;
+
+            let bruto = 0;
+            let liquidado = 0;
+            let pendente = 0;
+            let totalAtend = 0;
+            const servicosCount = {};
+
+            agenda.forEach(a => {
+                if (de && a.data < de) return;
+                if (ate && a.data > ate) return;
+                if (a.cliente === 'BLOQUEADO') return;
+
+                bruto += a.total;
+                pendente += a.pendente;
+                totalAtend++;
+                servicosCount[a.servico] = (servicosCount[a.servico] || 0) + a.total;
+            });
+
+            dfc.forEach(d => {
+                if (de && d.data < de) return;
+                if (ate && d.data > ate) return;
+                if (d.status === 'LIQUIDADO' && d.tipo === 'receita') liquidado += d.valor;
+            });
+
             document.getElementById('dashBruto').innerText = `R$ ${bruto.toFixed(2).replace('.', ',')}`;
+            document.getElementById('dashCaixaEfetivo').innerText = `R$ ${liquidado.toFixed(2).replace('.', ',')}`;
+            document.getElementById('dashPendente').innerText = `R$ ${pendente.toFixed(2).replace('.', ',')}`;
+
+            const ticket = totalAtend > 0 ? bruto / totalAtend : 0;
+            document.getElementById('dashTicketMedio').innerText = `R$ ${ticket.toFixed(2).replace('.', ',')}`;
+
+            const taxaInad = bruto > 0 ? (pendente / bruto) * 100 : 0;
+            document.getElementById('dashTaxaInadimplencia').innerText = `${taxaInad.toFixed(1)}%`;
+
+            const tbServ = document.getElementById('tbDashRankingServicos');
+            tbServ.innerHTML = '';
+            Object.keys(servicosCount).forEach(s => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${s}</td><td>-</td><td style="color:var(--green-success)">R$ ${servicosCount[s].toFixed(2)}</td>`;
+                tbServ.appendChild(tr);
+            });
+        }
+
+        /* CONCILIAÇÃO SALÃO */
+        function atualizarConciliacaoPeriodo() {
+            const de = document.getElementById('concDataDe').value;
+            const ate = document.getElementById('concDataAte').value;
+            const taxa = parseFloat(document.getElementById('concTaxa').value) || 0;
+
+            let agenda = getTenantData('agenda', []);
+            let bruto = 0;
+
+            agenda.forEach(a => {
+                if (de && a.data < de) return;
+                if (ate && a.data > ate) return;
+                if (a.cliente === 'BLOQUEADO') return;
+                bruto += a.total;
+            });
+
+            const salao = (bruto * taxa) / 100;
+            const manicure = bruto - salao;
+
+            document.getElementById('concBrutoPeriodo').innerText = `R$ ${bruto.toFixed(2).replace('.', ',')}`;
+            document.getElementById('concSalaoPeriodo').innerText = `R$ ${salao.toFixed(2).replace('.', ',')}`;
+            document.getElementById('concManicurePeriodo').innerText = `R$ ${manicure.toFixed(2).replace('.', ',')}`;
+        }
+
+        function lancarDespesaSalaoNoFinanceiro() {
+            const de = document.getElementById('concDataDe').value;
+            const ate = document.getElementById('concDataAte').value;
+            const valorStr = document.getElementById('concSalaoPeriodo').innerText.replace('R$ ', '').replace(',', '.');
+            const valor = parseFloat(valorStr) || 0;
+
+            showConfirm('Lançar Repasse', `Lançar despesa de R$ ${valor.toFixed(2)} na Tesouraria como PENDENTE?`, () => {
+                let dfc = getTenantData('dfc', []);
+                dfc.push({ id: Date.now(), data: new Date().toISOString().split('T')[0], desc: `Repasse Salão (${formatDateBR(de)} a ${formatDateBR(ate)})`, tipo: "despesa", valor: valor, status: "PENDENTE" });
+                setTenantData('dfc', dfc);
+                renderAgendaEFinanceiro();
+                showConfirm('Sucesso', 'Lançamento efetuado como PENDENTE!', null, false);
+            });
+        }
+
+        /* ESTOQUE & PRECIFICAÇÃO */
+        function salvarInsumoEstoque() {
+            const nome = document.getElementById('estNome').value;
+            const qtd = parseInt(document.getElementById('estQtd').value) || 1;
+            const custo = parseFloat(document.getElementById('estCusto').value) || 0;
+            const rendimento = parseFloat(document.getElementById('estRendimento').value) || 1;
+
+            if (!nome || custo <= 0) { showConfirm('Atenção', 'Informe nome e custo.', null, false); return; }
+
+            let est = getTenantData('estoque', []);
+            est.push({ id: Date.now(), nome, qtd, custo, rendimento, custoAplicacao: custo / rendimento });
+            setTenantData('estoque', est);
+
+            document.getElementById('estNome').value = '';
+            document.getElementById('estQtd').value = '';
+            document.getElementById('estCusto').value = '';
+            document.getElementById('estRendimento').value = '';
+
+            renderTabelaEstoque();
+            showConfirm('Sucesso', 'Insumo cadastrado!', null, false);
+        }
+
+        function renderTabelaEstoque() {
+            const tbody = document.getElementById('tbEstoque');
+            const checkCont = document.getElementById('checkEstoqueProdutos');
+            tbody.innerHTML = '';
+            checkCont.innerHTML = '';
+
+            let est = getTenantData('estoque', []);
+            est.forEach((e, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${e.nome}</td><td><span class="badge-status ${e.qtd <= 2 ? 'badge-danger' : 'badge-green'}">${e.qtd} Un.</span></td><td>R$ ${e.custo.toFixed(2)}</td><td>${e.rendimento} Aplicações</td><td style="color:var(--gold-warning); font-weight:bold;">R$ ${e.custoAplicacao.toFixed(2)}</td><td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="excluirInsumo(${idx})">Excluir</button></td>`;
+                tbody.appendChild(tr);
+
+                const lbl = document.createElement('label');
+                lbl.style.fontSize = '0.85rem';
+                lbl.innerHTML = `<input type="checkbox" value="${e.custoAplicacao}" onchange="calcularPrecoMacroSugerido()"> ${e.nome} (Custo/Aplicação: R$ ${e.custoAplicacao.toFixed(2)})`;
+                checkCont.appendChild(lbl);
+            });
+        }
+
+        function excluirInsumo(idx) {
+            showConfirm('Excluir', 'Remover do estoque?', () => {
+                let est = getTenantData('estoque', []);
+                est.splice(idx, 1);
+                setTenantData('estoque', est);
+                renderTabelaEstoque();
+            });
+        }
+
+        function calcularPrecoMacroSugerido() {
+            let cmvTotal = 0;
+            const checkboxes = document.querySelectorAll('#checkEstoqueProdutos input[type="checkbox"]:checked');
+            checkboxes.forEach(c => cmvTotal += parseFloat(c.value) || 0);
+
+            document.getElementById('prCmvCombinado').value = `R$ ${cmvTotal.toFixed(2).replace('.', ',')}`;
+
+            const lucroDesejado = parseFloat(document.getElementById('prLucro').value) || 0;
+            const comissaoPct = parseFloat(document.getElementById('prComissao').value) || 0;
+
+            const precoIdeal = (cmvTotal + lucroDesejado) / (1 - (comissaoPct / 100));
+            document.getElementById('resPrecoMacroSugerido').innerText = `R$ ${precoIdeal.toFixed(2).replace('.', ',')}`;
         }
 
         /* PAINEL MASTER SAAS 2.0 */
@@ -1041,13 +1443,13 @@
             masterPrices = { PRO: pro, VIP: vip };
             localStorage.setItem('nailboss_master_prices', JSON.stringify(masterPrices));
 
-            document.getElementById('labelPriceProReg').innerText = `R$ ${pro.toFixed(2)}/mês`;
-            document.getElementById('labelPriceVipReg').innerText = `R$ ${vip.toFixed(2)}/mês`;
-            document.getElementById('labelPriceProPub').innerText = `R$ ${pro.toFixed(2)}/mês`;
-            document.getElementById('labelPriceVipPub').innerText = `R$ ${vip.toFixed(2)}/mês`;
+            const panelPro = document.getElementById('panelPricePro');
+            const panelVip = document.getElementById('panelPriceVip');
+            if (panelPro) panelPro.innerText = `R$ ${pro.toFixed(2)}/mês`;
+            if (panelVip) panelVip.innerText = `R$ ${vip.toFixed(2)}/mês`;
 
             renderMasterSaaS();
-            showConfirm('Preços Salvos', 'Tabela de preços atualizada!', null, false);
+            showConfirm('Preços Salvos', 'Tabela de preços atualizada no sistema!', null, false);
         }
 
         function abrirWhatsEstudio(whats, estudio) {
@@ -1061,7 +1463,7 @@
 
         function openChangePasswordModal() { document.getElementById('changePassModal').style.display = 'flex'; }
         function closeChangePasswordModal() { document.getElementById('changePassModal').style.display = 'none'; }
-        function saveNewPassword() { closeChangePasswordModal(); showConfirm('Sucesso', 'Senha alterada!', null, false); }
+        function saveNewPassword() { closeChangePasswordModal(); showConfirm('Sucesso', 'Senha alterada com sucesso!', null, false); }
         function dispararWhats(nome) { window.open(`https://wa.me/?text=Oi%20${nome}!`, '_blank'); }
     </script>
 </body>
