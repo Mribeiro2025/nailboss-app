@@ -22,9 +22,9 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; }
 
-        /* OVERLAY DE LOGIN / REGISTRO DE DEGUSTAÇÃO */
+        /* OVERLAY DE LOGIN / REGISTRO / TELA DE PLANOS PÚBLICA */
         #login-screen { position: fixed; inset: 0; background: rgba(10, 14, 26, 0.96); backdrop-filter: blur(12px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .login-card-v2 { background: var(--card-bg); border: 1px solid var(--pink-glow); padding: 35px; border-radius: 24px; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 0 40px rgba(255, 42, 133, 0.15); max-height: 90vh; overflow-y: auto; }
+        .login-card-v2 { background: var(--card-bg); border: 1px solid var(--pink-glow); padding: 35px; border-radius: 24px; max-width: 520px; width: 100%; text-align: center; box-shadow: 0 0 40px rgba(255, 42, 133, 0.15); max-height: 90vh; overflow-y: auto; }
         .login-icon-box { width: 60px; height: 60px; background: linear-gradient(135deg, var(--pink-neon), #d6005d); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 1.8rem; box-shadow: 0 8px 20px rgba(255, 42, 133, 0.4); }
         .login-card-v2 h2 { color: var(--text-main); font-size: 1.8rem; font-weight: 800; }
         .login-card-v2 p { color: var(--text-muted); font-size: 0.85rem; margin: 6px 0 20px; }
@@ -105,17 +105,18 @@
         .btn-modal-confirm { background: var(--pink-neon); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
         /* TELA DE PLANOS CARD DESIGN */
-        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
-        .plan-card { background: #0c101d; border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; text-align: center; transition: 0.3s; }
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 15px; }
+        .plan-card { background: #0c101d; border: 1px solid var(--card-border); border-radius: 14px; padding: 15px; text-align: center; transition: 0.3s; cursor: pointer; }
         .plan-card.highlight { border-color: var(--pink-neon); box-shadow: 0 0 20px rgba(255, 42, 133, 0.2); }
-        .plan-price { font-size: 1.6rem; font-weight: 800; color: var(--pink-neon); margin: 8px 0; }
+        .plan-card.selected { border-color: var(--green-success); background: rgba(0, 230, 118, 0.08); }
+        .plan-price { font-size: 1.4rem; font-weight: 800; color: var(--pink-neon); margin: 6px 0; }
 
         @media (max-width: 768px) { body { flex-direction: column; } .sidebar { width: 100%; } }
     </style>
 </head>
 <body>
 
-    <!-- OVERLAY DE LOGIN / REGISTRO / TELA DE PLANOS PÚBLICA -->
+    <!-- OVERLAY DE LOGIN / REGISTRO / PLANOS DE AUTOATIVAÇÃO -->
     <div id="login-screen">
         <div class="login-card-v2">
             <div class="login-icon-box">💅</div>
@@ -124,8 +125,8 @@
             
             <div id="loginStepSelect">
                 <button class="btn-login-option btn-pink-gradient" onclick="showAuthInputs('studio')">🏪 Acessar Meu Studio</button>
-                <button class="btn-login-option btn-outline-dark" onclick="showRegisterForm()">✨ Testar 14 Dias Grátis</button>
-                <button class="btn-login-option btn-outline-dark" style="color:var(--gold-warning); border-color:var(--gold-warning);" onclick="showPublicPlans()">💎 Ver Planos & Preços (PIX)</button>
+                <button class="btn-login-option btn-outline-dark" onclick="showRegisterForm()">✨ Cadastrar Studio & Ativar Plano</button>
+                <button class="btn-login-option btn-outline-dark" style="color:var(--gold-warning); border-color:var(--gold-warning);" onclick="showPublicPlans()">💎 Ver Pacotes & Chave PIX</button>
                 <button class="btn-login-option btn-outline-dark" style="margin-top:10px;" onclick="showAuthInputs('master')">👑 Painel Restrito Dono (SaaS)</button>
             </div>
 
@@ -143,9 +144,9 @@
                 <button class="btn-login-option btn-outline-dark" style="margin-bottom:0;" onclick="resetLoginStep()">Voltar</button>
             </div>
 
-            <!-- REGISTRO DEGUSTAÇÃO -->
+            <!-- REGISTRO EM 2 ETAPAS (COM ESCOLHA DE PLANO E AUTOATIVAÇÃO) -->
             <div id="loginStepRegister" style="display: none; text-align: left;">
-                <h4 style="color:var(--pink-neon); margin-bottom:12px; text-align:center;">Cadastre seu Studio (14 Dias Grátis)</h4>
+                <h4 style="color:var(--pink-neon); margin-bottom:12px; text-align:center;">1º Passso: Dados do Studio</h4>
                 <div class="input-group" style="margin-bottom: 10px;">
                     <label>Nome do Studio</label>
                     <input type="text" id="regStudio" placeholder="Ex: Studio Bella Unhas">
@@ -162,14 +163,47 @@
                     <label>Senha de Acesso</label>
                     <input type="password" id="regSenha" placeholder="******">
                 </div>
-                <button class="btn-action btn-green" style="width: 100%; margin-bottom: 10px;" onclick="solicitarDegustacao()">Solicitar Acesso (Requer Aprovação)</button>
+                <button class="btn-action btn-green" style="width: 100%; margin-bottom: 10px;" onclick="avancarParaEscolhaPlano()">Avançar para Escolha de Plano ➔</button>
                 <button class="btn-login-option btn-outline-dark" style="margin-bottom:0;" onclick="resetLoginStep()">Voltar</button>
+            </div>
+
+            <!-- ETAPA 2 DO REGISTRO: SELEÇÃO DE PLANO & PIX -->
+            <div id="loginStepSelectPlan" style="display: none; text-align: center;">
+                <h4 style="color:var(--gold-warning); margin-bottom:6px;">2º Passo: Escolha o Pacote</h4>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px;">Selecione o plano para ativar e utilizar seu sistema:</p>
+
+                <div class="plans-grid">
+                    <div class="plan-card" id="cardPlanStarter" onclick="selecionarPlanoRegistro('STARTER')">
+                        <h4 style="color:white;">STARTER</h4>
+                        <div class="plan-price">R$ 0,00</div>
+                        <p style="font-size:0.7rem; color:var(--text-muted);">Degustação 14 dias grátis.</p>
+                    </div>
+                    <div class="plan-card highlight selected" id="cardPlanPro" onclick="selecionarPlanoRegistro('PRO')">
+                        <h4 style="color:var(--pink-neon);">PRO</h4>
+                        <div class="plan-price">R$ 19,90/mês</div>
+                        <p style="font-size:0.7rem; color:var(--text-muted);">Tesouraria DFC + CRM.</p>
+                    </div>
+                    <div class="plan-card" id="cardPlanVip" onclick="selecionarPlanoRegistro('VIP')">
+                        <h4 style="color:var(--gold-warning);">VIP</h4>
+                        <div class="plan-price">R$ 39,90/mês</div>
+                        <p style="font-size:0.7rem; color:var(--text-muted);">Tudo Ilimitado + Repasses.</p>
+                    </div>
+                </div>
+
+                <div style="background:#0c101d; border:1px dashed var(--pink-neon); padding:15px; border-radius:12px; margin:15px 0;">
+                    <strong style="color:var(--gold-warning); font-size:0.85rem;">🔑 CHAVE PIX CONECTADA:</strong><br>
+                    <span style="font-size:1.1rem; font-weight:bold; color:white;">55-11-94788-7105</span>
+                    <button class="btn-action btn-green" style="width:100%; margin-top:8px; font-size:0.75rem; padding:8px;" onclick="enviarComprovanteWhatsApp()">📲 ENVIAR COMPROVANTE NO WHATSAPP</button>
+                </div>
+
+                <button class="btn-action" style="width: 100%; margin-bottom: 10px;" onclick="finalizarCadastroEAtivar()">Finalizar Cadastro & Solicitar Liberação</button>
+                <button class="btn-login-option btn-outline-dark" style="margin-bottom:0;" onclick="voltarParaEtapa1Cadastro()">Voltar</button>
             </div>
 
             <!-- PLANOS PÚBLICOS NA ÁREA EXTERNA -->
             <div id="loginStepPlans" style="display: none; text-align: center;">
-                <h4 style="color:var(--gold-warning); margin-bottom:10px;">👑 Conheça os Planos do NailBoss</h4>
-                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px;">Chave PIX direta para assinatura e envio de comprovante via WhatsApp.</p>
+                <h4 style="color:var(--gold-warning); margin-bottom:10px;">👑 Pacotes do NailBoss</h4>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px;">Chave PIX direta para renovação e envio de comprovante.</p>
 
                 <div class="plans-grid">
                     <div class="plan-card">
@@ -180,12 +214,12 @@
                     <div class="plan-card highlight">
                         <h4 style="color:var(--pink-neon);">PRO</h4>
                         <div class="plan-price">R$ 19,90/mês</div>
-                        <p style="font-size:0.75rem; color:var(--text-muted);">Tesouraria DFC, CRM e Sinal PIX.</p>
+                        <p style="font-size:0.75rem; color:var(--text-muted);">Tesouraria DFC + CRM.</p>
                     </div>
                     <div class="plan-card">
                         <h4 style="color:var(--gold-warning);">VIP</h4>
                         <div class="plan-price">R$ 39,90/mês</div>
-                        <p style="font-size:0.75rem; color:var(--text-muted);">Tudo ilimitado + Repasse Salão.</p>
+                        <p style="font-size:0.75rem; color:var(--text-muted);">Repasses + Ilimitado.</p>
                     </div>
                 </div>
 
@@ -239,7 +273,6 @@
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
-        
         <div class="top-header">
             <div class="header-title">
                 <h1 id="pageTitle">Painel de Controle <span>360°</span></h1>
@@ -514,7 +547,7 @@
         </div>
     </main>
 
-    <!-- MODAL SLOTS AGENDA -->
+    <!-- MODAIS E POPUPS -->
     <div class="modal-overlay" id="slotsModal">
         <div class="modal-card">
             <div class="modal-title" id="slotsTitle">Visão dos Slots do Dia</div>
@@ -525,7 +558,6 @@
         </div>
     </div>
 
-    <!-- MODAL HISTÓRICO CLIENTE -->
     <div class="modal-overlay" id="historyModal">
         <div class="modal-card">
             <div class="modal-title" id="histTitle">Histórico do Cliente</div>
@@ -536,7 +568,6 @@
         </div>
     </div>
 
-    <!-- MODAL CONFIRMAÇÃO CLEAN -->
     <div class="modal-overlay" id="customModal">
         <div class="modal-card">
             <div class="modal-title" id="modalTitle">Confirmação</div>
@@ -548,7 +579,6 @@
         </div>
     </div>
 
-    <!-- MODAL MUDAR SENHA -->
     <div class="modal-overlay" id="changePassModal">
         <div class="modal-card">
             <div class="modal-title">🔑 Alterar Senha de Acesso</div>
@@ -566,6 +596,7 @@
         let currentPlan = "STARTER";
         let currentRole = "studio";
         let targetAuthRole = "studio";
+        let regSelectedPlan = "PRO";
         let onConfirmCallback = null;
 
         function formatDateBR(dateStr) {
@@ -575,7 +606,6 @@
             return dateStr;
         }
 
-        // ISOLAMENTO MULTITENANT
         function getTenantData(key, defaultData) {
             const raw = localStorage.getItem(`nailboss_${currentTenantId}_${key}`);
             return raw ? JSON.parse(raw) : defaultData;
@@ -585,7 +615,6 @@
             localStorage.setItem(`nailboss_${currentTenantId}_${key}`, JSON.stringify(data));
         }
 
-        // BASE GLOBAL SAAS (Aprovações)
         let baseMasterSaaS = JSON.parse(localStorage.getItem('nailboss_global_master')) || [
             { id: 1, estudio: "Studio Bella Unhas", email: "bella@unhas.com", whats: "11977776666", plano: "PRO", status: "AGUARDANDO_APROVACAO" },
             { id: 2, estudio: "Elegance Nails", email: "contato@elegance.com", whats: "11988885555", plano: "VIP", status: "ATIVO" }
@@ -618,6 +647,7 @@
             targetAuthRole = role;
             document.getElementById('loginStepSelect').style.display = 'none';
             document.getElementById('loginStepRegister').style.display = 'none';
+            document.getElementById('loginStepSelectPlan').style.display = 'none';
             document.getElementById('loginStepPlans').style.display = 'none';
             document.getElementById('loginStepCredentials').style.display = 'block';
         }
@@ -625,6 +655,7 @@
         function showRegisterForm() {
             document.getElementById('loginStepSelect').style.display = 'none';
             document.getElementById('loginStepCredentials').style.display = 'none';
+            document.getElementById('loginStepSelectPlan').style.display = 'none';
             document.getElementById('loginStepPlans').style.display = 'none';
             document.getElementById('loginStepRegister').style.display = 'block';
         }
@@ -633,6 +664,7 @@
             document.getElementById('loginStepSelect').style.display = 'none';
             document.getElementById('loginStepCredentials').style.display = 'none';
             document.getElementById('loginStepRegister').style.display = 'none';
+            document.getElementById('loginStepSelectPlan').style.display = 'none';
             document.getElementById('loginStepPlans').style.display = 'block';
         }
 
@@ -640,20 +672,52 @@
             document.getElementById('loginStepSelect').style.display = 'block';
             document.getElementById('loginStepCredentials').style.display = 'none';
             document.getElementById('loginStepRegister').style.display = 'none';
+            document.getElementById('loginStepSelectPlan').style.display = 'none';
             document.getElementById('loginStepPlans').style.display = 'none';
         }
 
-        function solicitarDegustacao() {
+        function avancarParaEscolhaPlano() {
+            const studio = document.getElementById('regStudio').value;
+            const email = document.getElementById('regEmail').value;
+
+            if (!studio || !email) { showConfirm('Atenção', 'Preencha o nome do studio e e-mail.', null, false); return; }
+
+            document.getElementById('loginStepRegister').style.display = 'none';
+            document.getElementById('loginStepSelectPlan').style.display = 'block';
+        }
+
+        function voltarParaEtapa1Cadastro() {
+            document.getElementById('loginStepSelectPlan').style.display = 'none';
+            document.getElementById('loginStepRegister').style.display = 'block';
+        }
+
+        function selecionarPlanoRegistro(plano) {
+            regSelectedPlan = plano;
+            document.getElementById('cardPlanStarter').classList.remove('selected');
+            document.getElementById('cardPlanPro').classList.remove('selected');
+            document.getElementById('cardPlanVip').classList.remove('selected');
+
+            if (plano === 'STARTER') document.getElementById('cardPlanStarter').classList.add('selected');
+            if (plano === 'PRO') document.getElementById('cardPlanPro').classList.add('selected');
+            if (plano === 'VIP') document.getElementById('cardPlanVip').classList.add('selected');
+        }
+
+        function finalizarCadastroEAtivar() {
             const studio = document.getElementById('regStudio').value;
             const email = document.getElementById('regEmail').value;
             const whats = document.getElementById('regWhats').value;
 
-            if (!studio || !email) { showConfirm('Atenção', 'Informe nome e e-mail do studio.', null, false); return; }
-
-            baseMasterSaaS.push({ id: Date.now(), estudio: studio, email: email, whats: whats, plano: "PRO", status: "AGUARDANDO_APROVACAO" });
+            baseMasterSaaS.push({ id: Date.now(), estudio: studio, email: email, whats: whats, plano: regSelectedPlan, status: "AGUARDANDO_APROVACAO" });
             saveMasterGlobal();
             resetLoginStep();
-            showConfirm('Cadastro Recebido!', 'Seus dados foram enviados. Aguarde a validação do administrador SaaS para liberar o acesso.', null, false);
+
+            if (regSelectedPlan === 'STARTER') {
+                showConfirm('Cadastro Recebido!', 'Seu cadastro de degustação foi recebido. Aguarde a validação do Master para acessar.', null, false);
+            } else {
+                showConfirm('Solicitação do Plano ' + regSelectedPlan + ' Enviada!', 'Realize o PIX da chave acima e envie o comprovante no WhatsApp para ativação expressa!', () => {
+                    enviarComprovanteWhatsApp();
+                }, false);
+            }
         }
 
         function executeLogin() {
@@ -667,16 +731,15 @@
                     showConfirm('Acesso Negado', 'Senha Master incorreta.', null, false);
                 }
             } else {
-                // TRAVA E VALIDAÇÃO OBRIGATÓRIA DE ACESSO
                 const user = baseMasterSaaS.find(u => u.email.toLowerCase() === email.toLowerCase());
 
                 if (!user) {
-                    showConfirm('Acesso Não Autorizado', 'E-mail não encontrado na base. Solicite o cadastro de 14 dias grátis primeiro.', null, false);
+                    showConfirm('Acesso Não Autorizado', 'E-mail não encontrado na base. Cadastre seu studio primeiro.', null, false);
                     return;
                 }
 
                 if (user.status === 'AGUARDANDO_APROVACAO') {
-                    showConfirm('Acesso Pendente', 'Sua conta ainda não foi aprovada pelo administrador SaaS. Envie o comprovante no WhatsApp.', null, false);
+                    showConfirm('Acesso Pendente', 'Sua conta aguarda validação. Envie o comprovante do PIX via WhatsApp.', null, false);
                     return;
                 }
 
