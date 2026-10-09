@@ -22,9 +22,9 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; }
 
-        /* OVERLAY LOGIN & CADASTRO */
+        /* OVERLAY DE LOGIN / REGISTRO DE DEGUSTAÇÃO */
         #login-screen { position: fixed; inset: 0; background: rgba(10, 14, 26, 0.96); backdrop-filter: blur(12px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .login-card-v2 { background: var(--card-bg); border: 1px solid var(--pink-glow); padding: 35px; border-radius: 24px; max-width: 460px; width: 100%; text-align: center; box-shadow: 0 0 40px rgba(255, 42, 133, 0.15); max-height: 90vh; overflow-y: auto; }
+        .login-card-v2 { background: var(--card-bg); border: 1px solid var(--pink-glow); padding: 35px; border-radius: 24px; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 0 40px rgba(255, 42, 133, 0.15); max-height: 90vh; overflow-y: auto; }
         .login-icon-box { width: 60px; height: 60px; background: linear-gradient(135deg, var(--pink-neon), #d6005d); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 1.8rem; box-shadow: 0 8px 20px rgba(255, 42, 133, 0.4); }
         .login-card-v2 h2 { color: var(--text-main); font-size: 1.8rem; font-weight: 800; }
         .login-card-v2 p { color: var(--text-muted); font-size: 0.85rem; margin: 6px 0 20px; }
@@ -105,17 +105,17 @@
         .btn-modal-confirm { background: var(--pink-neon); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
         /* TELA DE PLANOS CARD DESIGN */
-        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
-        .plan-card { background: #0c101d; border: 1px solid var(--card-border); border-radius: 16px; padding: 25px; text-align: center; transition: 0.3s; }
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .plan-card { background: #0c101d; border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; text-align: center; transition: 0.3s; }
         .plan-card.highlight { border-color: var(--pink-neon); box-shadow: 0 0 20px rgba(255, 42, 133, 0.2); }
-        .plan-price { font-size: 1.8rem; font-weight: 800; color: var(--pink-neon); margin: 10px 0; }
+        .plan-price { font-size: 1.6rem; font-weight: 800; color: var(--pink-neon); margin: 8px 0; }
 
         @media (max-width: 768px) { body { flex-direction: column; } .sidebar { width: 100%; } }
     </style>
 </head>
 <body>
 
-    <!-- OVERLAY DE LOGIN / REGISTRO DE DEGUSTAÇÃO -->
+    <!-- OVERLAY DE LOGIN / REGISTRO / TELA DE PLANOS PÚBLICA -->
     <div id="login-screen">
         <div class="login-card-v2">
             <div class="login-icon-box">💅</div>
@@ -125,6 +125,7 @@
             <div id="loginStepSelect">
                 <button class="btn-login-option btn-pink-gradient" onclick="showAuthInputs('studio')">🏪 Acessar Meu Studio</button>
                 <button class="btn-login-option btn-outline-dark" onclick="showRegisterForm()">✨ Testar 14 Dias Grátis</button>
+                <button class="btn-login-option btn-outline-dark" style="color:var(--gold-warning); border-color:var(--gold-warning);" onclick="showPublicPlans()">💎 Ver Planos & Preços (PIX)</button>
                 <button class="btn-login-option btn-outline-dark" style="margin-top:10px;" onclick="showAuthInputs('master')">👑 Painel Restrito Dono (SaaS)</button>
             </div>
 
@@ -161,8 +162,40 @@
                     <label>Senha de Acesso</label>
                     <input type="password" id="regSenha" placeholder="******">
                 </div>
-                <button class="btn-action btn-green" style="width: 100%; margin-bottom: 10px;" onclick="solicitarDegustacao()">Solicitar Acesso 14 Dias</button>
+                <button class="btn-action btn-green" style="width: 100%; margin-bottom: 10px;" onclick="solicitarDegustacao()">Solicitar Acesso (Requer Aprovação)</button>
                 <button class="btn-login-option btn-outline-dark" style="margin-bottom:0;" onclick="resetLoginStep()">Voltar</button>
+            </div>
+
+            <!-- PLANOS PÚBLICOS NA ÁREA EXTERNA -->
+            <div id="loginStepPlans" style="display: none; text-align: center;">
+                <h4 style="color:var(--gold-warning); margin-bottom:10px;">👑 Conheça os Planos do NailBoss</h4>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px;">Chave PIX direta para assinatura e envio de comprovante via WhatsApp.</p>
+
+                <div class="plans-grid">
+                    <div class="plan-card">
+                        <h4 style="color:white;">STARTER</h4>
+                        <div class="plan-price">R$ 0,00</div>
+                        <p style="font-size:0.75rem; color:var(--text-muted);">Agenda básica.</p>
+                    </div>
+                    <div class="plan-card highlight">
+                        <h4 style="color:var(--pink-neon);">PRO</h4>
+                        <div class="plan-price">R$ 19,90/mês</div>
+                        <p style="font-size:0.75rem; color:var(--text-muted);">Tesouraria DFC, CRM e Sinal PIX.</p>
+                    </div>
+                    <div class="plan-card">
+                        <h4 style="color:var(--gold-warning);">VIP</h4>
+                        <div class="plan-price">R$ 39,90/mês</div>
+                        <p style="font-size:0.75rem; color:var(--text-muted);">Tudo ilimitado + Repasse Salão.</p>
+                    </div>
+                </div>
+
+                <div style="background:#0c101d; border:1px dashed var(--pink-neon); padding:15px; border-radius:12px; margin:15px 0;">
+                    <strong style="color:var(--gold-warning); font-size:0.85rem;">🔑 CHAVE PIX CONECTADA:</strong><br>
+                    <span style="font-size:1.1rem; font-weight:bold; color:white;">55-11-94788-7105</span>
+                    <button class="btn-action btn-green" style="width:100%; margin-top:8px; font-size:0.75rem; padding:8px;" onclick="enviarComprovanteWhatsApp()">📲 ENVIAR COMPROVANTE NO WHATSAPP</button>
+                </div>
+
+                <button class="btn-login-option btn-outline-dark" style="margin-bottom:0;" onclick="resetLoginStep()">Voltar ao Login</button>
             </div>
         </div>
     </div>
@@ -218,7 +251,7 @@
             </div>
         </div>
 
-        <!-- TELA 1: DASHBOARD COM ANÁLISE AVANÇADA DE TESOURARIA -->
+        <!-- TELA 1: DASHBOARD -->
         <div id="view-dash" class="view-section active">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                 <h3 style="color:var(--pink-neon)">📈 Visão Geral de Tesouraria e Indicadores (KPIs)</h3>
@@ -277,7 +310,7 @@
             </div>
         </div>
 
-        <!-- TELA 3: AGENDA COMPLETA COM SLOTS POPUP E BLOQUEIO -->
+        <!-- TELA 3: AGENDA -->
         <div id="view-agenda" class="view-section">
             <div class="content-card">
                 <div class="card-header">📅 Agendamento & Bloqueio de Horário</div>
@@ -298,7 +331,6 @@
                 </div>
             </div>
 
-            <!-- FILTROS AGENDA -->
             <div class="content-card">
                 <div class="card-header">🔍 Filtros da Agenda de Atendimentos</div>
                 <div class="form-grid">
@@ -317,7 +349,7 @@
             </div>
         </div>
 
-        <!-- TELA 4: TESOURARIA, FLUXO DE CAIXA DFC & BAIXAS -->
+        <!-- TELA 4: TESOURARIA DFC -->
         <div id="view-financeiro" class="view-section">
             <div class="metrics-grid">
                 <div class="metric-card"><div class="metric-label">Caixa Liquidado</div><div class="metric-value" style="color:var(--green-success)" id="finCaixaHoje">R$ 0,00</div></div>
@@ -326,7 +358,6 @@
                 <div class="metric-card"><div class="metric-label">Saldo Liquido DFC</div><div class="metric-value" style="color:var(--text-main)" id="finSaldoLiquido">R$ 0,00</div></div>
             </div>
 
-            <!-- FILTROS TESOURARIA -->
             <div class="content-card">
                 <div class="card-header">🔍 Filtro da Tesouraria por Descrição & Período</div>
                 <div class="form-grid">
@@ -395,7 +426,7 @@
             </div>
         </div>
 
-        <!-- TELA 7: ESTOQUE & PRECIFICAÇÃO COMBINADA -->
+        <!-- TELA 7: ESTOQUE & PRECIFICAÇÃO -->
         <div id="view-estoque" class="view-section">
             <div class="content-card">
                 <div class="card-header">➕ Incluir Produto no Estoque</div>
@@ -434,11 +465,11 @@
             </div>
         </div>
 
-        <!-- TELA 8: PLANOS DE ASSINATURA COM PIX CONECTADO -->
+        <!-- TELA 8: PLANOS DENTRO DO PAINEL -->
         <div id="view-planos" class="view-section">
             <div class="content-card" style="border-color:var(--gold-warning);">
                 <div class="card-header" style="color:var(--gold-warning);">👑 Escolha ou Renove seu Plano NailBoss</div>
-                <p style="color:var(--text-muted); font-size:0.85rem;">Efetue o pagamento via PIX para o número/e-mail abaixo e envie o comprovante no WhatsApp do Proprietário para liberação imediata.</p>
+                <p style="color:var(--text-muted); font-size:0.85rem;">Efetue o pagamento via PIX e envie o comprovante para liberação imediata do acesso.</p>
 
                 <div class="plans-grid">
                     <div class="plan-card">
@@ -483,7 +514,7 @@
         </div>
     </main>
 
-    <!-- MODAL SLOTS AGENDA DIA -->
+    <!-- MODAL SLOTS AGENDA -->
     <div class="modal-overlay" id="slotsModal">
         <div class="modal-card">
             <div class="modal-title" id="slotsTitle">Visão dos Slots do Dia</div>
@@ -544,7 +575,7 @@
             return dateStr;
         }
 
-        // CHAVE DE ISOLAMENTO DE BANCO DE DADOS LOCAL (MULTITENANT REAL)
+        // ISOLAMENTO MULTITENANT
         function getTenantData(key, defaultData) {
             const raw = localStorage.getItem(`nailboss_${currentTenantId}_${key}`);
             return raw ? JSON.parse(raw) : defaultData;
@@ -554,10 +585,15 @@
             localStorage.setItem(`nailboss_${currentTenantId}_${key}`, JSON.stringify(data));
         }
 
-        let baseMasterSaaS = [
+        // BASE GLOBAL SAAS (Aprovações)
+        let baseMasterSaaS = JSON.parse(localStorage.getItem('nailboss_global_master')) || [
             { id: 1, estudio: "Studio Bella Unhas", email: "bella@unhas.com", whats: "11977776666", plano: "PRO", status: "AGUARDANDO_APROVACAO" },
             { id: 2, estudio: "Elegance Nails", email: "contato@elegance.com", whats: "11988885555", plano: "VIP", status: "ATIVO" }
         ];
+
+        function saveMasterGlobal() {
+            localStorage.setItem('nailboss_global_master', JSON.stringify(baseMasterSaaS));
+        }
 
         function navigateTo(viewId, element) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
@@ -569,7 +605,6 @@
 
         function applyPlanPermissions() {
             document.getElementById('planBadge').innerText = currentPlan;
-            // Ocultar/Exibir recursos conforme o plano
             if (currentPlan === 'STARTER') {
                 document.getElementById('menu-crm').classList.add('disabled');
                 document.getElementById('menu-estoque').classList.add('disabled');
@@ -583,19 +618,29 @@
             targetAuthRole = role;
             document.getElementById('loginStepSelect').style.display = 'none';
             document.getElementById('loginStepRegister').style.display = 'none';
+            document.getElementById('loginStepPlans').style.display = 'none';
             document.getElementById('loginStepCredentials').style.display = 'block';
         }
 
         function showRegisterForm() {
             document.getElementById('loginStepSelect').style.display = 'none';
             document.getElementById('loginStepCredentials').style.display = 'none';
+            document.getElementById('loginStepPlans').style.display = 'none';
             document.getElementById('loginStepRegister').style.display = 'block';
+        }
+
+        function showPublicPlans() {
+            document.getElementById('loginStepSelect').style.display = 'none';
+            document.getElementById('loginStepCredentials').style.display = 'none';
+            document.getElementById('loginStepRegister').style.display = 'none';
+            document.getElementById('loginStepPlans').style.display = 'block';
         }
 
         function resetLoginStep() {
             document.getElementById('loginStepSelect').style.display = 'block';
             document.getElementById('loginStepCredentials').style.display = 'none';
             document.getElementById('loginStepRegister').style.display = 'none';
+            document.getElementById('loginStepPlans').style.display = 'none';
         }
 
         function solicitarDegustacao() {
@@ -606,13 +651,14 @@
             if (!studio || !email) { showConfirm('Atenção', 'Informe nome e e-mail do studio.', null, false); return; }
 
             baseMasterSaaS.push({ id: Date.now(), estudio: studio, email: email, whats: whats, plano: "PRO", status: "AGUARDANDO_APROVACAO" });
+            saveMasterGlobal();
             resetLoginStep();
-            showConfirm('Cadastro Recebido!', 'Aguarde a aprovação manual do proprietário SaaS para liberar seu acesso.', null, false);
+            showConfirm('Cadastro Recebido!', 'Seus dados foram enviados. Aguarde a validação do administrador SaaS para liberar o acesso.', null, false);
         }
 
         function executeLogin() {
-            const email = document.getElementById('loginEmail').value;
-            const pass = document.getElementById('loginPassword').value;
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass = document.getElementById('loginPassword').value.trim();
 
             if (targetAuthRole === 'master') {
                 if (pass === 'admin123' || email.includes('5511947887105')) {
@@ -621,18 +667,31 @@
                     showConfirm('Acesso Negado', 'Senha Master incorreta.', null, false);
                 }
             } else {
+                // TRAVA E VALIDAÇÃO OBRIGATÓRIA DE ACESSO
                 const user = baseMasterSaaS.find(u => u.email.toLowerCase() === email.toLowerCase());
-                if (user && user.status === 'AGUARDANDO_APROVACAO') {
-                    showConfirm('Acesso Pendente', 'Aguarde a aprovação manual do administrador SaaS.', null, false);
+
+                if (!user) {
+                    showConfirm('Acesso Não Autorizado', 'E-mail não encontrado na base. Solicite o cadastro de 14 dias grátis primeiro.', null, false);
                     return;
                 }
-                currentTenantId = email ? email.replace(/[^a-zA-Z0-9]/g, '') : "demo";
-                currentPlan = user ? user.plano : "PRO";
-                loginAs('studio', email);
+
+                if (user.status === 'AGUARDANDO_APROVACAO') {
+                    showConfirm('Acesso Pendente', 'Sua conta ainda não foi aprovada pelo administrador SaaS. Envie o comprovante no WhatsApp.', null, false);
+                    return;
+                }
+
+                if (user.status === 'BLOQUEADO') {
+                    showConfirm('Acesso Bloqueado', 'Sua conta está suspensa. Entre em contato pelo WhatsApp.', null, false);
+                    return;
+                }
+
+                currentTenantId = email.replace(/[^a-zA-Z0-9]/g, '');
+                currentPlan = user.plano || "PRO";
+                loginAs('studio', user.estudio);
             }
         }
 
-        function loginAs(role, emailName = "Studio Demo") {
+        function loginAs(role, studioName = "Studio Demo") {
             document.getElementById('login-screen').style.display = 'none';
             currentRole = role;
 
@@ -643,7 +702,7 @@
                 renderMasterSaaS();
                 navigateTo('admin');
             } else {
-                document.getElementById('userRoleName').innerText = emailName;
+                document.getElementById('userRoleName').innerText = studioName;
                 document.getElementById('nav-master-item').style.display = 'none';
                 document.getElementById('btnSidebarUpgrade').style.display = 'block';
                 applyPlanPermissions();
@@ -976,7 +1035,6 @@
             const taxaInad = bruto > 0 ? (pendente / bruto) * 100 : 0;
             document.getElementById('dashTaxaInadimplencia').innerText = `${taxaInad.toFixed(1)}%`;
 
-            // Renderizar Rankings
             const tbServ = document.getElementById('tbDashRankingServicos');
             tbServ.innerHTML = '';
             Object.keys(servicosCount).forEach(s => {
@@ -1025,7 +1083,7 @@
             });
         }
 
-        /* ESTOQUE & PRECIFICAÇÃO COMBINADA */
+        /* ESTOQUE & PRECIFICAÇÃO */
         function salvarInsumoEstoque() {
             const nome = document.getElementById('estNome').value;
             const qtd = parseInt(document.getElementById('estQtd').value) || 1;
@@ -1091,7 +1149,7 @@
             baseMasterSaaS.forEach(m => {
                 const tr = document.createElement('tr');
                 const btnAcao = m.status === 'AGUARDANDO_APROVACAO' 
-                    ? `<button class="btn-action btn-green" style="padding:4px 8px; font-size:0.75rem;" onclick="aprovarClienteMaster(${m.id})">Aprovar</button>`
+                    ? `<button class="btn-action btn-green" style="padding:4px 8px; font-size:0.75rem;" onclick="aprovarClienteMaster(${m.id})">Aprovar Acesso</button>`
                     : `<button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="bloquearClienteMaster(${m.id})">Bloquear</button>`;
 
                 tr.innerHTML = `<td><strong>${m.estudio}</strong></td><td>${m.email}</td><td>${m.whats || '-'}</td><td><span class="badge-status badge-gold">${m.plano}</span></td><td><span class="badge-status ${m.status === 'ATIVO' ? 'badge-green' : 'badge-gold'}">${m.status}</span></td><td>${btnAcao}</td>`;
@@ -1102,14 +1160,22 @@
         function aprovarClienteMaster(id) {
             showConfirm('Aprovar Acesso', 'Aprovar o acesso deste estúdio ao NailBoss?', () => {
                 const item = baseMasterSaaS.find(m => m.id === id);
-                if (item) { item.status = 'ATIVO'; renderMasterSaaS(); }
+                if (item) { 
+                    item.status = 'ATIVO'; 
+                    saveMasterGlobal();
+                    renderMasterSaaS(); 
+                }
             });
         }
 
         function bloquearClienteMaster(id) {
             showConfirm('Bloquear', 'Suspender o acesso deste estúdio?', () => {
                 const item = baseMasterSaaS.find(m => m.id === id);
-                if (item) { item.status = 'BLOQUEADO'; renderMasterSaaS(); }
+                if (item) { 
+                    item.status = 'BLOQUEADO'; 
+                    saveMasterGlobal();
+                    renderMasterSaaS(); 
+                }
             });
         }
 
