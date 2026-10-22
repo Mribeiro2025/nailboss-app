@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NailBoss Pro - Gestão 360°, Tesouraria & SaaS Multitenant</title>
-    <!-- Chart.js para Gráficos Visuais no Dashboard -->
+    <!-- Chart.js para Gráficos Visuais -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
@@ -85,10 +85,10 @@
         .btn-logout { background: transparent; border: 1px solid var(--danger); color: var(--danger); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
 
         /* Menu Flutuante Mobile (Bottom Nav) */
-        .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background: var(--sidebar-bg); backdrop-filter: blur(16px); border-top: 1px solid var(--card-border); z-index: 4000; justify-content: space-around; align-items: center; padding: 0 6px; }
-        .mobile-nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.68rem; font-weight: 600; text-decoration: none; border: none; background: transparent; gap: 3px; flex: 1; height: 100%; cursor: pointer; }
+        .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background: var(--sidebar-bg); backdrop-filter: blur(16px); border-top: 1px solid var(--card-border); z-index: 4000; justify-content: space-around; align-items: center; padding: 0 4px; }
+        .mobile-nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.65rem; font-weight: 600; text-decoration: none; border: none; background: transparent; gap: 3px; flex: 1; height: 100%; cursor: pointer; }
         .mobile-nav-btn.active { color: var(--pink-neon); font-weight: 800; }
-        .mobile-nav-icon { font-size: 1.25rem; }
+        .mobile-nav-icon { font-size: 1.2rem; }
 
         /* Top Bar Mobile */
         .mobile-top-bar { display: none; justify-content: space-between; align-items: center; background: var(--sidebar-bg); padding: 12px 16px; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 3900; }
@@ -139,7 +139,7 @@
         .time-slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 15px; }
         .time-slot-card { background: var(--input-bg); border: 1px solid var(--card-border); padding: 10px; border-radius: 10px; text-align: center; }
         .time-slot-card.occupied { border-color: var(--pink-neon); background: rgba(255, 42, 133, 0.12); }
-        .time-slot-card.blocked { border-color: var(--danger); background: rgba(255, 77, 77, 0.12); }
+        .time-slot-card.blocked { border-color: var(--danger); background: rgba(255, 77, 77, 0.25); color: #ff8888; font-weight: bold; }
 
         /* MODAIS */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; z-index: 6000; padding: 16px; }
@@ -297,7 +297,6 @@
                 </div>
             </div>
 
-            <!-- SELETOR DE TEMA DE CORES -->
             <div style="margin-bottom: 20px; background: var(--input-bg); padding: 10px; border-radius: 12px; border: 1px solid var(--card-border);">
                 <label style="font-size: 0.7rem; color: var(--text-muted); font-weight: bold; display: block; margin-bottom: 4px;">🎨 TEMA DE CORES</label>
                 <select id="themeSelector" style="width: 100%; background: transparent; border: none; color: var(--text-main); font-size: 0.82rem; font-weight: bold; outline: none; cursor: pointer;" onchange="mudarTemaCores(this.value)">
@@ -309,6 +308,7 @@
 
             <nav class="nav-menu">
                 <a class="nav-item active" id="menu-dash" onclick="navigateTo('dash', this)">📊 Dashboard 360°</a>
+                <a class="nav-item" id="menu-servicos" onclick="navigateTo('servicos', this)">💅 Serviços & Preços</a>
                 <a class="nav-item" id="menu-clientes" onclick="navigateTo('clientes', this)">👥 Clientes & Histórico</a>
                 <a class="nav-item" id="menu-agenda" onclick="navigateTo('agenda', this)">📅 Agenda & Slots</a>
                 <a class="nav-item" id="menu-financeiro" onclick="navigateTo('financeiro', this)">💳 Tesouraria & DFC</a>
@@ -338,8 +338,8 @@
         <button class="mobile-nav-btn active" id="mob-dash" onclick="navigateTo('dash', this)">
             <span class="mobile-nav-icon">📊</span> Dash
         </button>
-        <button class="mobile-nav-btn" id="mob-clientes" onclick="navigateTo('clientes', this)">
-            <span class="mobile-nav-icon">👥</span> Clientes
+        <button class="mobile-nav-btn" id="mob-servicos" onclick="navigateTo('servicos', this)">
+            <span class="mobile-nav-icon">💅</span> Serviços
         </button>
         <button class="mobile-nav-btn" id="mob-agenda" onclick="navigateTo('agenda', this)">
             <span class="mobile-nav-icon">📅</span> Agenda
@@ -347,8 +347,8 @@
         <button class="mobile-nav-btn" id="mob-financeiro" onclick="navigateTo('financeiro', this)">
             <span class="mobile-nav-icon">💳</span> Caixa
         </button>
-        <button class="mobile-nav-btn" id="mob-estoque" onclick="navigateTo('estoque', this)">
-            <span class="mobile-nav-icon">📦</span> Estoque
+        <button class="mobile-nav-btn" id="mob-clientes" onclick="navigateTo('clientes', this)">
+            <span class="mobile-nav-icon">👥</span> Clientes
         </button>
     </nav>
 
@@ -384,7 +384,6 @@
                 <div class="metric-card"><div class="metric-label">Inadimplência</div><div class="metric-value" style="color:var(--danger)" id="dashTaxaInadimplencia">0%</div></div>
             </div>
 
-            <!-- GRÁFICOS VISUAIS CHART.JS -->
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:18px; margin-bottom:20px;">
                 <div class="content-card">
                     <div class="card-header">📊 Desempenho Financeiro (Bruto x Efetivo)</div>
@@ -419,6 +418,36 @@
                             <tbody id="tbDashRankingInsumos"></tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA NOVO: CADASTRO DE SERVIÇOS & TABELA DE PREÇOS -->
+        <div id="view-servicos" class="view-section">
+            <div class="content-card">
+                <div class="card-header">💅 Cadastrar Serviço no Catálogo</div>
+                <div class="form-grid">
+                    <div class="input-group"><label>Nome do Serviço</label><input type="text" id="srvNome" placeholder="Ex: Manutenção de Fibra"></div>
+                    <div class="input-group"><label>Preço Padrão (R$)</label><input type="number" id="srvValor" placeholder="120.00"></div>
+                    <div class="input-group"><label>Duração Média (Minutos)</label><input type="number" id="srvDuracao" placeholder="90" value="90"></div>
+                </div>
+                <button class="btn-action btn-green" onclick="salvarServicoCatalogo()">Salvar Serviço</button>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">📋 Tabela de Serviços e Valores</div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome do Serviço</th>
+                                <th>Duração</th>
+                                <th>Valor Padrão</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbServicosCatalogo"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -458,7 +487,14 @@
                     <div class="input-group"><label>Hora Início</label><input type="time" id="agHoraInicio" value="09:00"></div>
                     <div class="input-group"><label>Hora Fim</label><input type="time" id="agHoraFim" value="10:30"></div>
                     <div class="input-group"><label>Nome da Cliente</label><input type="text" id="agNome" placeholder="Digite o nome..."></div>
-                    <div class="input-group"><label>Serviço</label><input type="text" id="agServico" placeholder="Ex: Alongamento em Gel"></div>
+                    
+                    <div class="input-group">
+                        <label>Serviço (Catálogo)</label>
+                        <select id="agServicoSelect" onchange="aoSelecionarServicoAgendamento(this.value)">
+                            <option value="">Selecione um Serviço...</option>
+                        </select>
+                    </div>
+
                     <div class="input-group"><label>Valor Total (R$)</label><input type="number" id="agValor" placeholder="150.00" oninput="atualizarPendenteForm()"></div>
                     <div class="input-group"><label>Sinal PIX (R$)</label><input type="number" id="agSinal" placeholder="30.00" oninput="atualizarPendenteForm()"></div>
                     <div class="input-group"><label>Valor Pendente (R$)</label><input type="text" id="agPendente" readonly value="R$ 0,00" style="color:var(--gold-warning); font-weight:bold;"></div>
@@ -469,6 +505,25 @@
                     <button class="btn-action btn-gold" onclick="abrirPopupGradeDia()">👀 Slots do Dia</button>
                 </div>
             </div>
+
+            <!-- QUADRO DE HORÁRIOS BLOQUEADOS EM DESTAQUE -->
+            <div class="content-card" style="border-color: var(--danger);">
+                <div class="card-header" style="color:var(--danger)">🔒 Horários Bloqueados no Studio</div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Período</th>
+                                <th>Motivo / Observação</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbHorariosBloqueados"></tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="content-card">
                 <div class="card-header">🔍 Filtros da Agenda</div>
                 <div class="form-grid">
@@ -477,6 +532,7 @@
                     <div class="input-group"><label>Data Final</label><input type="date" id="filAgAte" onchange="renderAgendaEFinanceiro()"></div>
                 </div>
             </div>
+
             <div class="content-card">
                 <div class="card-header">📋 Agendamentos Registrados</div>
                 <div class="table-responsive">
@@ -588,7 +644,7 @@
                 <div class="card-header">💰 Fechamento de Repasse do Salão</div>
                 <div class="form-grid">
                     <div class="input-group"><label>Data Inicial</label><input type="date" id="concDataDe" value="2026-10-01" onchange="atualizarConciliacaoPeriodo()"></div>
-                    <div class="input-group"><label>Data Final</label><input type="date" id="concDataAte" value="2026-10-09" onchange="atualizarConciliacaoPeriodo()"></div>
+                    <div class="input-group"><label>Data Final</label><input type="date" id="concDataAte" value="2026-10-31" onchange="atualizarConciliacaoPeriodo()"></div>
                     <div class="input-group"><label>Taxa Salão (%)</label><input type="number" id="concTaxa" value="30" oninput="atualizarConciliacaoPeriodo()"></div>
                 </div>
                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:12px; background:var(--input-bg); padding:18px; border-radius:12px; text-align:center; margin-top:15px;">
@@ -676,7 +732,7 @@
             </div>
         </div>
 
-        <!-- TELA 9: MASTER SAAS 2.0 (COM APROVAÇÃO E PERSISTÊNCIA NUVEM) -->
+        <!-- TELA 9: MASTER SAAS 2.0 (COM SINCRONIZAÇÃO EM TEMPO REAL) -->
         <div id="view-admin" class="view-section">
             <div class="metrics-grid">
                 <div class="metric-card" style="border-color: var(--pink-neon);"><div class="metric-label">MRR (Recorrente Mensal)</div><div class="metric-value" style="color:var(--green-success)" id="masterMrrVal">R$ 0,00/mês</div></div>
@@ -778,6 +834,25 @@
         let chartFinInstance = null;
         let chartServInstance = null;
 
+        /* SISTEMA DE TRANSMISSÃO DE DADOS NUVEM / LOCALSTORAGE MULTI-ABA */
+        const cloudChannel = new BroadcastChannel('nailboss_sync_channel');
+        cloudChannel.onmessage = (event) => {
+            if (event.data === 'SYNC_ALL') {
+                recarregarDadosCompletos();
+            }
+        };
+
+        window.addEventListener('storage', () => {
+            recarregarDadosCompletos();
+        });
+
+        function notifyCloudSync() {
+            try {
+                cloudChannel.postMessage('SYNC_ALL');
+            } catch (e) {}
+            recarregarDadosCompletos();
+        }
+
         function formatDateBR(dateStr) {
             if (!dateStr) return "-";
             const parts = dateStr.split('-');
@@ -785,7 +860,6 @@
             return dateStr;
         }
 
-        /* SELEÇÃO DE TEMA VISUAL DE CORES */
         function mudarTemaCores(themeKey) {
             document.body.classList.remove('theme-rosegold', 'theme-purple');
             if (themeKey === 'rosegold') document.body.classList.add('theme-rosegold');
@@ -798,7 +872,6 @@
         document.getElementById('themeSelector').value = savedTheme;
         mudarTemaCores(savedTheme);
 
-        // PERSISTÊNCIA NUVEM GLOBAL SINCRONIZADA
         function getTenantData(key, defaultData) {
             if (!currentTenantId) return defaultData;
             const raw = localStorage.getItem(`nailboss_${currentTenantId}_${key}`);
@@ -808,11 +881,11 @@
         function setTenantData(key, data) {
             if (!currentTenantId) return;
             localStorage.setItem(`nailboss_${currentTenantId}_${key}`, JSON.stringify(data));
+            notifyCloudSync();
         }
 
         let masterPrices = JSON.parse(localStorage.getItem('nailboss_master_prices')) || { PRO: 19.90, VIP: 39.90 };
 
-        /* CAMADA NUVEM CENTRALIZADA (CELULAR E COMPUTADOR COMPARTILHAM MESMA BASE) */
         let baseMasterSaaS = JSON.parse(localStorage.getItem('nailboss_global_master')) || [
             { id: 1, estudio: "Studio Bella Unhas", email: "bella@unhas.com", whats: "11977776666", plano: "PRO", status: "AGUARDANDO_APROVACAO" },
             { id: 2, estudio: "Elegance Nails", email: "contato@elegance.com", whats: "11988885555", plano: "VIP", status: "ATIVO" }
@@ -826,6 +899,7 @@
         function saveMasterGlobal() {
             localStorage.setItem('nailboss_global_master', JSON.stringify(baseMasterSaaS));
             localStorage.setItem('nailboss_master_pagamentos', JSON.stringify(basePagamentosSaaS));
+            notifyCloudSync();
         }
 
         function syncFromCloudGlobal() {
@@ -860,6 +934,7 @@
             if (currentRole === 'master') {
                 renderMasterSaaS();
             } else {
+                renderTabelaServicosCatalogo();
                 renderTabelaClientes();
                 renderTabelaEstoque();
                 renderAgendaEFinanceiro();
@@ -1063,6 +1138,76 @@
             document.getElementById('customModal').style.display = 'none';
         };
 
+        /* CATÁLOGO DE SERVIÇOS & VALORES AUTOMÁTICOS */
+        function salvarServicoCatalogo() {
+            const nome = document.getElementById('srvNome').value.trim();
+            const valor = parseFloat(document.getElementById('srvValor').value) || 0;
+            const duracao = parseInt(document.getElementById('srvDuracao').value) || 60;
+
+            if (!nome || valor <= 0) { showConfirm('Atenção', 'Informe o nome do serviço e valor válido.', null, false); return; }
+
+            let servicos = getTenantData('servicos_catalogo', []);
+            servicos.push({ id: Date.now(), nome, valor, duracao });
+            setTenantData('servicos_catalogo', servicos);
+
+            document.getElementById('srvNome').value = '';
+            document.getElementById('srvValor').value = '';
+
+            renderTabelaServicosCatalogo();
+            showConfirm('Sucesso', 'Serviço cadastrado no catálogo!', null, false);
+        }
+
+        function excluirServicoCatalogo(id) {
+            showConfirm('Remover Serviço', 'Deseja excluir este serviço do catálogo?', () => {
+                let servicos = getTenantData('servicos_catalogo', []);
+                servicos = servicos.filter(s => s.id !== id);
+                setTenantData('servicos_catalogo', servicos);
+                renderTabelaServicosCatalogo();
+            });
+        }
+
+        function renderTabelaServicosCatalogo() {
+            const tbody = document.getElementById('tbServicosCatalogo');
+            const selectAg = document.getElementById('agServicoSelect');
+            if (!tbody || !selectAg) return;
+
+            tbody.innerHTML = '';
+            selectAg.innerHTML = '<option value="">Selecione um Serviço...</option>';
+
+            let servicos = getTenantData('servicos_catalogo', [
+                { id: 1, nome: "Pé e Mão Completo", valor: 70.00, duracao: 60 },
+                { id: 2, nome: "Alongamento em Gel", valor: 150.00, duracao: 120 },
+                { id: 3, nome: "Manutenção Fibra de Vidro", valor: 100.00, duracao: 90 }
+            ]);
+
+            servicos.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${s.nome}</strong></td>
+                    <td>${s.duracao} min</td>
+                    <td style="color:var(--green-success); font-weight:bold;">R$ ${s.valor.toFixed(2)}</td>
+                    <td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="excluirServicoCatalogo(${s.id})">🗑️ Excluir</button></td>
+                `;
+                tbody.appendChild(tr);
+
+                const opt = document.createElement('option');
+                opt.value = s.nome;
+                opt.setAttribute('data-valor', s.valor);
+                opt.innerText = `${s.nome} (R$ ${s.valor.toFixed(2)})`;
+                selectAg.appendChild(opt);
+            });
+        }
+
+        function aoSelecionarServicoAgendamento(nomeServico) {
+            const selectAg = document.getElementById('agServicoSelect');
+            const selectedOpt = selectAg.options[selectAg.selectedIndex];
+            if (selectedOpt && selectedOpt.hasAttribute('data-valor')) {
+                const val = parseFloat(selectedOpt.getAttribute('data-valor')) || 0;
+                document.getElementById('agValor').value = val.toFixed(2);
+                atualizarPendenteForm();
+            }
+        }
+
         function atualizarPendenteForm() {
             const total = parseFloat(document.getElementById('agValor').value) || 0;
             const sinal = parseFloat(document.getElementById('agSinal').value) || 0;
@@ -1090,12 +1235,21 @@
             if (!data || !inicio) { showConfirm('Atenção', 'Informe data e horário.', null, false); return; }
 
             let agenda = getTenantData('agenda', []);
-            agenda.push({ id: Date.now(), data, horaInicio: inicio, horaFim: fim, cliente: "BLOQUEADO", servico: motivo, total: 0, sinal: 0, pendente: 0, quitado: true });
+            agenda.push({ id: Date.now(), data, horaInicio: inicio, horaFim: fim, cliente: "BLOQUEADO", servico: motivo, total: 0, sinal: 0, pendente: 0, quitado: true, ehBloqueio: true });
             setTenantData('agenda', agenda);
 
             fecharModalBloqueioHorario();
             renderAgendaEFinanceiro();
-            showConfirm('Horário Bloqueado', `Bloqueio realizado para as ${inicio} em ${formatDateBR(data)}.`, null, false);
+            showConfirm('Horário Bloqueado', `Bloqueio realizado para ${inicio} às ${fim} em ${formatDateBR(data)}.`, null, false);
+        }
+
+        function desbloquearHorario(id) {
+            showConfirm('Desbloquear', 'Deseja remover este bloqueio de horário?', () => {
+                let agenda = getTenantData('agenda', []);
+                agenda = agenda.filter(a => a.id !== id);
+                setTenantData('agenda', agenda);
+                renderAgendaEFinanceiro();
+            });
         }
 
         /* CLIENTES */
@@ -1178,7 +1332,7 @@
                     let statusClass = '';
                     let label = 'Livre';
                     if (item) {
-                        if (item.cliente === 'BLOQUEADO') { statusClass = 'blocked'; label = 'Bloqueado'; }
+                        if (item.cliente === 'BLOQUEADO' || item.ehBloqueio) { statusClass = 'blocked'; label = '🔒 Bloqueado'; }
                         else { statusClass = 'occupied'; label = item.cliente; }
                     }
                     div.className = `time-slot-card ${statusClass}`;
@@ -1210,7 +1364,7 @@
                 let label = 'Livre';
 
                 if (item) {
-                    if (item.cliente === 'BLOQUEADO') { statusClass = 'blocked'; label = 'Bloqueado'; }
+                    if (item.cliente === 'BLOQUEADO' || item.ehBloqueio) { statusClass = 'blocked'; label = '🔒 Bloqueado'; }
                     else { statusClass = 'occupied'; label = item.cliente; }
                 }
 
@@ -1224,34 +1378,33 @@
             const data = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
             const horaInicio = document.getElementById('agHoraInicio').value;
             const nome = document.getElementById('agNome').value;
-            const servico = document.getElementById('agServico').value;
+            const servicoSelect = document.getElementById('agServicoSelect').value;
             const total = parseFloat(document.getElementById('agValor').value) || 0;
             const sinal = parseFloat(document.getElementById('agSinal').value) || 0;
             const pendente = Math.max(0, total - sinal);
 
-            if (!nome || !servico || total <= 0) { showConfirm('Atenção', 'Preencha cliente, serviço e valor total.', null, false); return; }
+            if (!nome || !servicoSelect || total <= 0) { showConfirm('Atenção', 'Selecione um serviço do catálogo, informe a cliente e o valor.', null, false); return; }
 
             let agenda = getTenantData('agenda', []);
             let dfc = getTenantData('dfc', []);
 
             const agId = Date.now();
-            agenda.push({ id: agId, data, horaInicio, cliente: nome, servico, total, sinal, pendente, quitado: false });
+            agenda.push({ id: agId, data, horaInicio, cliente: nome, servico: servicoSelect, total, sinal, pendente, quitado: false });
 
-            if (sinal > 0) dfc.push({ id: Date.now(), agId: agId, data: data, desc: `Sinal PIX - ${nome}`, tipo: "receita", valor: sinal, status: "LIQUIDADO" });
-            if (pendente > 0) dfc.push({ id: Date.now() + 1, agId: agId, data: data, desc: `Saldo Pendente - ${nome}`, tipo: "receita", valor: pendente, status: "PENDENTE" });
+            if (sinal > 0) dfc.push({ id: Date.now(), agId: agId, data: data, desc: `Sinal PIX - ${nome} (${servicoSelect})`, tipo: "receita", valor: sinal, status: "LIQUIDADO" });
+            if (pendente > 0) dfc.push({ id: Date.now() + 1, agId: agId, data: data, desc: `Saldo Pendente - ${nome} (${servicoSelect})`, tipo: "receita", valor: pendente, status: "PENDENTE" });
 
             setTenantData('agenda', agenda);
             setTenantData('dfc', dfc);
 
             document.getElementById('agNome').value = '';
-            document.getElementById('agServico').value = '';
             document.getElementById('agValor').value = '';
             document.getElementById('agSinal').value = '';
             atualizarPendenteForm();
 
             renderAgendaEFinanceiro();
             renderDashboardData();
-            showConfirm('Sucesso', 'Agendamento gravado!', null, false);
+            showConfirm('Sucesso', 'Agendamento gravado e linkado à tesouraria!', null, false);
         }
 
         function excluirAgendamento(agId) {
@@ -1328,20 +1481,39 @@
         function renderAgendaEFinanceiro() {
             const tbAgenda = document.getElementById('tbAgenda');
             const tbFin = document.getElementById('tbFinanceiro');
+            const tbBloq = document.getElementById('tbHorariosBloqueados');
             if (!tbAgenda || !tbFin) return;
 
             tbAgenda.innerHTML = '';
             tbFin.innerHTML = '';
+            if (tbBloq) tbBloq.innerHTML = '';
 
             let agenda = getTenantData('agenda', []);
             let dfc = getTenantData('dfc', []);
 
-            // AGENDA
+            // AGENDA & BLOQUEIOS
             const filCliente = document.getElementById('filAgCliente') ? document.getElementById('filAgCliente').value.toLowerCase() : '';
             const filAgDe = document.getElementById('filAgDe') ? document.getElementById('filAgDe').value : '';
             const filAgAte = document.getElementById('filAgAte') ? document.getElementById('filAgAte').value : '';
 
+            let temBloqueio = false;
+
             agenda.forEach(item => {
+                if (item.cliente === 'BLOQUEADO' || item.ehBloqueio) {
+                    temBloqueio = true;
+                    if (tbBloq) {
+                        const trB = document.createElement('tr');
+                        trB.innerHTML = `
+                            <td><strong>${formatDateBR(item.data)}</strong></td>
+                            <td><span class="badge-status badge-danger">${item.horaInicio} às ${item.horaFim || item.horaInicio}</span></td>
+                            <td>${item.servico || 'Bloqueio de Agenda'}</td>
+                            <td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="desbloquearHorario(${item.id})">🔓 Liberar Horário</button></td>
+                        `;
+                        tbBloq.appendChild(trB);
+                    }
+                    return;
+                }
+
                 if (filCliente && !item.cliente.toLowerCase().includes(filCliente)) return;
                 if (filAgDe && item.data < filAgDe) return;
                 if (filAgAte && item.data > filAgAte) return;
@@ -1350,7 +1522,7 @@
                 trAg.innerHTML = `
                     <td>${formatDateBR(item.data)} (${item.horaInicio})</td>
                     <td>${item.cliente}</td>
-                    <td>${item.servico}</td>
+                    <td><strong>${item.servico}</strong></td>
                     <td>R$ ${item.total.toFixed(2)}</td>
                     <td style="color:var(--green-success)">R$ ${item.sinal.toFixed(2)}</td>
                     <td style="color:var(--gold-warning)">R$ ${item.pendente.toFixed(2)}</td>
@@ -1359,6 +1531,10 @@
                 `;
                 tbAgenda.appendChild(trAg);
             });
+
+            if (tbBloq && !temBloqueio) {
+                tbBloq.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted)">Nenhum horário bloqueado.</td></tr>';
+            }
 
             // TESOURARIA (DFC)
             const finDesc = document.getElementById('finFilDesc') ? document.getElementById('finFilDesc').value.toLowerCase() : '';
@@ -1418,7 +1594,7 @@
 
             const ultimosAtend = {};
             agenda.forEach(a => {
-                if (a.cliente === 'BLOQUEADO') return;
+                if (a.cliente === 'BLOQUEADO' || a.ehBloqueio) return;
                 const d = new Date(a.data);
                 if (!ultimosAtend[a.cliente] || d > ultimosAtend[a.cliente].data) {
                     ultimosAtend[a.cliente] = { data: d, servico: a.servico, dataStr: a.data };
@@ -1458,7 +1634,7 @@
             agenda.forEach(a => {
                 if (de && a.data < de) return;
                 if (ate && a.data > ate) return;
-                if (a.cliente === 'BLOQUEADO') return;
+                if (a.cliente === 'BLOQUEADO' || a.ehBloqueio) return;
 
                 bruto += a.total;
                 pendente += a.pendente;
@@ -1503,7 +1679,6 @@
             if (chartFinInstance) chartFinInstance.destroy();
             if (chartServInstance) chartServInstance.destroy();
 
-            // GRÁFICO 1: BARRAS
             chartFinInstance = new Chart(ctxFin, {
                 type: 'bar',
                 data: {
@@ -1526,7 +1701,6 @@
                 }
             });
 
-            // GRÁFICO 2: ROSCA
             const servLabels = Object.keys(servicosCount);
             const servData = Object.values(servicosCount);
 
@@ -1560,7 +1734,7 @@
             agenda.forEach(a => {
                 if (de && a.data < de) return;
                 if (ate && a.data > ate) return;
-                if (a.cliente === 'BLOQUEADO') return;
+                if (a.cliente === 'BLOQUEADO' || a.ehBloqueio) return;
                 bruto += a.total;
             });
 
@@ -1653,7 +1827,7 @@
             document.getElementById('resPrecoMacroSugerido').innerText = `R$ ${precoIdeal.toFixed(2).replace('.', ',')}`;
         }
 
-        /* PAINEL MASTER SAAS 2.0 (COM APROVAÇÃO) */
+        /* PAINEL MASTER SAAS 2.0 (COM SINCRONIZAÇÃO EM TEMPO REAL) */
         function renderMasterSaaS() {
             syncFromCloudGlobal();
             const tbody = document.getElementById('tbMasterClientes');
