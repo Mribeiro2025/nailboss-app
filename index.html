@@ -67,6 +67,10 @@
         .btn-outline-dark { background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); color: var(--text-main); }
         .btn-outline-dark:hover { border-color: var(--pink-neon); }
 
+        /* TELA PÚBLICA DE AGENDAMENTO CLIENTE */
+        #public-booking-screen { position: fixed; inset: 0; background: var(--bg-dark); z-index: 9000; overflow-y: auto; padding: 20px 15px; display: none; }
+        .booking-container { max-width: 500px; margin: 0 auto; background: var(--card-bg); border: 1px solid var(--pink-neon); border-radius: 24px; padding: 24px; box-shadow: 0 0 40px rgba(255, 42, 133, 0.2); }
+
         /* Sidebar Lateral (Desktop) */
         .sidebar { width: 260px; background-color: var(--sidebar-bg); border-right: 1px solid var(--card-border); padding: 20px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; transition: all 0.3s ease; }
         .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 25px; }
@@ -91,7 +95,7 @@
         .mobile-nav-icon { font-size: 1.2rem; }
 
         /* Top Bar Mobile */
-        .mobile-top-bar { display: none; justify-content: space-between; align-items: center; background: var(--sidebar-bg); padding: 12px 16px; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 3900; }
+        .mobile-top-bar { display: none; justify-content: space-between; align-items: center; background: var(--sidebar-bg); padding: 10px 14px; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 3900; }
 
         /* Main Content */
         .main-content { flex: 1; padding: 25px; overflow-y: auto; position: relative; padding-bottom: 80px; }
@@ -136,10 +140,12 @@
         .badge-gold { background: rgba(255,184,0,0.15); color: var(--gold-warning); border: 1px solid rgba(255,184,0,0.3); }
         .badge-danger { background: rgba(255,77,77,0.15); color: var(--danger); border: 1px solid rgba(255,77,77,0.3); }
 
-        .time-slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 15px; }
-        .time-slot-card { background: var(--input-bg); border: 1px solid var(--card-border); padding: 10px; border-radius: 10px; text-align: center; }
-        .time-slot-card.occupied { border-color: var(--pink-neon); background: rgba(255, 42, 133, 0.12); }
-        .time-slot-card.blocked { border-color: var(--danger); background: rgba(255, 77, 77, 0.25); color: #ff8888; font-weight: bold; }
+        .time-slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; margin-top: 15px; }
+        .time-slot-card { background: var(--input-bg); border: 1px solid var(--card-border); padding: 10px; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .time-slot-card:hover { border-color: var(--pink-neon); }
+        .time-slot-card.selected { border-color: var(--green-success); background: rgba(0, 230, 118, 0.15); color: var(--green-success); font-weight: bold; }
+        .time-slot-card.occupied { border-color: var(--pink-neon); background: rgba(255, 42, 133, 0.12); cursor: not-allowed; opacity: 0.6; }
+        .time-slot-card.blocked { border-color: var(--danger); background: rgba(255, 77, 77, 0.25); color: #ff8888; font-weight: bold; cursor: not-allowed; opacity: 0.6; }
 
         /* MODAIS */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; z-index: 6000; padding: 16px; }
@@ -174,6 +180,52 @@
     </style>
 </head>
 <body>
+
+    <!-- OVERLAY TELA PÚBLICA DE AGENDAMENTO CLIENTE -->
+    <div id="public-booking-screen">
+        <div class="booking-container">
+            <div style="text-align:center; margin-bottom:20px;">
+                <div class="login-icon-box" style="width:54px; height:54px; font-size:1.6rem; margin-bottom:10px;">💅</div>
+                <h2 style="font-size:1.5rem; color:var(--text-main);" id="pubStudioTitle">Studio Agendamento</h2>
+                <p style="color:var(--text-muted); font-size:0.82rem;">Escolha o dia, horário e serviço para reservar o seu horário.</p>
+            </div>
+
+            <div class="form-grid" style="text-align:left;">
+                <div class="input-group">
+                    <label>Seu Nome Completo</label>
+                    <input type="text" id="pubCliNome" placeholder="Ex: Maria Silva">
+                </div>
+                <div class="input-group">
+                    <label>Seu WhatsApp</label>
+                    <input type="text" id="pubCliWhats" placeholder="(11) 99999-9999">
+                </div>
+                <div class="input-group">
+                    <label>Selecione o Serviço</label>
+                    <select id="pubCliServico" onchange="aoSelecionarServicoPublico(this.value)">
+                        <option value="">Selecione um serviço...</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Data Desejada</label>
+                    <input type="date" id="pubCliData" onchange="renderPublicTimeSlots()">
+                </div>
+            </div>
+
+            <div style="margin: 15px 0;">
+                <label style="font-size:0.8rem; color:var(--text-muted); font-weight:bold; display:block; margin-bottom:8px;">Horários Disponíveis no Dia:</label>
+                <div class="time-slots-grid" id="pubSlotsContainer"></div>
+            </div>
+
+            <div style="background:var(--input-bg); border:1px dashed var(--pink-neon); padding:15px; border-radius:12px; margin:20px 0; text-align:center;">
+                <small style="color:var(--text-muted);">VALOR DO SERVIÇO / SINAL PIX</small>
+                <div style="font-size:1.2rem; font-weight:800; color:var(--green-success);" id="pubValResumo">Total: R$ 0,00 | Sinal: R$ 30,00</div>
+                <small style="color:var(--gold-warning); font-size:0.75rem; display:block; margin-top:4px;">🔑 Chave PIX: 55-11-94788-7105</small>
+            </div>
+
+            <button class="btn-action btn-green" style="width:100%; padding:14px; font-size:0.9rem;" onclick="confirmarAgendamentoPublicoCliente()">📲 CONFIRMAR & RESERVAR HORÁRIO</button>
+            <p style="text-align:center; font-size:0.72rem; color:var(--text-muted); margin-top:12px;">Sua reserva será enviada diretamente para o WhatsApp do Studio.</p>
+        </div>
+    </div>
 
     <!-- OVERLAY DE LOGIN / REGISTRO / APROVAÇÃO -->
     <div id="login-screen">
@@ -273,15 +325,19 @@
         </div>
     </div>
 
-    <!-- TOP BAR CELULAR -->
+    <!-- TOP BAR CELULAR COM BOTÃO DE COR -->
     <div class="mobile-top-bar">
         <div style="display:flex; align-items:center; gap:8px;">
             <div class="brand-logo" style="width:30px; height:30px; font-size:0.9rem;">N</div>
-            <strong style="font-size:1rem; color:var(--text-main);" id="mobileStudioName">NailBoss</strong>
+            <strong style="font-size:0.95rem; color:var(--text-main);" id="mobileStudioName">NailBoss</strong>
         </div>
         <div style="display:flex; gap:6px; align-items:center;">
+            <select id="mobileThemeSelector" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); font-size:0.75rem; padding:4px; border-radius:6px; outline:none;" onchange="mudarTemaCores(this.value)">
+                <option value="default">💖 Pink</option>
+                <option value="rosegold">🌸 Rose</option>
+                <option value="purple">💜 Purple</option>
+            </select>
             <button class="btn-action btn-outline-dark" style="padding:5px 8px; font-size:0.7rem;" onclick="recarregarDadosCompletos()">🔄</button>
-            <button class="btn-action btn-outline-dark" style="padding:5px 8px; font-size:0.7rem;" onclick="openChangePasswordModal()">🔑</button>
             <button class="btn-logout" onclick="logout()">Sair</button>
         </div>
     </div>
@@ -301,7 +357,7 @@
                 <label style="font-size: 0.7rem; color: var(--text-muted); font-weight: bold; display: block; margin-bottom: 4px;">🎨 TEMA DE CORES</label>
                 <select id="themeSelector" style="width: 100%; background: transparent; border: none; color: var(--text-main); font-size: 0.82rem; font-weight: bold; outline: none; cursor: pointer;" onchange="mudarTemaCores(this.value)">
                     <option value="default" style="background:var(--card-bg); color:var(--text-main);">💖 Pink Neon (Dark)</option>
-                    <option value="rosegold" style="background:var(--card-bg); color:var(--text-main);">🌸 Rose Gold (Feminino Light)</option>
+                    <option value="rosegold" style="background:var(--card-bg); color:var(--text-main);">🌸 Rose Gold (Light)</option>
                     <option value="purple" style="background:var(--card-bg); color:var(--text-main);">💜 Purple Luxury (Roxo)</option>
                 </select>
             </div>
@@ -422,7 +478,7 @@
             </div>
         </div>
 
-        <!-- TELA NOVO: CADASTRO DE SERVIÇOS & TABELA DE PREÇOS -->
+        <!-- TELA CATÁLOGO DE SERVIÇOS & TABELA DE PREÇOS -->
         <div id="view-servicos" class="view-section">
             <div class="content-card">
                 <div class="card-header">💅 Cadastrar Serviço no Catálogo</div>
@@ -452,7 +508,7 @@
             </div>
         </div>
 
-        <!-- TELA 2: CLIENTES -->
+        <!-- TELA CLIENTES -->
         <div id="view-clientes" class="view-section">
             <div class="content-card">
                 <div class="card-header">👤 Cadastrar Novo Cliente</div>
@@ -475,7 +531,7 @@
             </div>
         </div>
 
-        <!-- TELA 3: AGENDA -->
+        <!-- TELA AGENDA -->
         <div id="view-agenda" class="view-section">
             <div class="content-card">
                 <div class="card-header">
@@ -555,7 +611,7 @@
             </div>
         </div>
 
-        <!-- TELA 4: TESOURARIA DFC -->
+        <!-- TELA TESOURARIA DFC -->
         <div id="view-financeiro" class="view-section">
             <div class="metrics-grid">
                 <div class="metric-card"><div class="metric-label">Caixa Liquidado</div><div class="metric-value" style="color:var(--green-success)" id="finCaixaHoje">R$ 0,00</div></div>
@@ -611,7 +667,7 @@
             </div>
         </div>
 
-        <!-- TELA 5: CRM -->
+        <!-- TELA CRM -->
         <div id="view-crm" class="view-section">
             <div id="lockCrm" class="plan-lock-overlay" style="display:none;">
                 <div class="plan-lock-card">
@@ -631,7 +687,7 @@
             </div>
         </div>
 
-        <!-- TELA 6: CONCILIAÇÃO SALÃO -->
+        <!-- TELA CONCILIAÇÃO SALÃO -->
         <div id="view-conciliacao" class="view-section">
             <div id="lockConc" class="plan-lock-overlay" style="display:none;">
                 <div class="plan-lock-card">
@@ -656,7 +712,7 @@
             </div>
         </div>
 
-        <!-- TELA 7: ESTOQUE & PRECIFICAÇÃO -->
+        <!-- TELA ESTOQUE & PRECIFICAÇÃO -->
         <div id="view-estoque" class="view-section">
             <div id="lockEst" class="plan-lock-overlay" style="display:none;">
                 <div class="plan-lock-card">
@@ -700,7 +756,7 @@
             </div>
         </div>
 
-        <!-- TELA 8: PLANOS DENTRO DO PAINEL -->
+        <!-- TELA PLANOS DENTRO DO PAINEL -->
         <div id="view-planos" class="view-section">
             <div class="content-card" style="border-color:var(--gold-warning);">
                 <div class="card-header" style="color:var(--gold-warning);">👑 Escolha ou Renove seu Plano NailBoss</div>
@@ -732,7 +788,7 @@
             </div>
         </div>
 
-        <!-- TELA 9: MASTER SAAS 2.0 (COM SINCRONIZAÇÃO EM TEMPO REAL) -->
+        <!-- TELA MASTER SAAS 2.0 -->
         <div id="view-admin" class="view-section">
             <div class="metrics-grid">
                 <div class="metric-card" style="border-color: var(--pink-neon);"><div class="metric-label">MRR (Recorrente Mensal)</div><div class="metric-value" style="color:var(--green-success)" id="masterMrrVal">R$ 0,00/mês</div></div>
@@ -830,11 +886,12 @@
         let targetAuthRole = "studio";
         let regSelectedPlan = "PRO";
         let onConfirmCallback = null;
+        let selectedPublicSlotTime = null;
 
         let chartFinInstance = null;
         let chartServInstance = null;
 
-        /* SISTEMA DE TRANSMISSÃO DE DADOS NUVEM / LOCALSTORAGE MULTI-ABA */
+        /* TRANSMISSÃO DE DADOS MULTI-ABA E DISPOSITIVOS */
         const cloudChannel = new BroadcastChannel('nailboss_sync_channel');
         cloudChannel.onmessage = (event) => {
             if (event.data === 'SYNC_ALL') {
@@ -847,9 +904,7 @@
         });
 
         function notifyCloudSync() {
-            try {
-                cloudChannel.postMessage('SYNC_ALL');
-            } catch (e) {}
+            try { cloudChannel.postMessage('SYNC_ALL'); } catch (e) {}
             recarregarDadosCompletos();
         }
 
@@ -864,12 +919,17 @@
             document.body.classList.remove('theme-rosegold', 'theme-purple');
             if (themeKey === 'rosegold') document.body.classList.add('theme-rosegold');
             if (themeKey === 'purple') document.body.classList.add('theme-purple');
+            
+            const selDesk = document.getElementById('themeSelector');
+            const selMob = document.getElementById('mobileThemeSelector');
+            if (selDesk) selDesk.value = themeKey;
+            if (selMob) selMob.value = themeKey;
+
             localStorage.setItem('nailboss_preferred_theme', themeKey);
             renderCharts();
         }
 
         const savedTheme = localStorage.getItem('nailboss_preferred_theme') || 'default';
-        document.getElementById('themeSelector').value = savedTheme;
         mudarTemaCores(savedTheme);
 
         function getTenantData(key, defaultData) {
@@ -914,7 +974,8 @@
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.mobile-nav-btn').forEach(el => el.classList.remove('active'));
 
-            document.getElementById(`view-${viewId}`).classList.add('active');
+            const targetView = document.getElementById(`view-${viewId}`);
+            if (targetView) targetView.classList.add('active');
             
             if (element) {
                 element.classList.add('active');
@@ -925,8 +986,163 @@
                 if (navMob) navMob.classList.add('active');
             }
 
+            localStorage.setItem('nailboss_active_view', viewId);
             applyPlanPermissions();
             recarregarDadosCompletos();
+        }
+
+        /* VERIFICAÇÃO DE LINK PÚBLICO E CARREGAMENTO */
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isBooking = urlParams.get('agendar');
+            const targetStudio = urlParams.get('studio') || "Studio Bella Unhas";
+
+            if (isBooking) {
+                // Abrir diretamente a tela de agendamento do cliente
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('public-booking-screen').style.display = 'block';
+                document.getElementById('pubStudioTitle').innerText = targetStudio;
+                
+                // Define tenant ID padrão para gravação da agenda
+                currentTenantId = targetStudio.toLowerCase().replace(/[^a-z0-9]/g, '');
+                
+                const hojeStr = new Date().toISOString().split('T')[0];
+                document.getElementById('pubCliData').value = hojeStr;
+
+                carregarServicosPublicos();
+                renderPublicTimeSlots();
+                return;
+            }
+
+            const sessionRaw = localStorage.getItem('nailboss_active_session');
+            if (sessionRaw) {
+                const session = JSON.parse(sessionRaw);
+                currentRole = session.role;
+                currentTenantId = session.tenantId || "";
+                currentPlan = session.plan || "STARTER";
+
+                document.getElementById('login-screen').style.display = 'none';
+
+                if (currentRole === 'master') {
+                    document.getElementById('userRoleName').innerText = 'Proprietário SaaS 👑';
+                    document.getElementById('mobileStudioName').innerText = 'NailBoss Master 👑';
+                    document.getElementById('nav-master-item').style.display = 'flex';
+                    document.getElementById('btnSidebarUpgrade').style.display = 'none';
+                } else {
+                    document.getElementById('userRoleName').innerText = session.studioName || 'Studio Demo';
+                    document.getElementById('mobileStudioName').innerText = session.studioName || 'Studio Demo';
+                    document.getElementById('nav-master-item').style.display = 'none';
+                    document.getElementById('btnSidebarUpgrade').style.display = 'block';
+                }
+
+                const savedView = localStorage.getItem('nailboss_active_view') || (currentRole === 'master' ? 'admin' : 'dash');
+                navigateTo(savedView);
+            }
+        });
+
+        /* FUNÇÕES DA TELA PÚBLICA DE AGENDAMENTO CLIENTE */
+        function carregarServicosPublicos() {
+            const select = document.getElementById('pubCliServico');
+            select.innerHTML = '<option value="">Selecione um serviço...</option>';
+
+            let servicos = getTenantData('servicos_catalogo', [
+                { id: 1, nome: "Pé e Mão Completo", valor: 70.00, duracao: 60 },
+                { id: 2, nome: "Alongamento em Gel", valor: 150.00, duracao: 120 },
+                { id: 3, nome: "Manutenção Fibra de Vidro", valor: 100.00, duracao: 90 }
+            ]);
+
+            servicos.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.nome;
+                opt.setAttribute('data-valor', s.valor);
+                opt.innerText = `${s.nome} (R$ ${s.valor.toFixed(2)})`;
+                select.appendChild(opt);
+            });
+        }
+
+        function aoSelecionarServicoPublico(nomeServico) {
+            const select = document.getElementById('pubCliServico');
+            const selectedOpt = select.options[select.selectedIndex];
+            if (selectedOpt && selectedOpt.hasAttribute('data-valor')) {
+                const val = parseFloat(selectedOpt.getAttribute('data-valor')) || 0;
+                const sinal = Math.min(30, val);
+                document.getElementById('pubValResumo').innerText = `Total: R$ ${val.toFixed(2).replace('.', ',')} | Sinal PIX: R$ ${sinal.toFixed(2).replace('.', ',')}`;
+            }
+        }
+
+        function renderPublicTimeSlots() {
+            const dataSel = document.getElementById('pubCliData').value || new Date().toISOString().split('T')[0];
+            let agenda = getTenantData('agenda', []);
+            const slots = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
+
+            const container = document.getElementById('pubSlotsContainer');
+            container.innerHTML = '';
+            selectedPublicSlotTime = null;
+
+            slots.forEach(h => {
+                const item = agenda.find(a => a.data === dataSel && a.horaInicio === h);
+                const div = document.createElement('div');
+                let statusClass = '';
+                let label = 'Livre';
+
+                if (item) {
+                    if (item.cliente === 'BLOQUEADO' || item.ehBloqueio) { statusClass = 'blocked'; label = '🔒 Ocupado'; }
+                    else { statusClass = 'occupied'; label = 'Ocupado'; }
+                } else {
+                    div.onclick = () => selectPublicSlot(div, h);
+                }
+
+                div.className = `time-slot-card ${statusClass}`;
+                div.innerHTML = `<strong>${h}</strong><br><small style="font-size:0.68rem;">${label}</small>`;
+                container.appendChild(div);
+            });
+        }
+
+        function selectPublicSlot(el, hora) {
+            document.querySelectorAll('#pubSlotsContainer .time-slot-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedPublicSlotTime = hora;
+        }
+
+        function confirmarAgendamentoPublicoCliente() {
+            const nome = document.getElementById('pubCliNome').value.trim();
+            const whats = document.getElementById('pubCliWhats').value.trim();
+            const servicoSelect = document.getElementById('pubCliServico').value;
+            const data = document.getElementById('pubCliData').value;
+
+            if (!nome || !whats || !servicoSelect || !data) {
+                alert('Por favor, preencha seu Nome, WhatsApp, Serviço e escolha uma Data.');
+                return;
+            }
+
+            if (!selectedPublicSlotTime) {
+                alert('Selecione um horário disponível verde no quadro de horários.');
+                return;
+            }
+
+            const select = document.getElementById('pubCliServico');
+            const selectedOpt = select.options[select.selectedIndex];
+            const totalVal = selectedOpt ? (parseFloat(selectedOpt.getAttribute('data-valor')) || 0) : 0;
+            const sinalVal = Math.min(30, totalVal);
+            const pendenteVal = Math.max(0, totalVal - sinalVal);
+
+            // Grava a reserva direta no banco do studio
+            let agenda = getTenantData('agenda', []);
+            let dfc = getTenantData('dfc', []);
+
+            const agId = Date.now();
+            agenda.push({ id: agId, data, horaInicio: selectedPublicSlotTime, cliente: nome, servico: servicoSelect, total: totalVal, sinal: sinalVal, pendente: pendenteVal, quitado: false });
+
+            if (sinalVal > 0) dfc.push({ id: Date.now(), agId: agId, data: data, desc: `Sinal PIX Web - ${nome} (${servicoSelect})`, tipo: "receita", valor: sinalVal, status: "PENDENTE" });
+            if (pendenteVal > 0) dfc.push({ id: Date.now() + 1, agId: agId, data: data, desc: `Saldo Pendente Web - ${nome} (${servicoSelect})`, tipo: "receita", valor: pendenteVal, status: "PENDENTE" });
+
+            setTenantData('agenda', agenda);
+            setTenantData('dfc', dfc);
+
+            // Abre o WhatsApp do Studio para confirmar e mandar o comprovante PIX
+            const msgWhatsApp = `Olá! Fiz meu agendamento no site!\n\n👤 *Cliente:* ${nome}\n💅 *Serviço:* ${servicoSelect}\n📅 *Data:* ${formatDateBR(data)} às ${selectedPublicSlotTime}\n💰 *Valor Sinal PIX:* R$ ${sinalVal.toFixed(2)}\n🔑 *Chave PIX:* 55-11-94788-7105\n\nSegue em anexo o meu comprovante de pagamento do Sinal PIX para confirmar a reserva!`;
+            
+            window.location.href = `https://wa.me/5511947887105?text=${encodeURIComponent(msgWhatsApp)}`;
         }
 
         function recarregarDadosCompletos() {
@@ -1095,6 +1311,13 @@
             document.getElementById('login-screen').style.display = 'none';
             currentRole = role;
 
+            localStorage.setItem('nailboss_active_session', JSON.stringify({
+                role: role,
+                tenantId: currentTenantId,
+                plan: currentPlan,
+                studioName: studioName
+            }));
+
             if (role === 'master') {
                 document.getElementById('userRoleName').innerText = 'Proprietário SaaS 👑';
                 document.getElementById('mobileStudioName').innerText = 'NailBoss Master 👑';
@@ -1116,6 +1339,8 @@
         function logout() {
             showConfirm('Encerrar Sessão', 'Deseja realmente sair do sistema?', () => {
                 currentTenantId = "";
+                localStorage.removeItem('nailboss_active_session');
+                localStorage.removeItem('nailboss_active_view');
                 resetLoginStep();
                 document.getElementById('login-screen').style.display = 'flex';
             });
@@ -1425,9 +1650,11 @@
 
         function gerarLinkPublicoAgendamento() {
             const studioName = document.getElementById('mobileStudioName').innerText;
-            const url = window.location.href;
-            showConfirm('Link de Agendamento', `Copie o link abaixo para enviar para suas clientes:\n\n${url}?agendar=${encodeURIComponent(studioName)}`, () => {
-                navigator.clipboard.writeText(`${url}?agendar=${encodeURIComponent(studioName)}`);
+            const baseUrl = window.location.origin + window.location.pathname;
+            const fullLink = `${baseUrl}?studio=${encodeURIComponent(studioName)}&agendar=true`;
+
+            showConfirm('📲 Link Direto de Agendamento', `Copie o link abaixo para enviar aos seus clientes:\n\n${fullLink}`, () => {
+                navigator.clipboard.writeText(fullLink);
             }, false);
         }
 
@@ -1827,7 +2054,7 @@
             document.getElementById('resPrecoMacroSugerido').innerText = `R$ ${precoIdeal.toFixed(2).replace('.', ',')}`;
         }
 
-        /* PAINEL MASTER SAAS 2.0 (COM SINCRONIZAÇÃO EM TEMPO REAL) */
+        /* PAINEL MASTER SAAS 2.0 */
         function renderMasterSaaS() {
             syncFromCloudGlobal();
             const tbody = document.getElementById('tbMasterClientes');
