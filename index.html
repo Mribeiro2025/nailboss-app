@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NailBoss Pro - Gestão 360°, Tesouraria & SaaS Multitenant</title>
+    <!-- Chart.js para Gráficos Visuais no Dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --bg-dark: #090d16;
@@ -17,12 +19,43 @@
             --danger: #ff4d4d;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
+            --input-bg: #0c101d;
+        }
+
+        body.theme-rosegold {
+            --bg-dark: #fdf8f5;
+            --sidebar-bg: #f7ede2;
+            --card-bg: #ffffff;
+            --card-border: #f0d9cc;
+            --pink-neon: #e05275;
+            --pink-glow: rgba(224, 82, 117, 0.2);
+            --gold-warning: #d97706;
+            --green-success: #10b981;
+            --danger: #ef4444;
+            --text-main: #2d2424;
+            --text-muted: #786c6c;
+            --input-bg: #f9f0ea;
+        }
+
+        body.theme-purple {
+            --bg-dark: #0f0a1c;
+            --sidebar-bg: #160f29;
+            --card-bg: #1f1638;
+            --card-border: #322456;
+            --pink-neon: #a855f7;
+            --pink-glow: rgba(168, 85, 247, 0.25);
+            --gold-warning: #f59e0b;
+            --green-success: #10b981;
+            --danger: #f43f5e;
+            --text-main: #f3f0ff;
+            --text-muted: #a799cc;
+            --input-bg: #130c24;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-dark); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; }
+        body { background-color: var(--bg-dark); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; transition: background-color 0.3s, color 0.3s; }
 
-        /* OVERLAY DE LOGIN / REGISTRO / AUTOATIVAÇÃO */
+        /* OVERLAY DE LOGIN / REGISTRO */
         #login-screen { position: fixed; inset: 0; background: rgba(9, 13, 22, 0.97); backdrop-filter: blur(14px); z-index: 5000; display: flex; align-items: center; justify-content: center; padding: 16px; }
         .login-card-v2 { background: var(--card-bg); border: 1px solid var(--pink-glow); padding: 30px; border-radius: 24px; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 0 50px rgba(255, 42, 133, 0.18); max-height: 92vh; overflow-y: auto; }
         .login-icon-box { width: 64px; height: 64px; background: linear-gradient(135deg, var(--pink-neon), #d6005d); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 2rem; box-shadow: 0 8px 25px rgba(255, 42, 133, 0.4); }
@@ -43,16 +76,16 @@
 
         .nav-menu { display: flex; flex-direction: column; gap: 6px; }
         .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .nav-item:hover, .nav-item.active { background: #1c2438; color: var(--text-main); }
-        .nav-item.active { border-left: 4px solid var(--pink-neon); border-radius: 0 12px 12px 0; color: white; font-weight: bold; background: linear-gradient(90deg, rgba(255, 42, 133, 0.12), transparent); }
+        .nav-item:hover, .nav-item.active { background: rgba(255, 42, 133, 0.08); color: var(--text-main); }
+        .nav-item.active { border-left: 4px solid var(--pink-neon); border-radius: 0 12px 12px 0; color: var(--pink-neon); font-weight: bold; }
 
         .sidebar-footer { display: flex; flex-direction: column; gap: 12px; }
         .btn-upgrade-sidebar { background: linear-gradient(135deg, #ffb800, #ff8c00); color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 0.85rem; cursor: pointer; text-align: center; }
-        .user-status { background: #161c2e; padding: 12px; border-radius: 10px; font-size: 0.8rem; color: var(--text-muted); border: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; }
+        .user-status { background: var(--card-bg); padding: 12px; border-radius: 10px; font-size: 0.8rem; color: var(--text-muted); border: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; }
         .btn-logout { background: transparent; border: 1px solid var(--danger); color: var(--danger); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
 
         /* Menu Flutuante Mobile (Bottom Nav) */
-        .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background: rgba(16, 21, 36, 0.94); backdrop-filter: blur(16px); border-top: 1px solid var(--card-border); z-index: 4000; justify-content: space-around; align-items: center; padding: 0 6px; }
+        .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background: var(--sidebar-bg); backdrop-filter: blur(16px); border-top: 1px solid var(--card-border); z-index: 4000; justify-content: space-around; align-items: center; padding: 0 6px; }
         .mobile-nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.68rem; font-weight: 600; text-decoration: none; border: none; background: transparent; gap: 3px; flex: 1; height: 100%; cursor: pointer; }
         .mobile-nav-btn.active { color: var(--pink-neon); font-weight: 800; }
         .mobile-nav-icon { font-size: 1.25rem; }
@@ -67,12 +100,7 @@
         .header-title h1 span { color: var(--pink-neon); }
         .status-pill { background: rgba(0, 230, 118, 0.1); color: var(--green-success); border: 1px solid var(--green-success); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
-        /* Views */
-        .view-section { display: none; animation: fadeIn 0.25s ease-in-out; }
-        .view-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* BANNER DE BLOQUEIO DE PLANO (OVERLAY) */
+        /* BANNER DE BLOQUEIO DE PLANO */
         .plan-lock-overlay { position: absolute; inset: 0; background: rgba(9, 13, 22, 0.90); backdrop-filter: blur(8px); z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; border-radius: 16px; border: 1px dashed var(--gold-warning); }
         .plan-lock-card { max-width: 400px; background: var(--card-bg); padding: 28px; border-radius: 20px; border: 1px solid var(--card-border); box-shadow: 0 10px 35px rgba(0,0,0,0.6); }
 
@@ -88,7 +116,7 @@
         
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 18px; }
         .input-group label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; }
-        .input-group input, .input-group select { width: 100%; background: #0c101d; border: 1px solid var(--card-border); border-radius: 10px; padding: 11px 13px; color: var(--text-main); font-size: 0.9rem; outline: none; transition: 0.2s; }
+        .input-group input, .input-group select { width: 100%; background: var(--input-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 11px 13px; color: var(--text-main); font-size: 0.9rem; outline: none; transition: 0.2s; }
         .input-group input:focus, .input-group select:focus { border-color: var(--pink-neon); box-shadow: 0 0 0 2px var(--pink-glow); }
         
         .btn-action { background: linear-gradient(135deg, #ff2a85, #d6005d); color: white; border: none; padding: 11px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.3px; transition: 0.2s; }
@@ -101,7 +129,7 @@
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.88rem; min-width: 600px; }
         th { text-align: left; padding: 12px 10px; color: var(--text-muted); border-bottom: 1px solid var(--card-border); font-size: 0.72rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
-        td { padding: 13px 10px; border-bottom: 1px solid #1a2238; vertical-align: middle; }
+        td { padding: 13px 10px; border-bottom: 1px solid var(--card-border); vertical-align: middle; }
 
         .badge-status { padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 800; display: inline-block; }
         .badge-green { background: rgba(0,230,118,0.15); color: var(--green-success); border: 1px solid rgba(0,230,118,0.3); }
@@ -109,7 +137,7 @@
         .badge-danger { background: rgba(255,77,77,0.15); color: var(--danger); border: 1px solid rgba(255,77,77,0.3); }
 
         .time-slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 15px; }
-        .time-slot-card { background: #0c101d; border: 1px solid var(--card-border); padding: 10px; border-radius: 10px; text-align: center; }
+        .time-slot-card { background: var(--input-bg); border: 1px solid var(--card-border); padding: 10px; border-radius: 10px; text-align: center; }
         .time-slot-card.occupied { border-color: var(--pink-neon); background: rgba(255, 42, 133, 0.12); }
         .time-slot-card.blocked { border-color: var(--danger); background: rgba(255, 77, 77, 0.12); }
 
@@ -124,12 +152,15 @@
 
         /* PLANOS GRID */
         .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 15px; }
-        .plan-card { background: #0c101d; border: 1px solid var(--card-border); border-radius: 16px; padding: 16px; text-align: center; transition: 0.3s; cursor: pointer; }
+        .plan-card { background: var(--input-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 16px; text-align: center; transition: 0.3s; cursor: pointer; }
         .plan-card.highlight { border-color: var(--pink-neon); box-shadow: 0 0 20px rgba(255, 42, 133, 0.2); }
         .plan-card.selected { border-color: var(--green-success); background: rgba(0, 230, 118, 0.08); }
         .plan-price { font-size: 1.35rem; font-weight: 800; color: var(--pink-neon); margin: 6px 0; }
 
-        /* MEDIA QUERIES PARA CELULAR */
+        .view-section { display: none; animation: fadeIn 0.25s ease-in-out; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
         @media (max-width: 768px) {
             body { flex-direction: column; }
             .sidebar { display: none; }
@@ -144,7 +175,7 @@
 </head>
 <body>
 
-    <!-- OVERLAY DE LOGIN / REGISTRO / AUTOATIVAÇÃO -->
+    <!-- OVERLAY DE LOGIN / REGISTRO / APROVAÇÃO -->
     <div id="login-screen">
         <div class="login-card-v2">
             <div class="login-icon-box">💅</div>
@@ -195,13 +226,13 @@
 
             <div id="loginStepSelectPlan" style="display: none; text-align: center;">
                 <h4 style="color:var(--gold-warning); margin-bottom:6px;">2º Passo: Escolha o Pacote</h4>
-                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px;">Selecione o plano para ativar seu acesso no celular e computador:</p>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px;">Selecione o plano desejado para enviar à análise do Master:</p>
 
                 <div class="plans-grid">
                     <div class="plan-card" id="cardPlanStarter" onclick="selecionarPlanoRegistro('STARTER')">
-                        <h4 style="color:white;">STARTER</h4>
+                        <h4 style="color:var(--text-main);">STARTER</h4>
                         <div class="plan-price">R$ 0,00</div>
-                        <p style="font-size:0.7rem; color:var(--text-muted);">Degustação 14 dias grátis.</p>
+                        <p style="font-size:0.7rem; color:var(--text-muted);">Degustação 14 dias.</p>
                     </div>
                     <div class="plan-card highlight selected" id="cardPlanPro" onclick="selecionarPlanoRegistro('PRO')">
                         <h4 style="color:var(--pink-neon);">PRO</h4>
@@ -215,26 +246,26 @@
                     </div>
                 </div>
 
-                <div style="background:#0c101d; border:1px dashed var(--pink-neon); padding:15px; border-radius:12px; margin:15px 0;">
+                <div style="background:var(--input-bg); border:1px dashed var(--pink-neon); padding:15px; border-radius:12px; margin:15px 0;">
                     <strong style="color:var(--gold-warning); font-size:0.85rem;">🔑 CHAVE PIX CONECTADA:</strong><br>
-                    <span style="font-size:1.1rem; font-weight:bold; color:white;">55-11-94788-7105</span>
+                    <span style="font-size:1.1rem; font-weight:bold; color:var(--text-main);">55-11-94788-7105</span>
                     <button class="btn-action btn-green" style="width:100%; margin-top:8px; font-size:0.75rem; padding:8px;" onclick="enviarComprovanteWhatsApp()">📲 ENVIAR COMPROVANTE NO WHATSAPP</button>
                 </div>
 
-                <button class="btn-action" style="width: 100%; margin-bottom: 10px;" onclick="finalizarCadastroEAtivar()">Concluir & Entrar no Sistema</button>
+                <button class="btn-action" style="width: 100%; margin-bottom: 10px;" onclick="finalizarCadastroEAtivar()">Solicitar Acesso & Enviar Aprovação</button>
                 <button class="btn-login-option btn-outline-dark" style="margin-bottom:0;" onclick="voltarParaEtapa1Cadastro()">Voltar</button>
             </div>
 
             <div id="loginStepPlans" style="display: none; text-align: center;">
                 <h4 style="color:var(--gold-warning); margin-bottom:10px;">👑 Pacotes do NailBoss</h4>
                 <div class="plans-grid">
-                    <div class="plan-card"><h4 style="color:white;">STARTER</h4><div class="plan-price">R$ 0,00</div><p style="font-size:0.75rem; color:var(--text-muted);">Agenda básica.</p></div>
+                    <div class="plan-card"><h4 style="color:var(--text-main);">STARTER</h4><div class="plan-price">R$ 0,00</div><p style="font-size:0.75rem; color:var(--text-muted);">Agenda básica.</p></div>
                     <div class="plan-card highlight"><h4 style="color:var(--pink-neon);">PRO</h4><div class="plan-price" id="labelPriceProPub">R$ 19,90/mês</div><p style="font-size:0.75rem; color:var(--text-muted);">Tesouraria DFC + CRM.</p></div>
                     <div class="plan-card"><h4 style="color:var(--gold-warning);">VIP</h4><div class="plan-price" id="labelPriceVipPub">R$ 39,90/mês</div><p style="font-size:0.75rem; color:var(--text-muted);">Repasses + Ilimitado.</p></div>
                 </div>
-                <div style="background:#0c101d; border:1px dashed var(--pink-neon); padding:15px; border-radius:12px; margin:15px 0;">
+                <div style="background:var(--input-bg); border:1px dashed var(--pink-neon); padding:15px; border-radius:12px; margin:15px 0;">
                     <strong style="color:var(--gold-warning); font-size:0.85rem;">🔑 CHAVE PIX CONECTADA:</strong><br>
-                    <span style="font-size:1.1rem; font-weight:bold; color:white;">55-11-94788-7105</span>
+                    <span style="font-size:1.1rem; font-weight:bold; color:var(--text-main);">55-11-94788-7105</span>
                     <button class="btn-action btn-green" style="width:100%; margin-top:8px; font-size:0.75rem; padding:8px;" onclick="enviarComprovanteWhatsApp()">📲 ENVIAR COMPROVANTE NO WHATSAPP</button>
                 </div>
                 <button class="btn-login-option btn-outline-dark" style="margin-bottom:0;" onclick="resetLoginStep()">Voltar ao Login</button>
@@ -248,8 +279,9 @@
             <div class="brand-logo" style="width:30px; height:30px; font-size:0.9rem;">N</div>
             <strong style="font-size:1rem; color:var(--text-main);" id="mobileStudioName">NailBoss</strong>
         </div>
-        <div style="display:flex; gap:8px; align-items:center;">
-            <button class="btn-action btn-outline-dark" style="padding:5px 10px; font-size:0.7rem;" onclick="openChangePasswordModal()">🔑 Senha</button>
+        <div style="display:flex; gap:6px; align-items:center;">
+            <button class="btn-action btn-outline-dark" style="padding:5px 8px; font-size:0.7rem;" onclick="recarregarDadosCompletos()">🔄</button>
+            <button class="btn-action btn-outline-dark" style="padding:5px 8px; font-size:0.7rem;" onclick="openChangePasswordModal()">🔑</button>
             <button class="btn-logout" onclick="logout()">Sair</button>
         </div>
     </div>
@@ -263,6 +295,16 @@
                     <span class="brand-title">NailBoss</span>
                     <span class="brand-badge" id="planBadge">STARTER</span>
                 </div>
+            </div>
+
+            <!-- SELETOR DE TEMA DE CORES -->
+            <div style="margin-bottom: 20px; background: var(--input-bg); padding: 10px; border-radius: 12px; border: 1px solid var(--card-border);">
+                <label style="font-size: 0.7rem; color: var(--text-muted); font-weight: bold; display: block; margin-bottom: 4px;">🎨 TEMA DE CORES</label>
+                <select id="themeSelector" style="width: 100%; background: transparent; border: none; color: var(--text-main); font-size: 0.82rem; font-weight: bold; outline: none; cursor: pointer;" onchange="mudarTemaCores(this.value)">
+                    <option value="default" style="background:var(--card-bg); color:var(--text-main);">💖 Pink Neon (Dark)</option>
+                    <option value="rosegold" style="background:var(--card-bg); color:var(--text-main);">🌸 Rose Gold (Feminino Light)</option>
+                    <option value="purple" style="background:var(--card-bg); color:var(--text-main);">💜 Purple Luxury (Roxo)</option>
+                </select>
             </div>
 
             <nav class="nav-menu">
@@ -318,18 +360,19 @@
                 <p id="pageSub" style="color:var(--text-muted); font-size:0.88rem;">Resumo financeiro e gestão completa do seu studio.</p>
             </div>
             <div style="display: flex; gap: 10px; align-items: center;">
+                <button class="btn-action btn-green" style="padding:8px 14px; font-size:0.8rem;" onclick="recarregarDadosCompletos()">🔄 Atualizar Dados</button>
                 <button class="btn-action btn-outline-dark" style="padding:8px 12px; font-size:0.8rem;" onclick="openChangePasswordModal()">🔑 Alterar Senha</button>
-                <div class="status-pill">● Online (Render API)</div>
+                <div class="status-pill">● Nuvem Sincronizada ☁️</div>
             </div>
         </div>
 
-        <!-- TELA 1: DASHBOARD -->
+        <!-- TELA 1: DASHBOARD COM GRÁFICOS INTERATIVOS -->
         <div id="view-dash" class="view-section active">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
                 <h3 style="color:var(--pink-neon); font-size:1.1rem;">📈 Visão Geral de Tesouraria</h3>
                 <div style="display:flex; gap:8px;">
-                    <input type="date" id="dashDataDe" value="2026-10-01" style="background:#0c101d; border:1px solid var(--card-border); color:white; padding:6px; border-radius:8px; font-size:0.8rem;" onchange="renderDashboardData()">
-                    <input type="date" id="dashDataAte" value="2026-10-31" style="background:#0c101d; border:1px solid var(--card-border); color:white; padding:6px; border-radius:8px; font-size:0.8rem;" onchange="renderDashboardData()">
+                    <input type="date" id="dashDataDe" value="2026-10-01" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px; border-radius:8px; font-size:0.8rem;" onchange="renderDashboardData()">
+                    <input type="date" id="dashDataAte" value="2026-10-31" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px; border-radius:8px; font-size:0.8rem;" onchange="renderDashboardData()">
                 </div>
             </div>
 
@@ -339,6 +382,22 @@
                 <div class="metric-card"><div class="metric-label">Pendentes</div><div class="metric-value" style="color:var(--gold-warning)" id="dashPendente">R$ 0,00</div></div>
                 <div class="metric-card"><div class="metric-label">Ticket Médio</div><div class="metric-value" style="color:var(--pink-neon)" id="dashTicketMedio">R$ 0,00</div></div>
                 <div class="metric-card"><div class="metric-label">Inadimplência</div><div class="metric-value" style="color:var(--danger)" id="dashTaxaInadimplencia">0%</div></div>
+            </div>
+
+            <!-- GRÁFICOS VISUAIS CHART.JS -->
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:18px; margin-bottom:20px;">
+                <div class="content-card">
+                    <div class="card-header">📊 Desempenho Financeiro (Bruto x Efetivo)</div>
+                    <div style="height:230px; position:relative;">
+                        <canvas id="chartFinanceiro"></canvas>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="card-header">🍰 Distribuição por Serviço</div>
+                    <div style="height:230px; position:relative;">
+                        <canvas id="chartServicos"></canvas>
+                    </div>
+                </div>
             </div>
 
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:18px;">
@@ -390,7 +449,10 @@
         <!-- TELA 3: AGENDA -->
         <div id="view-agenda" class="view-section">
             <div class="content-card">
-                <div class="card-header">📅 Novo Agendamento / Bloqueio</div>
+                <div class="card-header">
+                    <span>📅 Novo Agendamento</span>
+                    <button class="btn-action btn-gold" style="font-size:0.75rem; padding:6px 12px;" onclick="gerarLinkPublicoAgendamento()">📲 Link de Agendamento</button>
+                </div>
                 <div class="form-grid">
                     <div class="input-group"><label>Data do Serviço</label><input type="date" id="agData" onchange="renderGradeHorarios()"></div>
                     <div class="input-group"><label>Hora Início</label><input type="time" id="agHoraInicio" value="09:00"></div>
@@ -403,7 +465,7 @@
                 </div>
                 <div style="display:flex; gap:10px; flex-wrap:wrap;">
                     <button class="btn-action btn-green" onclick="salvarAgendamento()">Confirmar Agendamento</button>
-                    <button class="btn-action btn-danger" onclick="bloquearHorarioGrade()">🔒 Bloquear Horário</button>
+                    <button class="btn-action btn-danger" onclick="abrirModalBloqueioHorario()">🔒 Bloquear Horário</button>
                     <button class="btn-action btn-gold" onclick="abrirPopupGradeDia()">👀 Slots do Dia</button>
                 </div>
             </div>
@@ -529,7 +591,7 @@
                     <div class="input-group"><label>Data Final</label><input type="date" id="concDataAte" value="2026-10-09" onchange="atualizarConciliacaoPeriodo()"></div>
                     <div class="input-group"><label>Taxa Salão (%)</label><input type="number" id="concTaxa" value="30" oninput="atualizarConciliacaoPeriodo()"></div>
                 </div>
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:12px; background:#0c101d; padding:18px; border-radius:12px; text-align:center; margin-top:15px;">
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:12px; background:var(--input-bg); padding:18px; border-radius:12px; text-align:center; margin-top:15px;">
                     <div><small style="color:var(--text-muted)">FATURAMENTO</small><br><strong id="concBrutoPeriodo" style="font-size:1.2rem; color:var(--text-main)">R$ 0,00</strong></div>
                     <div><small style="color:var(--text-muted)">COMISSÃO SALÃO</small><br><strong id="concSalaoPeriodo" style="font-size:1.2rem; color:var(--pink-neon)">R$ 0,00</strong></div>
                     <div><small style="color:var(--text-muted)">LÚCRO LÍQUIDO</small><br><strong id="concManicurePeriodo" style="font-size:1.2rem; color:var(--green-success)">R$ 0,00</strong></div>
@@ -575,7 +637,7 @@
                     <div class="input-group"><label>Margem Lucro Desejada (R$)</label><input type="number" id="prLucro" value="90.00" oninput="calcularPrecoMacroSugerido()"></div>
                     <div class="input-group"><label>Comissão Salão (%)</label><input type="number" id="prComissao" value="30" oninput="calcularPrecoMacroSugerido()"></div>
                 </div>
-                <div style="background:#0c101d; padding:15px; border-radius:12px; text-align:center;">
+                <div style="background:var(--input-bg); padding:15px; border-radius:12px; text-align:center;">
                     <small style="color:var(--text-muted)">PREÇO FINAL SUGERIDO DE VENDA</small><br>
                     <strong id="resPrecoMacroSugerido" style="font-size:1.6rem; color:var(--green-success)">R$ 0,00</strong>
                 </div>
@@ -606,27 +668,27 @@
                     </div>
                 </div>
 
-                <div style="background:#0c101d; border:2px dashed var(--pink-neon); padding:20px; border-radius:12px; margin-top:20px; text-align:center;">
+                <div style="background:var(--input-bg); border:2px dashed var(--pink-neon); padding:20px; border-radius:12px; margin-top:20px; text-align:center;">
                     <strong style="color:var(--gold-warning); font-size:1.1rem;">🔑 CHAVE PIX CONECTADA:</strong><br>
-                    <span style="font-size:1.4rem; font-weight:800; color:white; letter-spacing:1px; display:block; margin:8px 0;">55-11-94788-7105</span>
+                    <span style="font-size:1.4rem; font-weight:800; color:var(--text-main); letter-spacing:1px; display:block; margin:8px 0;">55-11-94788-7105</span>
                     <button class="btn-action btn-green" style="width:100%; max-width:320px; margin-top:10px;" onclick="enviarComprovanteWhatsApp()">📲 ENVIAR COMPROVANTE NO WHATSAPP</button>
                 </div>
             </div>
         </div>
 
-        <!-- TELA 9: MASTER SAAS 2.0 (COM EXCLUSÃO DE STUDIOS) -->
+        <!-- TELA 9: MASTER SAAS 2.0 (COM APROVAÇÃO E PERSISTÊNCIA NUVEM) -->
         <div id="view-admin" class="view-section">
             <div class="metrics-grid">
                 <div class="metric-card" style="border-color: var(--pink-neon);"><div class="metric-label">MRR (Recorrente Mensal)</div><div class="metric-value" style="color:var(--green-success)" id="masterMrrVal">R$ 0,00/mês</div></div>
                 <div class="metric-card" style="border-color: var(--gold-warning);"><div class="metric-label">ARR (Estimativa Anual)</div><div class="metric-value" style="color:var(--gold-warning)" id="masterArrVal">R$ 0,00/ano</div></div>
-                <div class="metric-card" style="border-color: var(--green-success);"><div class="metric-label">Estúdios Ativos</div><div class="metric-value" style="color:white" id="masterAtivosVal">0</div></div>
+                <div class="metric-card" style="border-color: var(--green-success);"><div class="metric-label">Estúdios Ativos</div><div class="metric-value" style="color:var(--text-main)" id="masterAtivosVal">0</div></div>
                 <div class="metric-card" style="border-color: var(--danger);"><div class="metric-label">Aguardando Aprovação</div><div class="metric-value" style="color:var(--danger)" id="masterPendenteVal">0</div></div>
             </div>
 
             <div class="content-card" style="border-color: var(--gold-warning);">
                 <div class="card-header" style="color: var(--gold-warning);">
                     <span>👑 Gestão Executiva de Estúdios Cadastrados</span>
-                    <input type="text" id="filMasterBusca" placeholder="🔍 Buscar studio..." style="background:#0c101d; border:1px solid var(--card-border); color:white; padding:6px 12px; border-radius:8px; font-size:0.85rem;" oninput="renderMasterSaaS()">
+                    <input type="text" id="filMasterBusca" placeholder="🔍 Buscar studio..." style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px 12px; border-radius:8px; font-size:0.85rem;" oninput="renderMasterSaaS()">
                 </div>
                 <div class="table-responsive">
                     <table>
@@ -668,13 +730,31 @@
         </div>
     </main>
 
-    <!-- MODAIS E POPUPS -->
+    <!-- MODAL POPUP PARA BLOQUEIO DE HORÁRIO -->
+    <div class="modal-overlay" id="blockTimeModal">
+        <div class="modal-card">
+            <div class="modal-title">🔒 Bloqueio de Horário de Atendimento</div>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:15px;">Selecione o período e motivo para bloquear na grade da agenda:</p>
+            <div class="form-grid" style="text-align:left;">
+                <div class="input-group"><label>Data do Bloqueio</label><input type="date" id="blockDate"></div>
+                <div class="input-group"><label>Hora Início</label><input type="time" id="blockStart" value="12:00"></div>
+                <div class="input-group"><label>Hora Fim</label><input type="time" id="blockEnd" value="13:00"></div>
+                <div class="input-group"><label>Motivo</label><input type="text" id="blockReason" placeholder="Ex: Horário de Almoço / Curso"></div>
+            </div>
+            <div class="modal-actions" style="margin-top:15px;">
+                <button class="btn-modal-cancel" onclick="fecharModalBloqueioHorario()">Cancelar</button>
+                <button class="btn-modal-confirm" style="background:var(--danger);" onclick="confirmarBloqueioHorarioModal()">Confirmar Bloqueio</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAIS E POPUPS DIVERSOS -->
     <div class="modal-overlay" id="slotsModal">
         <div class="modal-card">
             <div class="modal-title" id="slotsTitle">Visão dos Slots do Dia</div>
             <div style="margin: 10px 0 15px;">
                 <label style="font-size:0.8rem; color:var(--text-muted); display:block; margin-bottom:5px;">Trocar Data da Visão:</label>
-                <input type="date" id="modalSlotsDataSel" style="background:#0c101d; border:1px solid var(--card-border); color:white; padding:8px; border-radius:8px;" onchange="renderGradeHorariosModal(this.value)">
+                <input type="date" id="modalSlotsDataSel" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:8px; border-radius:8px;" onchange="renderGradeHorariosModal(this.value)">
             </div>
             <div class="time-slots-grid" id="slotsContainer"></div>
             <div class="modal-actions" style="margin-top:20px;">
@@ -695,6 +775,9 @@
         let regSelectedPlan = "PRO";
         let onConfirmCallback = null;
 
+        let chartFinInstance = null;
+        let chartServInstance = null;
+
         function formatDateBR(dateStr) {
             if (!dateStr) return "-";
             const parts = dateStr.split('-');
@@ -702,7 +785,20 @@
             return dateStr;
         }
 
-        // ISOLAMENTO DE LOCALSTORAGE POR ESTÚDIO (VAZAMENTO ZERO)
+        /* SELEÇÃO DE TEMA VISUAL DE CORES */
+        function mudarTemaCores(themeKey) {
+            document.body.classList.remove('theme-rosegold', 'theme-purple');
+            if (themeKey === 'rosegold') document.body.classList.add('theme-rosegold');
+            if (themeKey === 'purple') document.body.classList.add('theme-purple');
+            localStorage.setItem('nailboss_preferred_theme', themeKey);
+            renderCharts();
+        }
+
+        const savedTheme = localStorage.getItem('nailboss_preferred_theme') || 'default';
+        document.getElementById('themeSelector').value = savedTheme;
+        mudarTemaCores(savedTheme);
+
+        // PERSISTÊNCIA NUVEM GLOBAL SINCRONIZADA
         function getTenantData(key, defaultData) {
             if (!currentTenantId) return defaultData;
             const raw = localStorage.getItem(`nailboss_${currentTenantId}_${key}`);
@@ -716,8 +812,9 @@
 
         let masterPrices = JSON.parse(localStorage.getItem('nailboss_master_prices')) || { PRO: 19.90, VIP: 39.90 };
 
+        /* CAMADA NUVEM CENTRALIZADA (CELULAR E COMPUTADOR COMPARTILHAM MESMA BASE) */
         let baseMasterSaaS = JSON.parse(localStorage.getItem('nailboss_global_master')) || [
-            { id: 1, estudio: "Studio Bella Unhas", email: "bella@unhas.com", whats: "11977776666", plano: "PRO", status: "ATIVO" },
+            { id: 1, estudio: "Studio Bella Unhas", email: "bella@unhas.com", whats: "11977776666", plano: "PRO", status: "AGUARDANDO_APROVACAO" },
             { id: 2, estudio: "Elegance Nails", email: "contato@elegance.com", whats: "11988885555", plano: "VIP", status: "ATIVO" }
         ];
 
@@ -729,6 +826,13 @@
         function saveMasterGlobal() {
             localStorage.setItem('nailboss_global_master', JSON.stringify(baseMasterSaaS));
             localStorage.setItem('nailboss_master_pagamentos', JSON.stringify(basePagamentosSaaS));
+        }
+
+        function syncFromCloudGlobal() {
+            const rawG = localStorage.getItem('nailboss_global_master');
+            if (rawG) baseMasterSaaS = JSON.parse(rawG);
+            const rawP = localStorage.getItem('nailboss_master_pagamentos');
+            if (rawP) basePagamentosSaaS = JSON.parse(rawP);
         }
 
         function navigateTo(viewId, element) {
@@ -748,6 +852,20 @@
             }
 
             applyPlanPermissions();
+            recarregarDadosCompletos();
+        }
+
+        function recarregarDadosCompletos() {
+            syncFromCloudGlobal();
+            if (currentRole === 'master') {
+                renderMasterSaaS();
+            } else {
+                renderTabelaClientes();
+                renderTabelaEstoque();
+                renderAgendaEFinanceiro();
+                renderDashboardData();
+                renderCrmAusentes();
+            }
         }
 
         function applyPlanPermissions() {
@@ -843,8 +961,10 @@
 
             if (!studio || !email) { showConfirm('Atenção', 'Informe o nome do studio e seu e-mail.', null, false); return; }
 
-            // CRIA CONTA ATIVA PARA PERMITIR DEGUSTAÇÃO E ENTRADA DIRETA NO CELULAR
-            baseMasterSaaS.push({ id: Date.now(), estudio: studio, email: email, whats: whats, plano: regSelectedPlan, status: "ATIVO" });
+            syncFromCloudGlobal();
+            
+            const novoItem = { id: Date.now(), estudio: studio, email: email, whats: whats, plano: regSelectedPlan, status: "AGUARDANDO_APROVACAO" };
+            baseMasterSaaS.push(novoItem);
             
             const valorPlano = regSelectedPlan === 'VIP' ? masterPrices.VIP : (regSelectedPlan === 'PRO' ? masterPrices.PRO : 0);
             if (valorPlano > 0) {
@@ -852,17 +972,15 @@
             }
 
             saveMasterGlobal();
-            currentTenantId = email.toLowerCase().replace(/[^a-z0-9]/g, '');
-            currentPlan = regSelectedPlan;
 
-            loginAs('studio', studio);
-
-            showConfirm('Bem-vinda ao NailBoss!', 'Seu cadastro está ativo! Você já pode utilizar todas as funções no celular e no computador.', () => {
+            showConfirm('Solicitação Enviada!', 'Seu cadastro foi gravado com sucesso! O seu acesso será liberado assim que o Master aprovar a conta.', () => {
                 if (valorPlano > 0) enviarComprovanteWhatsApp();
+                resetLoginStep();
             }, false);
         }
 
         function executeLogin() {
+            syncFromCloudGlobal();
             const email = document.getElementById('loginEmail').value.trim();
             const pass = document.getElementById('loginPassword').value.trim();
 
@@ -880,8 +998,15 @@
                     return;
                 }
 
+                if (user.status === 'AGUARDANDO_APROVACAO') {
+                    showConfirm('Aguardando Aprovação ⏳', 'Seu estúdio está aguardando liberação do administrador Master. Caso já tenha feito o PIX, envie o comprovante no WhatsApp.', () => {
+                        enviarComprovanteWhatsApp();
+                    }, true);
+                    return;
+                }
+
                 if (user.status === 'BLOQUEADO') {
-                    showConfirm('Acesso Bloqueado', 'Sua conta está suspensa. Entre em contato pelo WhatsApp.', null, false);
+                    showConfirm('Acesso Suspenso', 'Sua conta está suspensa. Entre em contato com o suporte.', null, false);
                     return;
                 }
 
@@ -908,13 +1033,7 @@
                 document.getElementById('nav-master-item').style.display = 'none';
                 document.getElementById('btnSidebarUpgrade').style.display = 'block';
                 applyPlanPermissions();
-                
-                // CARREGA DADOS ISOLADOS DO ESTÚDIO
-                renderTabelaClientes();
-                renderTabelaEstoque();
-                renderAgendaEFinanceiro();
-                renderDashboardData();
-                renderCrmAusentes();
+                recarregarDadosCompletos();
                 navigateTo('dash');
             }
         }
@@ -944,7 +1063,6 @@
             document.getElementById('customModal').style.display = 'none';
         };
 
-        /* CÁLCULO DE VALOR PENDENTE NA AGENDA */
         function atualizarPendenteForm() {
             const total = parseFloat(document.getElementById('agValor').value) || 0;
             const sinal = parseFloat(document.getElementById('agSinal').value) || 0;
@@ -952,7 +1070,35 @@
             document.getElementById('agPendente').value = `R$ ${pendente.toFixed(2).replace('.', ',')}`;
         }
 
-        /* CLIENTES (COM BOTÃO DE EXCLUSÃO) */
+        /* MODAL DE BLOQUEIO DE HORÁRIO */
+        function abrirModalBloqueioHorario() {
+            const dataAtual = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
+            document.getElementById('blockDate').value = dataAtual;
+            document.getElementById('blockTimeModal').style.display = 'flex';
+        }
+
+        function fecharModalBloqueioHorario() {
+            document.getElementById('blockTimeModal').style.display = 'none';
+        }
+
+        function confirmarBloqueioHorarioModal() {
+            const data = document.getElementById('blockDate').value;
+            const inicio = document.getElementById('blockStart').value;
+            const fim = document.getElementById('blockEnd').value;
+            const motivo = document.getElementById('blockReason').value || 'Horário Bloqueado';
+
+            if (!data || !inicio) { showConfirm('Atenção', 'Informe data e horário.', null, false); return; }
+
+            let agenda = getTenantData('agenda', []);
+            agenda.push({ id: Date.now(), data, horaInicio: inicio, horaFim: fim, cliente: "BLOQUEADO", servico: motivo, total: 0, sinal: 0, pendente: 0, quitado: true });
+            setTenantData('agenda', agenda);
+
+            fecharModalBloqueioHorario();
+            renderAgendaEFinanceiro();
+            showConfirm('Horário Bloqueado', `Bloqueio realizado para as ${inicio} em ${formatDateBR(data)}.`, null, false);
+        }
+
+        /* CLIENTES */
         function salvarCliente() {
             const nome = document.getElementById('cliNome').value;
             const whats = document.getElementById('cliWhats').value;
@@ -982,6 +1128,7 @@
 
         function renderTabelaClientes() {
             const tbody = document.getElementById('tbClientes');
+            if (!tbody) return;
             tbody.innerHTML = '';
             let list = getTenantData('clientes', []);
             if (list.length === 0) {
@@ -1009,7 +1156,7 @@
             let agenda = getTenantData('agenda', []);
             const itens = agenda.filter(a => a.cliente.toLowerCase() === nome.toLowerCase());
             let html = itens.length === 0 ? '<p>Nenhum atendimento registrado.</p>' : '';
-            itens.forEach(i => { html += `<div style="border-bottom:1px solid #1c2438; padding:8px 0;"><strong>Data:</strong> ${formatDateBR(i.data)}<br><strong>Serviço:</strong> ${i.servico}<br><strong>Total:</strong> R$ ${i.total.toFixed(2)}</div>`; });
+            itens.forEach(i => { html += `<div style="border-bottom:1px solid var(--card-border); padding:8px 0;"><strong>Data:</strong> ${formatDateBR(i.data)}<br><strong>Serviço:</strong> ${i.servico}<br><strong>Total:</strong> R$ ${i.total.toFixed(2)}</div>`; });
             document.getElementById('histContent').innerHTML = html;
             document.getElementById('historyModal').style.display = 'flex';
         }
@@ -1073,17 +1220,6 @@
             });
         }
 
-        function bloquearHorarioGrade() {
-            const data = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
-            const hora = document.getElementById('agHoraInicio').value;
-            showConfirm('Bloquear Horário', `Bloquear horário das ${hora} no dia ${formatDateBR(data)}?`, () => {
-                let agenda = getTenantData('agenda', []);
-                agenda.push({ id: Date.now(), data, horaInicio: hora, horaFim: hora, cliente: "BLOQUEADO", servico: "Intervalo / Indisponível", total: 0, sinal: 0, pendente: 0, quitado: true });
-                setTenantData('agenda', agenda);
-                renderAgendaEFinanceiro();
-            });
-        }
-
         function salvarAgendamento() {
             const data = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
             const horaInicio = document.getElementById('agHoraInicio').value;
@@ -1134,7 +1270,15 @@
             });
         }
 
-        /* TESOURARIA - LANÇAMENTO MANUAL & BAIXA ÚNICA */
+        function gerarLinkPublicoAgendamento() {
+            const studioName = document.getElementById('mobileStudioName').innerText;
+            const url = window.location.href;
+            showConfirm('Link de Agendamento', `Copie o link abaixo para enviar para suas clientes:\n\n${url}?agendar=${encodeURIComponent(studioName)}`, () => {
+                navigator.clipboard.writeText(`${url}?agendar=${encodeURIComponent(studioName)}`);
+            }, false);
+        }
+
+        /* TESOURARIA - LANÇAMENTO MANUAL & BAIXA */
         function salvarLancamentoDFC() {
             const tipo = document.getElementById('dfcTipo').value;
             const desc = document.getElementById('dfcDesc').value;
@@ -1184,6 +1328,8 @@
         function renderAgendaEFinanceiro() {
             const tbAgenda = document.getElementById('tbAgenda');
             const tbFin = document.getElementById('tbFinanceiro');
+            if (!tbAgenda || !tbFin) return;
+
             tbAgenda.innerHTML = '';
             tbFin.innerHTML = '';
 
@@ -1295,7 +1441,7 @@
             }
         }
 
-        /* DASHBOARD KPIS & RANKING */
+        /* DASHBOARD KPIS & GRÁFICOS VISUAIS CHART.JS */
         function renderDashboardData() {
             let agenda = getTenantData('agenda', []);
             let dfc = getTenantData('dfc', []);
@@ -1337,11 +1483,68 @@
             document.getElementById('dashTaxaInadimplencia').innerText = `${taxaInad.toFixed(1)}%`;
 
             const tbServ = document.getElementById('tbDashRankingServicos');
-            tbServ.innerHTML = '';
-            Object.keys(servicosCount).forEach(s => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${s}</td><td style="color:var(--green-success)">R$ ${servicosCount[s].toFixed(2)}</td>`;
-                tbServ.appendChild(tr);
+            if (tbServ) {
+                tbServ.innerHTML = '';
+                Object.keys(servicosCount).forEach(s => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${s}</td><td style="color:var(--green-success)">R$ ${servicosCount[s].toFixed(2)}</td>`;
+                    tbServ.appendChild(tr);
+                });
+            }
+
+            renderCharts(bruto, liquidado, pendente, servicosCount);
+        }
+
+        function renderCharts(bruto = 0, liquidado = 0, pendente = 0, servicosCount = {}) {
+            const ctxFin = document.getElementById('chartFinanceiro');
+            const ctxServ = document.getElementById('chartServicos');
+            if (!ctxFin || !ctxServ) return;
+
+            if (chartFinInstance) chartFinInstance.destroy();
+            if (chartServInstance) chartServInstance.destroy();
+
+            // GRÁFICO 1: BARRAS
+            chartFinInstance = new Chart(ctxFin, {
+                type: 'bar',
+                data: {
+                    labels: ['Bruto', 'Liquidado', 'Pendente'],
+                    datasets: [{
+                        label: 'Valor (R$)',
+                        data: [bruto, liquidado, pendente],
+                        backgroundColor: ['#ff2a85', '#00e676', '#ffb800'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                    }
+                }
+            });
+
+            // GRÁFICO 2: ROSCA
+            const servLabels = Object.keys(servicosCount);
+            const servData = Object.values(servicosCount);
+
+            chartServInstance = new Chart(ctxServ, {
+                type: 'doughnut',
+                data: {
+                    labels: servLabels.length ? servLabels : ['Sem dados'],
+                    datasets: [{
+                        data: servData.length ? servData : [1],
+                        backgroundColor: ['#ff2a85', '#00e676', '#ffb800', '#00b0ff', '#a855f7'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', font: { size: 10 } } } }
+                }
             });
         }
 
@@ -1409,6 +1612,8 @@
         function renderTabelaEstoque() {
             const tbody = document.getElementById('tbEstoque');
             const checkCont = document.getElementById('checkEstoqueProdutos');
+            if (!tbody || !checkCont) return;
+
             tbody.innerHTML = '';
             checkCont.innerHTML = '';
 
@@ -1448,10 +1653,13 @@
             document.getElementById('resPrecoMacroSugerido').innerText = `R$ ${precoIdeal.toFixed(2).replace('.', ',')}`;
         }
 
-        /* PAINEL MASTER SAAS 2.0 (COM EXCLUSÃO DE STUDIO) */
+        /* PAINEL MASTER SAAS 2.0 (COM APROVAÇÃO) */
         function renderMasterSaaS() {
+            syncFromCloudGlobal();
             const tbody = document.getElementById('tbMasterClientes');
             const tbPag = document.getElementById('tbMasterPagamentosSaaS');
+            if (!tbody || !tbPag) return;
+
             const busca = document.getElementById('filMasterBusca') ? document.getElementById('filMasterBusca').value.toLowerCase() : '';
             
             tbody.innerHTML = '';
@@ -1473,7 +1681,7 @@
                 }
 
                 const tr = document.createElement('tr');
-                const selectPlano = `<select style="background:#0c101d; color:white; border:1px solid var(--card-border); padding:4px; border-radius:6px; font-size:0.75rem;" onchange="alterarPlanoEstudioMaster(${m.id}, this.value)">
+                const selectPlano = `<select style="background:var(--input-bg); color:var(--text-main); border:1px solid var(--card-border); padding:4px; border-radius:6px; font-size:0.75rem;" onchange="alterarPlanoEstudioMaster(${m.id}, this.value)">
                     <option value="STARTER" ${m.plano === 'STARTER' ? 'selected' : ''}>STARTER (R$ 0)</option>
                     <option value="PRO" ${m.plano === 'PRO' ? 'selected' : ''}>PRO (R$ ${masterPrices.PRO.toFixed(2)})</option>
                     <option value="VIP" ${m.plano === 'VIP' ? 'selected' : ''}>VIP (R$ ${masterPrices.VIP.toFixed(2)})</option>
@@ -1481,7 +1689,7 @@
 
                 const btnStatusAcao = m.status === 'ATIVO'
                     ? `<button class="btn-action btn-gold" style="padding:4px 8px; font-size:0.72rem;" onclick="alterarStatusEstudioMaster(${m.id}, 'BLOQUEADO')">🔒 Bloquear</button>`
-                    : `<button class="btn-action btn-green" style="padding:4px 8px; font-size:0.72rem;" onclick="alterarStatusEstudioMaster(${m.id}, 'ATIVO')">✅ Aprovar</button>`;
+                    : `<button class="btn-action btn-green" style="padding:4px 8px; font-size:0.72rem;" onclick="alterarStatusEstudioMaster(${m.id}, 'ATIVO')">✅ Aprovar / Liberar</button>`;
 
                 const btnExcluir = `<button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="excluirStudioMaster(${m.id})">🗑️ Excluir</button>`;
                 const btnWhats = `<button class="btn-action" style="padding:4px 8px; font-size:0.72rem; background:#25D366; color:white;" onclick="abrirWhatsEstudio('${m.whats}', '${m.estudio}')">💬 Whats</button>`;
