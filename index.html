@@ -71,6 +71,25 @@
         #public-booking-screen { position: fixed; inset: 0; background: var(--bg-dark); z-index: 9000; overflow-y: auto; padding: 20px 15px; display: none; }
         .booking-container { max-width: 500px; margin: 0 auto; background: var(--card-bg); border: 1px solid var(--pink-neon); border-radius: 24px; padding: 24px; box-shadow: 0 0 40px rgba(255, 42, 133, 0.2); }
 
+        /* BANNER DE NOTIFICAÇÃO EM TEMPO REAL */
+        #toastNotification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            background: var(--card-bg);
+            border: 2px solid var(--green-success);
+            border-radius: 16px;
+            padding: 16px 20px;
+            box-shadow: 0 10px 30px rgba(0, 230, 118, 0.3);
+            display: none;
+            align-items: center;
+            gap: 14px;
+            max-width: 380px;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
         /* Sidebar Lateral (Desktop) */
         .sidebar { width: 260px; background-color: var(--sidebar-bg); border-right: 1px solid var(--card-border); padding: 20px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; transition: all 0.3s ease; }
         .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 25px; }
@@ -139,13 +158,14 @@
         .badge-green { background: rgba(0,230,118,0.15); color: var(--green-success); border: 1px solid rgba(0,230,118,0.3); }
         .badge-gold { background: rgba(255,184,0,0.15); color: var(--gold-warning); border: 1px solid rgba(255,184,0,0.3); }
         .badge-danger { background: rgba(255,77,77,0.15); color: var(--danger); border: 1px solid rgba(255,77,77,0.3); }
+        .badge-link { background: rgba(168,85,247,0.2); color: #a855f7; border: 1px solid #a855f7; }
 
         .time-slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; margin-top: 15px; }
         .time-slot-card { background: var(--input-bg); border: 1px solid var(--card-border); padding: 10px; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.2s; }
         .time-slot-card:hover { border-color: var(--pink-neon); }
         .time-slot-card.selected { border-color: var(--green-success); background: rgba(0, 230, 118, 0.15); color: var(--green-success); font-weight: bold; }
-        .time-slot-card.occupied { border-color: var(--pink-neon); background: rgba(255, 42, 133, 0.12); cursor: not-allowed; opacity: 0.6; }
-        .time-slot-card.blocked { border-color: var(--danger); background: rgba(255, 77, 77, 0.25); color: #ff8888; font-weight: bold; cursor: not-allowed; opacity: 0.6; }
+        .time-slot-card.occupied { border-color: var(--pink-neon); background: rgba(255, 42, 133, 0.12); cursor: not-allowed; opacity: 0.8; }
+        .time-slot-card.blocked { border-color: var(--danger); background: rgba(255, 77, 77, 0.25); color: #ff8888; font-weight: bold; cursor: not-allowed; opacity: 0.8; }
 
         /* MODAIS */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; z-index: 6000; padding: 16px; }
@@ -180,6 +200,16 @@
     </style>
 </head>
 <body>
+
+    <!-- NOTIFICAÇÃO FLUTUANTE EM TEMPO REAL DENTRO DO APP -->
+    <div id="toastNotification">
+        <div style="font-size: 2rem;">📲</div>
+        <div>
+            <strong style="color:var(--green-success); font-size:0.9rem; display:block;">Novo Agendamento Via Link!</strong>
+            <span id="toastMsg" style="font-size:0.8rem; color:var(--text-main);">Cliente agendou um horário.</span>
+        </div>
+        <button onclick="fecharToast()" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; margin-left:auto;">✕</button>
+    </div>
 
     <!-- OVERLAY TELA PÚBLICA DE AGENDAMENTO CLIENTE -->
     <div id="public-booking-screen">
@@ -535,7 +565,7 @@
         <div id="view-agenda" class="view-section">
             <div class="content-card">
                 <div class="card-header">
-                    <span>📅 Novo Agendamento</span>
+                    <span>📅 Novo Agendamento (Balcão)</span>
                     <button class="btn-action btn-gold" style="font-size:0.75rem; padding:6px 12px;" onclick="gerarLinkPublicoAgendamento()">📲 Link de Agendamento</button>
                 </div>
                 <div class="form-grid">
@@ -595,14 +625,14 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Data/Hora</th>
-                                <th>Cliente</th>
+                                <th>Origem / Data</th>
+                                <th>Cliente / Whats</th>
                                 <th>Serviço</th>
                                 <th>Valor Total</th>
-                                <th>Sinal Hoje</th>
+                                <th>Sinal PIX</th>
                                 <th>Pendente Dia</th>
                                 <th>Status Atendimento</th>
-                                <th>Ações</th>
+                                <th>Ações de Gestão</th>
                             </tr>
                         </thead>
                         <tbody id="tbAgenda"></tbody>
@@ -891,10 +921,13 @@
         let chartFinInstance = null;
         let chartServInstance = null;
 
-        /* TRANSMISSÃO DE DADOS MULTI-ABA E DISPOSITIVOS */
+        /* TRANSMISSÃO DE DADOS MULTI-ABA E NOTIFICAÇÃO EM TEMPO REAL */
         const cloudChannel = new BroadcastChannel('nailboss_sync_channel');
         cloudChannel.onmessage = (event) => {
-            if (event.data === 'SYNC_ALL') {
+            if (event.data && event.data.type === 'NEW_WEB_BOOKING') {
+                dispararNotificacaoStudio(event.data.data);
+                recarregarDadosCompletos();
+            } else if (event.data === 'SYNC_ALL') {
                 recarregarDadosCompletos();
             }
         };
@@ -903,9 +936,42 @@
             recarregarDadosCompletos();
         });
 
-        function notifyCloudSync() {
-            try { cloudChannel.postMessage('SYNC_ALL'); } catch (e) {}
+        function notifyCloudSync(dataNotif = null) {
+            try {
+                if (dataNotif) {
+                    cloudChannel.postMessage({ type: 'NEW_WEB_BOOKING', data: dataNotif });
+                } else {
+                    cloudChannel.postMessage('SYNC_ALL');
+                }
+            } catch (e) {}
             recarregarDadosCompletos();
+        }
+
+        function dispararNotificacaoStudio(info) {
+            const toast = document.getElementById('toastNotification');
+            const msg = document.getElementById('toastMsg');
+            if (toast && msg) {
+                msg.innerHTML = `<strong>${info.cliente}</strong> agendou <strong>${info.servico}</strong> para <strong>${formatDateBR(info.data)} às ${info.horaInicio}</strong>!`;
+                toast.style.display = 'flex';
+                
+                // Toca alerta sonoro discreto do navegador se permitido
+                try {
+                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    const osc = audioCtx.createOscillator();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+                    osc.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.3);
+                } catch(e) {}
+
+                setTimeout(() => { fecharToast(); }, 12000);
+            }
+        }
+
+        function fecharToast() {
+            const toast = document.getElementById('toastNotification');
+            if (toast) toast.style.display = 'none';
         }
 
         function formatDateBR(dateStr) {
@@ -938,10 +1004,10 @@
             return raw ? JSON.parse(raw) : defaultData;
         }
 
-        function setTenantData(key, data) {
+        function setTenantData(key, data, notifData = null) {
             if (!currentTenantId) return;
             localStorage.setItem(`nailboss_${currentTenantId}_${key}`, JSON.stringify(data));
-            notifyCloudSync();
+            notifyCloudSync(notifData);
         }
 
         let masterPrices = JSON.parse(localStorage.getItem('nailboss_master_prices')) || { PRO: 19.90, VIP: 39.90 };
@@ -1126,21 +1192,35 @@
             const sinalVal = Math.min(30, totalVal);
             const pendenteVal = Math.max(0, totalVal - sinalVal);
 
-            // Grava a reserva direta no banco do studio
+            // Grava a reserva direta no banco do studio com marcação de Link Público
             let agenda = getTenantData('agenda', []);
             let dfc = getTenantData('dfc', []);
 
             const agId = Date.now();
-            agenda.push({ id: agId, data, horaInicio: selectedPublicSlotTime, cliente: nome, servico: servicoSelect, total: totalVal, sinal: sinalVal, pendente: pendenteVal, quitado: false });
+            const novoAgendamento = {
+                id: agId,
+                data: data,
+                horaInicio: selectedPublicSlotTime,
+                cliente: nome,
+                whats: whats,
+                servico: servicoSelect,
+                total: totalVal,
+                sinal: sinalVal,
+                pendente: pendenteVal,
+                quitado: false,
+                origemLink: true
+            };
+
+            agenda.push(novoAgendamento);
 
             if (sinalVal > 0) dfc.push({ id: Date.now(), agId: agId, data: data, desc: `Sinal PIX Web - ${nome} (${servicoSelect})`, tipo: "receita", valor: sinalVal, status: "PENDENTE" });
             if (pendenteVal > 0) dfc.push({ id: Date.now() + 1, agId: agId, data: data, desc: `Saldo Pendente Web - ${nome} (${servicoSelect})`, tipo: "receita", valor: pendenteVal, status: "PENDENTE" });
 
-            setTenantData('agenda', agenda);
+            setTenantData('agenda', agenda, novoAgendamento);
             setTenantData('dfc', dfc);
 
             // Abre o WhatsApp do Studio para confirmar e mandar o comprovante PIX
-            const msgWhatsApp = `Olá! Fiz meu agendamento no site!\n\n👤 *Cliente:* ${nome}\n💅 *Serviço:* ${servicoSelect}\n📅 *Data:* ${formatDateBR(data)} às ${selectedPublicSlotTime}\n💰 *Valor Sinal PIX:* R$ ${sinalVal.toFixed(2)}\n🔑 *Chave PIX:* 55-11-94788-7105\n\nSegue em anexo o meu comprovante de pagamento do Sinal PIX para confirmar a reserva!`;
+            const msgWhatsApp = `Olá! Fiz meu agendamento no site!\n\n👤 *Cliente:* ${nome}\n📱 *WhatsApp:* ${whats}\n💅 *Serviço:* ${servicoSelect}\n📅 *Data:* ${formatDateBR(data)} às ${selectedPublicSlotTime}\n💰 *Valor Sinal PIX:* R$ ${sinalVal.toFixed(2)}\n🔑 *Chave PIX:* 55-11-94788-7105\n\nSegue em anexo o meu comprovante de pagamento do Sinal PIX para confirmar a reserva!`;
             
             window.location.href = `https://wa.me/5511947887105?text=${encodeURIComponent(msgWhatsApp)}`;
         }
@@ -1746,15 +1826,21 @@
                 if (filAgAte && item.data > filAgAte) return;
 
                 const trAg = document.createElement('tr');
+                const tagOrigem = item.origemLink ? '<span class="badge-status badge-link">⚡ Link Público</span>' : '<span class="badge-status badge-gold">🏢 Balcão</span>';
+                
+                const btnWhatsConfirm = item.whats 
+                    ? `<button class="btn-action" style="padding:4px 8px; font-size:0.72rem; background:#25D366; color:white;" onclick="confirmarAgendamentoWhats('${item.whats}', '${item.cliente}', '${item.data}', '${item.horaInicio}', '${item.servico}')">💬 Whats</button>`
+                    : '';
+
                 trAg.innerHTML = `
-                    <td>${formatDateBR(item.data)} (${item.horaInicio})</td>
-                    <td>${item.cliente}</td>
+                    <td>${tagOrigem}<br><small style="font-weight:bold;">${formatDateBR(item.data)} (${item.horaInicio})</small></td>
+                    <td><strong>${item.cliente}</strong><br><small style="color:var(--text-muted);">${item.whats || ''}</small></td>
                     <td><strong>${item.servico}</strong></td>
                     <td>R$ ${item.total.toFixed(2)}</td>
                     <td style="color:var(--green-success)">R$ ${item.sinal.toFixed(2)}</td>
                     <td style="color:var(--gold-warning)">R$ ${item.pendente.toFixed(2)}</td>
                     <td>${item.quitado ? '<span class="badge-status badge-green">Liquidado ✓</span>' : '<span class="badge-status badge-gold">Pendente Caixa</span>'}</td>
-                    <td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="excluirAgendamento(${item.id})">Remover</button></td>
+                    <td style="display:flex; gap:4px;">${btnWhatsConfirm} <button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="excluirAgendamento(${item.id})">Remover</button></td>
                 `;
                 tbAgenda.appendChild(trAg);
             });
@@ -1808,6 +1894,12 @@
             document.getElementById('finSaldoLiquido').innerText = `R$ ${(caixaTotal - despesasTotal).toFixed(2).replace('.', ',')}`;
 
             atualizarConciliacaoPeriodo();
+        }
+
+        function confirmarAgendamentoWhats(whats, cliente, data, hora, servico) {
+            const num = whats.replace(/[^0-9]/g, '');
+            const msg = `Olá ${cliente}! Seu agendamento para *${servico}* no dia *${formatDateBR(data)} às ${hora}* foi confirmado pelo studio! 💅✨ Aguardamos você!`;
+            window.open(`https://wa.me/55${num}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         /* CRM DE CLIENTES AUSENTES */
