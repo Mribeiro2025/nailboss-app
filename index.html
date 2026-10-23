@@ -70,6 +70,19 @@
         .feature-card:hover { border-color: var(--pink-neon); transform: translateY(-6px); box-shadow: 0 10px 30px var(--pink-glow); }
         .feature-icon { width: 52px; height: 52px; background: rgba(255, 42, 133, 0.12); border: 1px solid var(--pink-neon); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 18px; }
 
+        /* SEÇÃO FAQ - PRINCIPAIS DÚVIDAS */
+        .faq-section { max-width: 850px; margin: 60px auto 40px; text-align: left; }
+        .faq-header { text-align: center; margin-bottom: 30px; }
+        .faq-header h2 { font-size: 2rem; font-weight: 800; color: var(--text-main); }
+        .faq-header h2 span { color: var(--pink-neon); }
+        .faq-item { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; margin-bottom: 12px; overflow: hidden; transition: 0.2s; }
+        .faq-item:hover { border-color: var(--pink-neon); }
+        .faq-question { padding: 18px 22px; font-weight: bold; font-size: 1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--text-main); }
+        .faq-answer { padding: 0 22px 18px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; display: none; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 10px; padding-top: 14px; }
+        .faq-toggle-icon { font-size: 1.2rem; color: var(--pink-neon); transition: transform 0.3s; }
+        .faq-item.active .faq-answer { display: block; }
+        .faq-item.active .faq-toggle-icon { transform: rotate(45deg); }
+
         /* OVERLAY DE LOGIN / REGISTRO */
         #login-screen { position: fixed; inset: 0; background: rgba(9, 13, 22, 0.97); backdrop-filter: blur(14px); z-index: 8500; display: none; align-items: center; justify-content: center; padding: 16px; }
         .login-card-v2 { background: var(--card-bg); border: 1px solid var(--pink-glow); padding: 32px; border-radius: 24px; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 0 50px rgba(255, 42, 133, 0.18); max-height: 92vh; overflow-y: auto; }
@@ -266,6 +279,65 @@
                     <p style="font-size:0.85rem; color:var(--text-muted);">Detete automaticamente clientes sem retorno há mais de 20 dias e envie mensagens no WhatsApp.</p>
                 </div>
             </div>
+
+            <!-- NOVO BLOCO: PRINCIPAIS DÚVIDAS (FAQ) -->
+            <div class="faq-section">
+                <div class="faq-header">
+                    <h2>❓ Principais <span>Dúvidas</span> (FAQ)</h2>
+                    <p style="color:var(--text-muted); font-size:0.9rem; margin-top:6px;">Tudo o que você precisa saber para transformar a gestão do seu studio.</p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Como funciona o teste grátis por 14 dias?</span>
+                        <span class="faq-toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Você cria sua conta no plano STARTER em segundos sem precisar cadastrar cartão de crédito. Durante 14 dias, você terá acesso completo a todas as ferramentas do sistema para experimentar na prática.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Preciso instalar algum aplicativo no celular ou computador?</span>
+                        <span class="faq-toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Não! O NailBoss Pro é 100% em nuvem e funciona direto no navegador do seu celular, tablet ou computador. Você pode acessar de qualquer lugar com seus dados sincronizados em tempo real.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Como a cobrança do Sinal PIX reduz o não-comparecimento?</span>
+                        <span class="faq-toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Quando a cliente faz a reserva pelo seu link online, ela é orientada a pagar uma taxa de reserva (sinal). Isso compromete a cliente com o horário e elimina os "furos" de última hora. Você também pode desativar essa cobrança quando quiser nas configurações.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Como funciona o CRM de Resgate de Clientes Sumidas?</span>
+                        <span class="faq-toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        O sistema monitora automaticamente a data do último atendimento de cada cliente. Se ela não retornar em 20 dias, o NailBoss Pro avisa e gera um botão com mensagem personalizada pronta para envio direto no WhatsApp dela.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>O que é a Precificação Combinada por Insumos (CMV)?</span>
+                        <span class="faq-toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        É uma ferramenta exclusiva que calcula o custo exato de cada gota de gel, preparador ou pó utilizado em cada serviço. O sistema calcula o Custo de Mercadoria Vendida (CMV) e sugere o valor ideal de venda para garantir o seu lucro líquido.
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -1027,6 +1099,12 @@
             if (!dateStr) return "-";
             const parts = dateStr.split('-');
             return parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : dateStr;
+        }
+
+        // FUNÇÃO INTERATIVA PARA EXPANDIR AS DÚVIDAS (FAQ)
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            faqItem.classList.toggle('active');
         }
 
         // ==========================================
