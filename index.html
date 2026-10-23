@@ -51,20 +51,28 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-dark); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; transition: background-color 0.3s, color 0.3s; flex-direction: column; }
-        /* TELA HOME LANDING PAGE ELEGANTE */
-        #landing-page { position: fixed; inset: 0; background: var(--bg-dark); z-index: 8000; overflow-y: auto; display: flex; flex-direction: column; }
-        .hero-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 1px solid var(--card-border); background: var(--sidebar-bg); }
-        .hero-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; text-align: center; }
-        .hero-title { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 16px; }
-        .hero-title span { color: var(--pink-neon); text-shadow: 0 0 20px var(--pink-glow); }
-        .hero-subtitle { font-size: 1.15rem; color: var(--text-muted); max-width: 680px; margin: 0 auto 35px; line-height: 1.6; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 40px; text-align: left; }
-        .feature-card { background: var(--card-bg); border: 1px solid var(--card-border); padding: 26px; border-radius: 20px; transition: 0.3s; }
-        .feature-card:hover { border-color: var(--pink-neon); transform: translateY(-4px); }
-        .feature-icon { width: 48px; height: 48px; background: rgba(255, 42, 133, 0.12); border: 1px solid var(--pink-neon); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 16px; }
+        
+        /* TELA HOME / LANDING PAGE PREMIUM REFORMULADA */
+        #landing-page { position: fixed; inset: 0; background: radial-gradient(circle at top center, #1a0b2e 0%, var(--bg-dark) 70%); z-index: 8000; overflow-y: auto; display: flex; flex-direction: column; }
+        .hero-nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 40px; border-bottom: 1px solid var(--card-border); background: rgba(16, 21, 36, 0.7); backdrop-filter: blur(12px); position: sticky; top:0; z-index: 10; }
+        .hero-container { max-width: 1150px; margin: 0 auto; padding: 50px 20px; text-align: center; }
+        .hero-badge { background: linear-gradient(135deg, rgba(255, 42, 133, 0.2), rgba(168, 85, 247, 0.2)); color: var(--pink-neon); border: 1px solid var(--pink-neon); padding: 8px 20px; border-radius: 30px; font-size: 0.82rem; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; box-shadow: 0 0 20px var(--pink-glow); }
+        .hero-title { font-size: 3.2rem; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 20px; line-height: 1.15; }
+        .hero-title span { background: linear-gradient(135deg, var(--pink-neon), #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-subtitle { font-size: 1.2rem; color: var(--text-muted); max-width: 750px; margin: 0 auto 35px; line-height: 1.6; }
+        
+        /* SIMULADOR DE GANHOS NA LANDING PAGE */
+        .calculator-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 24px; padding: 30px; max-width: 700px; margin: 0 auto 50px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); text-align: left; }
+        .calc-slider { width: 100%; margin: 15px 0; accent-color: var(--pink-neon); }
+        
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 20px; text-align: left; }
+        .feature-card { background: rgba(21, 27, 46, 0.6); backdrop-filter: blur(10px); border: 1px solid var(--card-border); padding: 28px; border-radius: 20px; transition: all 0.3s ease; }
+        .feature-card:hover { border-color: var(--pink-neon); transform: translateY(-6px); box-shadow: 0 10px 30px var(--pink-glow); }
+        .feature-icon { width: 52px; height: 52px; background: rgba(255, 42, 133, 0.12); border: 1px solid var(--pink-neon); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 18px; }
+
         /* OVERLAY DE LOGIN / REGISTRO */
         #login-screen { position: fixed; inset: 0; background: rgba(9, 13, 22, 0.97); backdrop-filter: blur(14px); z-index: 8500; display: none; align-items: center; justify-content: center; padding: 16px; }
-        .login-card-v2 { background: var(--card-bg); border: 1px solid var(--pink-glow); padding: 30px; border-radius: 24px; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 0 50px rgba(255, 42, 133, 0.18); max-height: 92vh; overflow-y: auto; }
+        .login-card-v2 { background: var(--card-bg); border: 1px solid var(--pink-glow); padding: 32px; border-radius: 24px; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 0 50px rgba(255, 42, 133, 0.18); max-height: 92vh; overflow-y: auto; }
         .login-icon-box { width: 64px; height: 64px; background: linear-gradient(135deg, var(--pink-neon), #d6005d); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 2rem; box-shadow: 0 8px 25px rgba(255, 42, 133, 0.4); }
         .login-card-v2 h2 { color: var(--text-main); font-size: 1.8rem; font-weight: 800; }
         .login-card-v2 p { color: var(--text-muted); font-size: 0.85rem; margin: 6px 0 20px; }
@@ -77,7 +85,7 @@
         #public-booking-screen { position: fixed; inset: 0; background: var(--bg-dark); z-index: 9000; overflow-y: auto; padding: 20px 15px; display: none; }
         .booking-container { max-width: 500px; margin: 0 auto; background: var(--card-bg); border: 1px solid var(--pink-neon); border-radius: 24px; padding: 24px; box-shadow: 0 0 40px rgba(255, 42, 133, 0.2); }
         
-        /* BANNER DE NOTIFICAÇÃO EM TEMPO REAL */
+        /* TOAST NOTIFICATION */
         #toastNotification {
             position: fixed; top: 20px; right: 20px; z-index: 9999; background: var(--card-bg); border: 2px solid var(--green-success); border-radius: 16px; padding: 16px 20px; box-shadow: 0 10px 30px rgba(0, 230, 118, 0.3); display: none; align-items: center; gap: 14px; max-width: 380px; animation: slideIn 0.3s ease-out;
         }
@@ -85,7 +93,6 @@
         
         /* APP LAYOUT */
         #app-layout { display: none; min-height: 100vh; flex-direction: row; width: 100%; }
-        /* Sidebar Lateral (Desktop) */
         .sidebar { width: 260px; background-color: var(--sidebar-bg); border-right: 1px solid var(--card-border); padding: 20px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; transition: all 0.3s ease; }
         .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 25px; }
         .brand-logo { width: 38px; height: 38px; background: var(--pink-neon); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 1.1rem; }
@@ -100,33 +107,26 @@
         .user-status { background: var(--card-bg); padding: 12px; border-radius: 10px; font-size: 0.8rem; color: var(--text-muted); border: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; }
         .btn-logout { background: transparent; border: 1px solid var(--danger); color: var(--danger); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
         
-        /* Menu Flutuante Mobile (Bottom Nav) */
         .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background: var(--sidebar-bg); backdrop-filter: blur(16px); border-top: 1px solid var(--card-border); z-index: 4000; justify-content: space-around; align-items: center; padding: 0 4px; }
         .mobile-nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.65rem; font-weight: 600; text-decoration: none; border: none; background: transparent; gap: 3px; flex: 1; height: 100%; cursor: pointer; }
         .mobile-nav-btn.active { color: var(--pink-neon); font-weight: 800; }
         .mobile-nav-icon { font-size: 1.2rem; }
-        
-        /* Top Bar Mobile */
         .mobile-top-bar { display: none; justify-content: space-between; align-items: center; background: var(--sidebar-bg); padding: 10px 14px; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 3900; }
         
-        /* Main Content */
         .main-content { flex: 1; padding: 25px; overflow-y: auto; position: relative; padding-bottom: 80px; }
         .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 12px; }
         .header-title h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.5px; }
         .header-title h1 span { color: var(--pink-neon); }
-        .status-pill { background: rgba(0, 230, 118, 0.1); color: var(--green-success); border: 1px solid var(--green-success); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
         
-        /* BANNER DE BLOQUEIO DE PLANO */
         .plan-lock-overlay { position: absolute; inset: 0; background: rgba(9, 13, 22, 0.90); backdrop-filter: blur(8px); z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; border-radius: 16px; border: 1px dashed var(--gold-warning); }
         .plan-lock-card { max-width: 400px; background: var(--card-bg); padding: 28px; border-radius: 20px; border: 1px solid var(--card-border); box-shadow: 0 10px 35px rgba(0,0,0,0.6); }
-        
-        /* Cards & Metrics */
+
         .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 25px; }
         .metric-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 18px; transition: transform 0.2s; }
         .metric-card:hover { transform: translateY(-2px); }
         .metric-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         .metric-value { font-size: 1.55rem; font-weight: 800; margin: 8px 0 2px; }
-        .content-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 22px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+        .content-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 22px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); position: relative; }
         .card-header { color: var(--pink-neon); font-size: 1.05rem; font-weight: 800; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 18px; }
@@ -134,13 +134,14 @@
         .input-group input, .input-group select { width: 100%; background: var(--input-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 11px 13px; color: var(--text-main); font-size: 0.9rem; outline: none; transition: 0.2s; }
         .input-group input:focus, .input-group select:focus { border-color: var(--pink-neon); box-shadow: 0 0 0 2px var(--pink-glow); }
         
-        .btn-action { background: linear-gradient(135deg, #ff2a85, #d6005d); color: white; border: none; padding: 11px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.3px; transition: 0.2s; }
+        .btn-action { background: linear-gradient(135deg, #ff2a85, #d6005d); color: white; border: none; padding: 11px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.3px; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
         .btn-action:hover { opacity: 0.92; transform: scale(0.99); }
         .btn-green { background: linear-gradient(135deg, #00e676, #00b0ff); color: #000; }
         .btn-gold { background: linear-gradient(135deg, #ffb800, #ff8c00); color: #000; }
         .btn-danger { background: var(--danger); color: white; }
+        .btn-quick-filter { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-muted); padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; font-weight: 600; }
+        .btn-quick-filter:hover { border-color: var(--pink-neon); color: var(--text-main); }
         
-        /* Table Responsiveness */
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.88rem; min-width: 600px; }
         th { text-align: left; padding: 12px 10px; color: var(--text-muted); border-bottom: 1px solid var(--card-border); font-size: 0.72rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
@@ -150,28 +151,26 @@
         .badge-gold { background: rgba(255,184,0,0.15); color: var(--gold-warning); border: 1px solid rgba(255,184,0,0.3); }
         .badge-danger { background: rgba(255,77,77,0.15); color: var(--danger); border: 1px solid rgba(255,77,77,0.3); }
         .badge-link { background: rgba(168,85,247,0.2); color: #a855f7; border: 1px solid #a855f7; }
+        
         .time-slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; margin-top: 15px; }
-        .time-slot-card { background: var(--input-bg); border: 1px solid var(--card-border); padding: 10px; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .time-slot-card { background: var(--input-bg); border: 1px solid var(--card-border); padding: 10px; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.2s; font-size:0.8rem; }
         .time-slot-card:hover { border-color: var(--pink-neon); }
         .time-slot-card.selected { border-color: var(--green-success); background: rgba(0, 230, 118, 0.15); color: var(--green-success); font-weight: bold; }
         .time-slot-card.occupied { border-color: var(--pink-neon); background: rgba(255, 42, 133, 0.12); cursor: not-allowed; opacity: 0.8; }
         .time-slot-card.blocked { border-color: var(--danger); background: rgba(255, 77, 77, 0.25); color: #ff8888; font-weight: bold; cursor: not-allowed; opacity: 0.8; }
-        
-        /* MODAIS */
+
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; z-index: 9500; padding: 16px; }
         .modal-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 25px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
         .modal-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; color: var(--pink-neon); }
         .modal-msg { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 20px; line-height: 1.4; }
         .modal-actions { display: flex; gap: 10px; justify-content: center; }
-        .btn-modal-cancel { background: transparent; border: 1px solid var(--card-border); color: var(--text-muted); padding: 10px 18px; border-radius: 10px; cursor: pointer; font-weight: 600; }
-        .btn-modal-confirm { background: var(--pink-neon); color: white; border: none; padding: 10px 18px; border-radius: 10px; cursor: pointer; font-weight: bold; }
         
-        /* PLANOS GRID */
         .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 15px; }
         .plan-card { background: var(--input-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 16px; text-align: center; transition: 0.3s; cursor: pointer; }
         .plan-card.highlight { border-color: var(--pink-neon); box-shadow: 0 0 20px rgba(255, 42, 133, 0.2); }
         .plan-card.selected { border-color: var(--green-success); background: rgba(0, 230, 118, 0.08); }
         .plan-price { font-size: 1.35rem; font-weight: 800; color: var(--pink-neon); margin: 6px 0; }
+
         .view-section { display: none; animation: fadeIn 0.25s ease-in-out; }
         .view-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -184,67 +183,92 @@
             .main-content { padding: 15px; padding-bottom: 90px; }
             .metrics-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
             .form-grid { grid-template-columns: 1fr; }
-            .top-header { display: none; }
-            .hero-nav { padding: 15px 20px; }
-            .hero-title { font-size: 2rem; }
+            .hero-title { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
-    <!-- NOTIFICAÇÃO FLUTUANTE EM TEMPO REAL DENTRO DO APP -->
+    <!-- TOAST NOTIFICATION -->
     <div id="toastNotification">
-        <div style="font-size: 2rem;">📲</div>
+        <div style="font-size: 1.8rem;" id="toastIcon">📲</div>
         <div>
-            <strong style="color:var(--green-success); font-size:0.9rem; display:block;">Novo Agendamento Via Link!</strong>
-            <span id="toastMsg" style="font-size:0.8rem; color:var(--text-main);">Cliente agendou um horário.</span>
+            <strong style="color:var(--green-success); font-size:0.9rem; display:block;" id="toastTitle">Sincronizado</strong>
+            <span id="toastMsg" style="font-size:0.8rem; color:var(--text-main);">Operação realizada com sucesso.</span>
         </div>
         <button onclick="fecharToast()" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; margin-left:auto;">✕</button>
     </div>
-    <!-- TELA HOME / LANDING PAGE ELEGANTE DO NAILBOSS PRO -->
+
+    <!-- TELA HOME / LANDING PAGE PREMIUM -->
     <div id="landing-page">
         <header class="hero-nav">
             <div style="display:flex; align-items:center; gap:10px;">
                 <div class="brand-logo">N</div>
-                <strong style="font-size:1.2rem; letter-spacing:-0.5px;">NailBoss <span style="color:var(--pink-neon);">Pro</span></strong>
+                <strong style="font-size:1.25rem; letter-spacing:-0.5px;">NailBoss <span style="color:var(--pink-neon);">Pro</span></strong>
             </div>
             <div style="display:flex; gap:10px;">
                 <button class="btn-action btn-outline-dark" onclick="abrirTelaLogin()">Entrar no Sistema</button>
                 <button class="btn-action btn-pink-gradient" onclick="abrirTelaCadastroStudio()">Criar Meu Studio</button>
             </div>
         </header>
+
         <div class="hero-container">
-            <span style="background:rgba(255,42,133,0.15); color:var(--pink-neon); border:1px solid var(--pink-neon); padding:6px 16px; border-radius:20px; font-size:0.8rem; font-weight:bold; display:inline-block; margin-bottom:20px;">💅 PLATAFORMA 360° PARA MANICURES & STUDIOS</span>
-            <h1 class="hero-title">A Inteligência Financeira e de Agenda que o seu Studio <span>precisa para lucrar mais</span></h1>
-            <p class="hero-subtitle">Controle total de caixa DFC, agendamentos automáticos com sinal PIX, precificação exata de insumos e recuperação de clientes ausentes em uma única plataforma integrada à nuvem.</p>
+            <div class="hero-badge">✨ PLATAFORMA 360° PARA MANICURES & DESIGNERS DE UNHAS</div>
+            <h1 class="hero-title">A Inteligência Financeira e de Agenda <span>que multiplica o seu lucro</span></h1>
+            <p class="hero-subtitle">Elimine o não-comparecimento com o Sinal PIX automático, assuma o controlo total da Tesouraria DFC e automatize o regresso de clientes num único ecossistema em nuvem.</p>
             
-            <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
-                <button class="btn-action btn-pink-gradient" style="padding:16px 32px; font-size:1rem;" onclick="abrirTelaCadastroStudio()">✨ COMEÇAR AGORA MESMO</button>
+            <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-bottom: 40px;">
+                <button class="btn-action btn-pink-gradient" style="padding:16px 36px; font-size:1rem;" onclick="abrirTelaCadastroStudio()">✨ EXPERIMENTAR GRATUITAMENTE</button>
                 <button class="btn-action btn-outline-dark" style="padding:16px 32px; font-size:1rem;" onclick="abrirTelaLogin()">🏪 ACESSAR MEU PAINEL</button>
             </div>
+
+            <!-- SIMULADOR INTERATIVO DE ROI NA LANDING PAGE -->
+            <div class="calculator-box">
+                <h3 style="color:var(--pink-neon); margin-bottom:8px; font-size:1.2rem;">🧮 Simulador de Lucro Perdido</h3>
+                <p style="color:var(--text-muted); font-size:0.85rem;">Descubra quanto dinheiro deixa de ganhar por mês sem controlo de faltas e sinal:</p>
+                
+                <div style="margin-top:20px;">
+                    <label style="font-size:0.85rem; font-weight:bold;">Atendimentos por Dia: <span id="calcAtendimentosVal" style="color:var(--pink-neon);">5</span></label>
+                    <input type="range" min="1" max="15" value="5" class="calc-slider" id="calcAtendimentos" oninput="calcularRoiLanding()">
+                </div>
+                <div style="margin-top:10px;">
+                    <label style="font-size:0.85rem; font-weight:bold;">Preço Médio do Serviço: <span id="calcPrecoVal" style="color:var(--green-success);">R$ 100,00</span></label>
+                    <input type="range" min="30" max="300" step="10" value="100" class="calc-slider" id="calcPreco" oninput="calcularRoiLanding()">
+                </div>
+
+                <div style="background:var(--input-bg); padding:16px; border-radius:14px; margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <small style="color:var(--text-muted); font-size:0.75rem;">ESTIMATIVA DE RECUPERAÇÃO MENSAL</small>
+                        <div style="font-size:1.5rem; font-weight:800; color:var(--green-success);" id="calcResultadoVal">+ R$ 600,00/mês</div>
+                    </div>
+                    <button class="btn-action btn-green" style="font-size:0.75rem;" onclick="abrirTelaCadastroStudio()">Garantir este Lucro</button>
+                </div>
+            </div>
+
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">📲</div>
-                    <h3 style="margin-bottom:8px; color:var(--text-main);">Link de Agendamento 24h</h3>
-                    <p style="font-size:0.85rem; color:var(--text-muted);">Sua cliente escolhe o dia, horário vago e faz a reserva diretamente no celular com cobrança do Sinal PIX automático.</p>
+                    <h3 style="margin-bottom:8px;">Agendamento 24h & Sinal PIX</h3>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Link personalizado para os seus clientes agendarem a qualquer hora com cobrança de sinal configurável.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
-                    <h3 style="margin-bottom:8px; color:var(--text-main);">Tesouraria DFC Inteligente</h3>
-                    <p style="font-size:0.85rem; color:var(--text-muted);">Demonstrativo de Fluxo de Caixa completo. Saiba exatamente o caixa liquidado, contas a receber e inadimplência em tempo real.</p>
+                    <h3 style="margin-bottom:8px;">Tesouraria DFC Completa</h3>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Controlo rigoroso de caixa liquidado, pendências, saídas manuais e balancete em tempo real.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🧪</div>
-                    <h3 style="margin-bottom:8px; color:var(--text-main);">Precificação de Insumos</h3>
-                    <p style="font-size:0.85rem; color:var(--text-muted);">Calcule o CMV exato por aplicação de gel, pó e preparadores para precificar seus serviços com margem garantida.</p>
+                    <h3 style="margin-bottom:8px;">Precificação por Insumo</h3>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Calcule o custo exato (CMV) de cada aplicação de gel, pó e preparadores com margem garantida.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">💬</div>
-                    <h3 style="margin-bottom:8px; color:var(--text-main);">CRM de Resgate de Clientes</h3>
-                    <p style="font-size:0.85rem; color:var(--text-muted);">Identifique automaticamente clientes sumidas há mais de 20 dias e envie ofertas de retorno direto pelo WhatsApp.</p>
+                    <h3 style="margin-bottom:8px;">CRM de Resgate Automatizado</h3>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Detete automaticamente clientes sem retorno há mais de 20 dias e envie mensagens no WhatsApp.</p>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- OVERLAY TELA PÚBLICA DE AGENDAMENTO CLIENTE -->
     <div id="public-booking-screen">
         <div class="booking-container">
@@ -278,15 +302,18 @@
                 <div class="time-slots-grid" id="pubSlotsContainer"></div>
             </div>
             <div style="background:var(--input-bg); border:1px dashed var(--pink-neon); padding:15px; border-radius:12px; margin:20px 0; text-align:center;">
-                <small style="color:var(--text-muted);">VALOR DO SERVIÇO / SINAL PIX</small>
-                <div style="font-size:1.2rem; font-weight:800; color:var(--green-success);" id="pubValResumo">Total: R$ 0,00 | Sinal: R$ 30,00</div>
-                <small style="color:var(--gold-warning); font-size:0.75rem; display:block; margin-top:4px;">🔑 Chave PIX: 55-11-94788-7105</small>
+                <small style="color:var(--text-muted);">VALOR DO SERVIÇO / SINAL</small>
+                <div style="font-size:1.15rem; font-weight:800; color:var(--green-success);" id="pubValResumo">Total: R$ 0,00</div>
+                <div id="pubBoxPixChave" style="margin-top:6px; display:none;">
+                    <small style="color:var(--gold-warning); font-size:0.75rem; display:block;">🔑 Chave PIX: <span id="pubChavePixVal">55-11-94788-7105</span></small>
+                </div>
             </div>
             <button class="btn-action btn-green" style="width:100%; padding:14px; font-size:0.9rem;" onclick="confirmarAgendamentoPublicoCliente()">📲 CONFIRMAR & RESERVAR HORÁRIO</button>
             <p style="text-align:center; font-size:0.72rem; color:var(--text-muted); margin-top:12px;">Sua reserva será enviada diretamente para o WhatsApp do Studio.</p>
         </div>
     </div>
-    <!-- OVERLAY DE LOGIN / REGISTRO / APROVAÇÃO -->
+
+    <!-- OVERLAY DE LOGIN / REGISTRO -->
     <div id="login-screen">
         <div class="login-card-v2">
             <div class="login-icon-box">💅</div>
@@ -319,7 +346,7 @@
                     <input type="text" id="regStudio" placeholder="Ex: Studio Bella Unhas">
                 </div>
                 <div class="input-group" style="margin-bottom: 10px;">
-                    <label>E-mail Comercial (Único)</label>
+                    <label>E-mail Comercial</label>
                     <input type="email" id="regEmail" placeholder="seu@email.com">
                 </div>
                 <div class="input-group" style="margin-bottom: 10px;">
@@ -377,6 +404,7 @@
             </div>
         </div>
     </div>
+
     <!-- PAINEL PRINCIPAL DO APP -->
     <div id="app-layout">
         <!-- TOP BAR CELULAR COM BOTÃO DE COR -->
@@ -395,6 +423,7 @@
                 <button class="btn-logout" onclick="logout()">Sair</button>
             </div>
         </div>
+
         <!-- SIDEBAR (DESKTOP) -->
         <aside class="sidebar">
             <div>
@@ -402,7 +431,7 @@
                     <div class="brand-logo">N</div>
                     <div>
                         <span class="brand-title">NailBoss</span>
-                        <span class="brand-badge" id="planBadge">STARTER</span>
+                        <span class="brand-badge" id="planBadge">PRO</span>
                     </div>
                 </div>
                 <div style="margin-bottom: 20px; background: var(--input-bg); padding: 10px; border-radius: 12px; border: 1px solid var(--card-border);">
@@ -410,7 +439,7 @@
                     <select id="themeSelector" style="width: 100%; background: transparent; border: none; color: var(--text-main); font-size: 0.82rem; font-weight: bold; outline: none; cursor: pointer;" onchange="mudarTemaCores(this.value)">
                         <option value="default" style="background:var(--card-bg); color:var(--text-main);">💖 Pink Neon (Dark)</option>
                         <option value="rosegold" style="background:var(--card-bg); color:var(--text-main);">🌸 Rose Gold (Light)</option>
-                        <option value="purple" style="background:var(--card-bg); color:var(--text-main);">💜 Purple Luxury (Roxo)</option>
+                        <option value="purple" style="background:var(--card-bg); color:var(--text-main);">💜 Purple Luxury</option>
                     </select>
                 </div>
                 <nav class="nav-menu">
@@ -423,8 +452,7 @@
                     <a class="nav-item" id="menu-conciliacao" onclick="navigateTo('conciliacao', this)">💰 Conciliação Salão</a>
                     <a class="nav-item" id="menu-estoque" onclick="navigateTo('estoque', this)">📦 Estoque & Precificação</a>
                     <a class="nav-item" id="menu-planos" onclick="navigateTo('planos', this)" style="color:var(--gold-warning);">👑 Planos & Assinatura</a>
-                    
-                    <a class="nav-item" id="nav-master-item" onclick="navigateTo('admin', this)" style="display:none; color: var(--gold-warning); border-top: 1px solid var(--card-border); margin-top: 12px; padding-top: 12px;">👑 Controle Master SaaS 2.0</a>
+                    <a class="nav-item" id="nav-master-item" onclick="navigateTo('admin', this)" style="display:none; color: var(--gold-warning); border-top: 1px solid var(--card-border); margin-top: 12px; padding-top: 12px;">👑 Controle Master SaaS</a>
                 </nav>
             </div>
             <div class="sidebar-footer">
@@ -438,25 +466,17 @@
                 </div>
             </div>
         </aside>
+
         <!-- MENU FLUTUANTE INFERIOR (MOBILE BOTTOM NAV) -->
         <nav class="mobile-bottom-nav">
-            <button class="mobile-nav-btn active" id="mob-dash" onclick="navigateTo('dash', this)">
-                <span class="mobile-nav-icon">📊</span> Dash
-            </button>
-            <button class="mobile-nav-btn" id="mob-servicos" onclick="navigateTo('servicos', this)">
-                <span class="mobile-nav-icon">💅</span> Serviços
-            </button>
-            <button class="mobile-nav-btn" id="mob-agenda" onclick="navigateTo('agenda', this)">
-                <span class="mobile-nav-icon">📅</span> Agenda
-            </button>
-            <button class="mobile-nav-btn" id="mob-financeiro" onclick="navigateTo('financeiro', this)">
-                <span class="mobile-nav-icon">💳</span> Caixa
-            </button>
-            <button class="mobile-nav-btn" id="mob-clientes" onclick="navigateTo('clientes', this)">
-                <span class="mobile-nav-icon">👥</span> Clientes
-            </button>
+            <button class="mobile-nav-btn active" id="mob-dash" onclick="navigateTo('dash', this)"><span class="mobile-nav-icon">📊</span> Dash</button>
+            <button class="mobile-nav-btn" id="mob-servicos" onclick="navigateTo('servicos', this)"><span class="mobile-nav-icon">💅</span> Serviços</button>
+            <button class="mobile-nav-btn" id="mob-agenda" onclick="navigateTo('agenda', this)"><span class="mobile-nav-icon">📅</span> Agenda</button>
+            <button class="mobile-nav-btn" id="mob-financeiro" onclick="navigateTo('financeiro', this)"><span class="mobile-nav-icon">💳</span> Caixa</button>
+            <button class="mobile-nav-btn" id="mob-clientes" onclick="navigateTo('clientes', this)"><span class="mobile-nav-icon">👥</span> Clientes</button>
         </nav>
-        <!-- CONTEÚDO PRINCIPAL -->
+
+        <!-- MAIN CONTENT -->
         <main class="main-content">
             <div class="top-header">
                 <div class="header-title">
@@ -464,18 +484,21 @@
                     <p id="pageSub" style="color:var(--text-muted); font-size:0.88rem;">Resumo financeiro e gestão completa do seu studio.</p>
                 </div>
                 <div style="display: flex; gap: 10px; align-items: center;">
-                    <button class="btn-action btn-green" style="padding:8px 14px; font-size:0.8rem;" onclick="recarregarDadosCompletos()">🔄 Sincronizar Nuvem API</button>
+                    <button class="btn-action btn-green" id="btnSincronizarNuvem" onclick="recarregarDadosCompletos()">🔄 Sincronizar Nuvem API</button>
                     <button class="btn-action btn-outline-dark" style="padding:8px 12px; font-size:0.8rem;" onclick="openChangePasswordModal()">🔑 Alterar Senha</button>
-                    <div class="status-pill">● Online & Sincronizado</div>
                 </div>
             </div>
-            <!-- TELA 1: DASHBOARD COM GRÁFICOS INTERATIVOS -->
+
+            <!-- TELA 1: DASHBOARD -->
             <div id="view-dash" class="view-section active">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
                     <h3 style="color:var(--pink-neon); font-size:1.1rem;">📈 Visão Geral de Tesouraria</h3>
-                    <div style="display:flex; gap:8px;">
-                        <input type="date" id="dashDataDe" value="2026-10-01" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px; border-radius:8px; font-size:0.8rem;" onchange="renderDashboardData()">
-                        <input type="date" id="dashDataAte" value="2026-10-31" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px; border-radius:8px; font-size:0.8rem;" onchange="renderDashboardData()">
+                    <div style="display:flex; gap:6px; align-items:center;">
+                        <button class="btn-quick-filter" onclick="filtrarPeriodoRapido('hoje')">Hoje</button>
+                        <button class="btn-quick-filter" onclick="filtrarPeriodoRapido('semana')">Esta Semana</button>
+                        <button class="btn-quick-filter" onclick="filtrarPeriodoRapido('mes')">Este Mês</button>
+                        <input type="date" id="dashDataDe" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px; border-radius:8px; font-size:0.8rem;" onchange="renderDashboardData()">
+                        <input type="date" id="dashDataAte" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px; border-radius:8px; font-size:0.8rem;" onchange="renderDashboardData()">
                     </div>
                 </div>
                 <div class="metrics-grid">
@@ -487,16 +510,12 @@
                 </div>
                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:18px; margin-bottom:20px;">
                     <div class="content-card">
-                        <div class="card-header">📊 Desempenho Financeiro (Bruto x Efetivo)</div>
-                        <div style="height:230px; position:relative;">
-                            <canvas id="chartFinanceiro"></canvas>
-                        </div>
+                        <div class="card-header">📊 Desempenho Financeiro</div>
+                        <div style="height:230px; position:relative;"><canvas id="chartFinanceiro"></canvas></div>
                     </div>
                     <div class="content-card">
                         <div class="card-header">🍰 Distribuição por Serviço</div>
-                        <div style="height:230px; position:relative;">
-                            <canvas id="chartServicos"></canvas>
-                        </div>
+                        <div style="height:230px; position:relative;"><canvas id="chartServicos"></canvas></div>
                     </div>
                 </div>
                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:18px;">
@@ -510,7 +529,7 @@
                         </div>
                     </div>
                     <div class="content-card">
-                        <div class="card-header">💅 Custos por Insumo</div>
+                        <div class="card-header">💅 Insumos do Estoque</div>
                         <div class="table-responsive">
                             <table>
                                 <thead><tr><th>Produto/Insumo</th><th>Custo Total</th></tr></thead>
@@ -520,45 +539,48 @@
                     </div>
                 </div>
             </div>
-            <!-- TELA CATÁLOGO DE SERVIÇOS & TABELA DE PREÇOS -->
+
+            <!-- TELA CATÁLOGO DE SERVIÇOS -->
             <div id="view-servicos" class="view-section">
                 <div class="content-card">
-                    <div class="card-header">💅 Cadastrar Serviço no Catálogo</div>
+                    <div class="card-header" id="headerFormServico">💅 Cadastrar Serviço no Catálogo</div>
+                    <input type="hidden" id="srvIdEdicao" value="">
                     <div class="form-grid">
                         <div class="input-group"><label>Nome do Serviço</label><input type="text" id="srvNome" placeholder="Ex: Manutenção de Fibra"></div>
                         <div class="input-group"><label>Preço Padrão (R$)</label><input type="number" id="srvValor" placeholder="120.00"></div>
                         <div class="input-group"><label>Duração Média (Minutos)</label><input type="number" id="srvDuracao" placeholder="90" value="90"></div>
                     </div>
-                    <button class="btn-action btn-green" onclick="salvarServicoCatalogo()">Salvar Serviço</button>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn-action btn-green" id="btnSalvarServico" onclick="salvarServicoCatalogo()">Salvar Serviço</button>
+                        <button class="btn-action btn-outline-dark" id="btnCancelarEditServico" style="display:none;" onclick="cancelarEdicaoServico()">Cancelar Edição</button>
+                    </div>
                 </div>
                 <div class="content-card">
                     <div class="card-header">📋 Tabela de Serviços e Valores</div>
                     <div class="table-responsive">
                         <table>
-                            <thead>
-                                <tr>
-                                    <th>Nome do Serviço</th>
-                                    <th>Duração</th>
-                                    <th>Valor Padrão</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
+                            <thead><tr><th>Nome do Serviço</th><th>Duração</th><th>Valor Padrão</th><th>Ações</th></tr></thead>
                             <tbody id="tbServicosCatalogo"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
             <!-- TELA CLIENTES -->
             <div id="view-clientes" class="view-section">
                 <div class="content-card">
-                    <div class="card-header">👤 Cadastrar Novo Cliente</div>
+                    <div class="card-header" id="headerFormCliente">👤 Cadastrar Novo Cliente</div>
+                    <input type="hidden" id="cliIdEdicao" value="">
                     <div class="form-grid">
                         <div class="input-group"><label>Nome Completo</label><input type="text" id="cliNome" placeholder="Ex: Ana Paula Ribeiro"></div>
                         <div class="input-group"><label>WhatsApp / Telefone</label><input type="text" id="cliWhats" placeholder="Ex: (11) 99999-8888"></div>
                         <div class="input-group"><label>Cliente Desde (Data)</label><input type="date" id="cliDesde"></div>
                         <div class="input-group"><label>Preferência / Estilo</label><input type="text" id="cliPref" placeholder="Ex: Fibra de Vidro"></div>
                     </div>
-                    <button class="btn-action btn-green" onclick="salvarCliente()">Salvar Cliente</button>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn-action btn-green" id="btnSalvarCliente" onclick="salvarCliente()">Salvar Cliente</button>
+                        <button class="btn-action btn-outline-dark" id="btnCancelarEditCliente" style="display:none;" onclick="cancelarEdicaoCliente()">Cancelar Edição</button>
+                    </div>
                 </div>
                 <div class="content-card">
                     <div class="card-header">👥 Base de Clientes Cadastrados</div>
@@ -570,19 +592,29 @@
                     </div>
                 </div>
             </div>
+
             <!-- TELA AGENDA -->
             <div id="view-agenda" class="view-section">
+                <div class="content-card">
+                    <div class="card-header">
+                        <span>📅 Configuração do Link de Agendamento Online</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:12px; background:var(--input-bg); padding:12px 16px; border-radius:12px; border:1px solid var(--card-border);">
+                        <input type="checkbox" id="cfgExigirSinalPix" style="width:20px; height:20px; accent-color:var(--pink-neon);" onchange="salvarConfigSinalPix()">
+                        <label for="cfgExigirSinalPix" style="font-weight:bold; font-size:0.9rem; cursor:pointer;">Cobrar Sinal PIX Adiantado no Agendamento Online?</label>
+                    </div>
+                </div>
+
                 <div class="content-card">
                     <div class="card-header">
                         <span>📅 Novo Agendamento (Balcão)</span>
                         <button class="btn-action btn-gold" style="font-size:0.75rem; padding:6px 12px;" onclick="gerarLinkPublicoAgendamento()">📲 Link de Agendamento</button>
                     </div>
                     <div class="form-grid">
-                        <div class="input-group"><label>Data do Serviço</label><input type="date" id="agData" onchange="renderGradeHorarios()"></div>
+                        <div class="input-group"><label>Data do Serviço</label><input type="date" id="agData"></div>
                         <div class="input-group"><label>Hora Início</label><input type="time" id="agHoraInicio" value="09:00"></div>
                         <div class="input-group"><label>Hora Fim</label><input type="time" id="agHoraFim" value="10:30"></div>
                         <div class="input-group"><label>Nome da Cliente</label><input type="text" id="agNome" placeholder="Digite o nome..."></div>
-                        
                         <div class="input-group">
                             <label>Serviço (Catálogo)</label>
                             <select id="agServicoSelect" onchange="aoSelecionarServicoAgendamento(this.value)">
@@ -599,22 +631,17 @@
                         <button class="btn-action btn-gold" onclick="abrirPopupGradeDia()">👀 Slots do Dia</button>
                     </div>
                 </div>
+
                 <div class="content-card" style="border-color: var(--danger);">
                     <div class="card-header" style="color:var(--danger)">🔒 Horários Bloqueados no Studio</div>
                     <div class="table-responsive">
                         <table>
-                            <thead>
-                                <tr>
-                                    <th>Data</th>
-                                    <th>Período</th>
-                                    <th>Motivo / Observação</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
+                            <thead><tr><th>Data</th><th>Período</th><th>Motivo / Observação</th><th>Ações</th></tr></thead>
                             <tbody id="tbHorariosBloqueados"></tbody>
                         </table>
                     </div>
                 </div>
+
                 <div class="content-card">
                     <div class="card-header">🔍 Filtros da Agenda</div>
                     <div class="form-grid">
@@ -623,27 +650,18 @@
                         <div class="input-group"><label>Data Final</label><input type="date" id="filAgAte" onchange="renderAgendaEFinanceiro()"></div>
                     </div>
                 </div>
+
                 <div class="content-card">
                     <div class="card-header">📋 Agendamentos Registrados</div>
                     <div class="table-responsive">
                         <table>
-                            <thead>
-                                <tr>
-                                    <th>Origem / Data</th>
-                                    <th>Cliente / Whats</th>
-                                    <th>Serviço</th>
-                                    <th>Valor Total</th>
-                                    <th>Sinal PIX</th>
-                                    <th>Pendente Dia</th>
-                                    <th>Status Atendimento</th>
-                                    <th>Ações de Gestão</th>
-                                </tr>
-                            </thead>
+                            <thead><tr><th>Origem / Data</th><th>Cliente / Whats</th><th>Serviço</th><th>Valor Total</th><th>Sinal PIX</th><th>Pendente Dia</th><th>Status Atendimento</th><th>Ações</th></tr></thead>
                             <tbody id="tbAgenda"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
             <!-- TELA TESOURARIA DFC -->
             <div id="view-financeiro" class="view-section">
                 <div class="metrics-grid">
@@ -652,12 +670,13 @@
                     <div class="metric-card"><div class="metric-label">Saídas / Despesas</div><div class="metric-value" style="color:var(--danger)" id="finDespesas">R$ 0,00</div></div>
                     <div class="metric-card"><div class="metric-label">Saldo Liquido DFC</div><div class="metric-value" style="color:var(--text-main)" id="finSaldoLiquido">R$ 0,00</div></div>
                 </div>
+
                 <div class="content-card">
                     <div class="card-header">🔍 Filtro de Tesouraria</div>
                     <div class="form-grid">
                         <div class="input-group"><label>Descrição / Texto</label><input type="text" id="finFilDesc" placeholder="Ex: Salão, Energia..." oninput="renderAgendaEFinanceiro()"></div>
-                        <div class="input-group"><label>Data Inicial</label><input type="date" id="finFilDe" value="2026-10-01" onchange="renderAgendaEFinanceiro()"></div>
-                        <div class="input-group"><label>Data Final</label><input type="date" id="finFilAte" value="2026-10-31" onchange="renderAgendaEFinanceiro()"></div>
+                        <div class="input-group"><label>Data Inicial</label><input type="date" id="finFilDe" onchange="renderAgendaEFinanceiro()"></div>
+                        <div class="input-group"><label>Data Final</label><input type="date" id="finFilAte" onchange="renderAgendaEFinanceiro()"></div>
                         <div class="input-group"><label>Status</label>
                             <select id="finFilStatus" onchange="renderAgendaEFinanceiro()">
                                 <option value="TODOS">Todos os Status</option>
@@ -667,6 +686,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="content-card">
                     <div class="card-header">💸 Lançamento Manual no Fluxo de Caixa (DFC)</div>
                     <div class="form-grid">
@@ -677,26 +697,19 @@
                     </div>
                     <button class="btn-action" onclick="salvarLancamentoDFC()">Lançar na Tesouraria</button>
                 </div>
+
                 <div class="content-card">
                     <div class="card-header">📊 Demonstrativo de Fluxo de Caixa (DFC)</div>
                     <div class="table-responsive">
                         <table>
-                            <thead>
-                                <tr>
-                                    <th>Data Vinculada</th>
-                                    <th>Descrição / Origem</th>
-                                    <th>Tipo</th>
-                                    <th>Valor</th>
-                                    <th>Status</th>
-                                    <th>Ação de Baixa</th>
-                                </tr>
-                            </thead>
+                            <thead><tr><th>Data Vinculada</th><th>Descrição / Origem</th><th>Tipo</th><th>Valor</th><th>Status</th><th>Ações de Gestão</th></tr></thead>
                             <tbody id="tbFinanceiro"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <!-- TELA CRM -->
+
+            <!-- TELA CRM (SUMIDAS) -->
             <div id="view-crm" class="view-section">
                 <div id="lockCrm" class="plan-lock-overlay" style="display:none;">
                     <div class="plan-lock-card">
@@ -715,6 +728,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- TELA CONCILIAÇÃO SALÃO -->
             <div id="view-conciliacao" class="view-section">
                 <div id="lockConc" class="plan-lock-overlay" style="display:none;">
@@ -727,18 +741,39 @@
                 <div class="content-card">
                     <div class="card-header">💰 Fechamento de Repasse do Salão</div>
                     <div class="form-grid">
-                        <div class="input-group"><label>Data Inicial</label><input type="date" id="concDataDe" value="2026-10-01" onchange="atualizarConciliacaoPeriodo()"></div>
-                        <div class="input-group"><label>Data Final</label><input type="date" id="concDataAte" value="2026-10-31" onchange="atualizarConciliacaoPeriodo()"></div>
+                        <div class="input-group"><label>Data Inicial</label><input type="date" id="concDataDe" onchange="atualizarConciliacaoPeriodo()"></div>
+                        <div class="input-group"><label>Data Final</label><input type="date" id="concDataAte" onchange="atualizarConciliacaoPeriodo()"></div>
                         <div class="input-group"><label>Taxa Salão (%)</label><input type="number" id="concTaxa" value="30" oninput="atualizarConciliacaoPeriodo()"></div>
                     </div>
                     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:12px; background:var(--input-bg); padding:18px; border-radius:12px; text-align:center; margin-top:15px;">
                         <div><small style="color:var(--text-muted)">FATURAMENTO</small><br><strong id="concBrutoPeriodo" style="font-size:1.2rem; color:var(--text-main)">R$ 0,00</strong></div>
                         <div><small style="color:var(--text-muted)">COMISSÃO SALÃO</small><br><strong id="concSalaoPeriodo" style="font-size:1.2rem; color:var(--pink-neon)">R$ 0,00</strong></div>
-                        <div><small style="color:var(--text-muted)">LÚCRO LÍQUIDO</small><br><strong id="concManicurePeriodo" style="font-size:1.2rem; color:var(--green-success)">R$ 0,00</strong></div>
+                        <div><small style="color:var(--text-muted)">LÚCRO LÍQUIDO MANICURE</small><br><strong id="concManicurePeriodo" style="font-size:1.2rem; color:var(--green-success)">R$ 0,00</strong></div>
                     </div>
-                    <button class="btn-action btn-gold" style="margin-top:15px; width:100%;" onclick="lancarDespesaSalaoNoFinanceiro()">Lançar Repasse no DFC</button>
+                    <button class="btn-action btn-gold" style="margin-top:15px; width:100%;" onclick="lancarDespesaSalaoNoFinanceiro()">LANÇAR E SALVAR REPASSE NO DFC</button>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">📜 Histórico de Repasses Efetuados</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data Reg.</th>
+                                    <th>Período Conciliado</th>
+                                    <th>Bruto Total</th>
+                                    <th>Taxa (%)</th>
+                                    <th>Valor Salão</th>
+                                    <th>Líquido Profissional</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbHistoricoRepasses"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
             <!-- TELA ESTOQUE & PRECIFICAÇÃO -->
             <div id="view-estoque" class="view-section">
                 <div id="lockEst" class="plan-lock-overlay" style="display:none;">
@@ -782,6 +817,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- TELA PLANOS DENTRO DO PAINEL -->
             <div id="view-planos" class="view-section">
                 <div class="content-card" style="border-color:var(--gold-warning);">
@@ -812,6 +848,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- TELA MASTER SAAS 2.0 -->
             <div id="view-admin" class="view-section">
                 <div class="metrics-grid">
@@ -823,7 +860,6 @@
                 <div class="content-card" style="border-color: var(--gold-warning);">
                     <div class="card-header" style="color: var(--gold-warning);">
                         <span>👑 Gestão Executiva de Estúdios Cadastrados</span>
-                        <input type="text" id="filMasterBusca" placeholder="🔍 Buscar studio..." style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px 12px; border-radius:8px; font-size:0.85rem;" oninput="renderMasterSaaS()">
                     </div>
                     <div class="table-responsive">
                         <table>
@@ -863,7 +899,25 @@
             </div>
         </main>
     </div>
-    <!-- MODAL POPUP PARA BLOQUEIO DE HORÁRIO -->
+
+    <!-- MODAL EDITAR DFC -->
+    <div class="modal-overlay" id="editDfcModal">
+        <div class="modal-card">
+            <div class="modal-title">✏️ Editar Lançamento DFC</div>
+            <input type="hidden" id="editDfcId">
+            <div class="form-grid" style="text-align:left;">
+                <div class="input-group"><label>Descrição</label><input type="text" id="editDfcDesc"></div>
+                <div class="input-group"><label>Valor (R$)</label><input type="number" id="editDfcValor"></div>
+                <div class="input-group"><label>Tipo</label><select id="editDfcTipo"><option value="despesa">Despesa (Saída)</option><option value="receita">Receita (Entrada)</option></select></div>
+            </div>
+            <div class="modal-actions" style="margin-top:15px;">
+                <button class="btn-action btn-outline-dark" onclick="fecharModalEditDFC()">Cancelar</button>
+                <button class="btn-action btn-green" onclick="salvarEdicaoDFC()">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL BLOQUEIO DE HORÁRIO -->
     <div class="modal-overlay" id="blockTimeModal">
         <div class="modal-card">
             <div class="modal-title">🔒 Bloqueio de Horário de Atendimento</div>
@@ -872,15 +926,16 @@
                 <div class="input-group"><label>Data do Bloqueio</label><input type="date" id="blockDate"></div>
                 <div class="input-group"><label>Hora Início</label><input type="time" id="blockStart" value="12:00"></div>
                 <div class="input-group"><label>Hora Fim</label><input type="time" id="blockEnd" value="13:00"></div>
-                <div class="input-group"><label>Motivo</label><input type="text" id="blockReason" placeholder="Ex: Horário de Almoço / Curso"></div>
+                <div class="input-group"><label>Motivo</label><input type="text" id="blockReason" placeholder="Ex: Almoço / Curso"></div>
             </div>
             <div class="modal-actions" style="margin-top:15px;">
-                <button class="btn-modal-cancel" onclick="fecharModalBloqueioHorario()">Cancelar</button>
-                <button class="btn-modal-confirm" style="background:var(--danger);" onclick="confirmarBloqueioHorarioModal()">Confirmar Bloqueio</button>
+                <button class="btn-action btn-outline-dark" onclick="fecharModalBloqueioHorario()">Cancelar</button>
+                <button class="btn-action btn-danger" onclick="confirmarBloqueioHorarioModal()">Confirmar Bloqueio</button>
             </div>
         </div>
     </div>
-    <!-- MODAIS E POPUPS DIVERSOS -->
+
+    <!-- MODAL SLOTS DO DIA -->
     <div class="modal-overlay" id="slotsModal">
         <div class="modal-card">
             <div class="modal-title" id="slotsTitle">Visão dos Slots do Dia</div>
@@ -890,22 +945,54 @@
             </div>
             <div class="time-slots-grid" id="slotsContainer"></div>
             <div class="modal-actions" style="margin-top:20px;">
-                <button class="btn-modal-cancel" onclick="fecharSlotsModal()">Fechar Modal</button>
+                <button class="btn-action btn-outline-dark" onclick="fecharSlotsModal()">Fechar Modal</button>
             </div>
         </div>
     </div>
-    <div class="modal-overlay" id="historyModal"><div class="modal-card"><div class="modal-title" id="histTitle">Histórico</div><div class="modal-msg" id="histContent" style="text-align:left; max-height:250px; overflow-y:auto;"></div><div class="modal-actions" style="margin-top:15px;"><button class="btn-modal-cancel" onclick="fecharHistoricoModal()">Fechar</button></div></div></div>
-    <div class="modal-overlay" id="customModal"><div class="modal-card"><div class="modal-title" id="modalTitle">Confirmação</div><div class="modal-msg" id="modalMsg">Deseja prosseguir?</div><div class="modal-actions"><button class="btn-modal-cancel" id="btnModalCancel">Cancelar</button><button class="btn-modal-confirm" id="btnModalConfirm">Confirmar</button></div></div></div>
-    <div class="modal-overlay" id="changePassModal"><div class="modal-card"><div class="modal-title">🔑 Alterar Senha</div><div class="input-group" style="margin-bottom:12px; text-align:left;"><label>Senha Atual</label><input type="password" id="passCurrent"></div><div class="input-group" style="margin-bottom:20px; text-align:left;"><label>Nova Senha</label><input type="password" id="passNew"></div><div class="modal-actions"><button class="btn-modal-cancel" onclick="closeChangePasswordModal()">Cancelar</button><button class="btn-modal-confirm" onclick="saveNewPassword()">Salvar</button></div></div></div>
-    
+
+    <!-- MODAIS GENÉRICOS (HISTÓRICO, CONFIRMAÇÃO, ALTERAR SENHA) -->
+    <div class="modal-overlay" id="historyModal">
+        <div class="modal-card">
+            <div class="modal-title" id="histTitle">Histórico</div>
+            <div class="modal-msg" id="histContent" style="text-align:left; max-height:250px; overflow-y:auto;"></div>
+            <div class="modal-actions" style="margin-top:15px;">
+                <button class="btn-action btn-outline-dark" onclick="fecharHistoricoModal()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-card">
+            <div class="modal-title" id="modalTitle">Confirmação</div>
+            <div class="modal-msg" id="modalMsg">Deseja prosseguir?</div>
+            <div class="modal-actions">
+                <button class="btn-action btn-outline-dark" id="btnModalCancel">Cancelar</button>
+                <button class="btn-action btn-green" id="btnModalConfirm">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="changePassModal">
+        <div class="modal-card">
+            <div class="modal-title">🔑 Alterar Senha</div>
+            <div class="input-group" style="margin-bottom:12px; text-align:left;"><label>Senha Atual</label><input type="password" id="passCurrent"></div>
+            <div class="input-group" style="margin-bottom:20px; text-align:left;"><label>Nova Senha</label><input type="password" id="passNew"></div>
+            <div class="modal-actions">
+                <button class="btn-action btn-outline-dark" onclick="closeChangePasswordModal()">Cancelar</button>
+                <button class="btn-action btn-green" onclick="saveNewPassword()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ==========================================
-        // CONFIGURAÇÕES DA API REST FASTAPI
+        // CONFIGURAÇÕES DA API REST FASTAPI E MULTITENANT
         // ==========================================
         const API_URL = "http://localhost:8000/api";
         
         let currentTenantId = "";
-        let currentPlan = "STARTER";
+        let currentToken = "";
+        let currentPlan = "PRO";
         let currentRole = "studio";
         let targetAuthRole = "studio";
         let regSelectedPlan = "PRO";
@@ -915,7 +1002,6 @@
         let chartFinInstance = null;
         let chartServInstance = null;
 
-        // ESTADO GLOBAL (Substitui as chamadas síncronas do localStorage para evitar quebrar a interface)
         let globalData = {
             servicos: [],
             clientes: [],
@@ -923,211 +1009,62 @@
             financeiro: [],
             estoque: [],
             masterStudios: [],
-            masterPagamentos: []
+            masterPagamentos: [],
+            historicoRepasses: []
         };
 
         let masterPrices = JSON.parse(localStorage.getItem('nailboss_master_prices')) || { PRO: 19.90, VIP: 39.90 };
 
-        /* UTILITÁRIO GERAL */
+        function getAuthHeaders() {
+            return {
+                "Content-Type": "application/json",
+                "tenant-id": currentTenantId || "default",
+                "Authorization": `Bearer ${currentToken}`
+            };
+        }
+
         function formatDateBR(dateStr) {
             if (!dateStr) return "-";
             const parts = dateStr.split('-');
-            if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
-            return dateStr;
+            return parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : dateStr;
         }
 
         // ==========================================
-        // FUNÇÕES ASSÍNCRONAS - COMUNICAÇÃO COM O BACK-END
+        // FEEDBACK VISUAL & MODAIS
         // ==========================================
-
-        async function recarregarDadosCompletos() {
-            try {
-                if (currentRole === 'master') {
-                    const res = await fetch(`${API_URL}/admin/studios`);
-                    if (res.ok) {
-                        const json = await res.json();
-                        globalData.masterStudios = json.map(s => ({
-                            id: s.id, estudio: s.studio_name, email: s.email, whats: s.phone || '', plano: s.plan, status: s.status
-                        }));
-                    }
-                    // Extrato SaaS (Mantido no localstorage como mock adicional para telas que a API não possui endpoint de GET SaaS Payment ainda)
-                    globalData.masterPagamentos = JSON.parse(localStorage.getItem('nailboss_master_pagamentos')) || [];
-                    renderMasterSaaS();
-                } else {
-                    const headers = { "tenant-id": currentTenantId, "Content-Type": "application/json" };
-                    
-                    // Buscar Serviços
-                    const resServ = await fetch(`${API_URL}/services`, { headers });
-                    if (resServ.ok) {
-                        globalData.servicos = (await resServ.json()).map(s => ({
-                            id: s.id, nome: s.name, valor: Number(s.price), duracao: s.estimated_duration_minutes
-                        }));
-                    }
-
-                    // Buscar Clientes
-                    const resCli = await fetch(`${API_URL}/clients`, { headers });
-                    if (resCli.ok) {
-                        globalData.clientes = (await resCli.json()).map(c => ({
-                            id: c.id, nome: c.name, whats: c.phone || '', desde: c.client_since, pref: c.preference || ''
-                        }));
-                    }
-
-                    // Buscar Agenda
-                    const resAg = await fetch(`${API_URL}/appointments`, { headers });
-                    if (resAg.ok) {
-                        globalData.agenda = (await resAg.json()).map(a => ({
-                            id: a.id, data: a.appointment_date, horaInicio: a.start_time, horaFim: a.end_time || '', 
-                            cliente: a.client_name, whats: a.client_phone || '', servico: a.service_name, 
-                            total: Number(a.total_amount), sinal: Number(a.pix_deposit_amount), pendente: Number(a.pending_amount), 
-                            quitado: a.is_settled, ehBloqueio: a.is_block, origemLink: a.is_from_link
-                        }));
-                    }
-
-                    // Buscar DFC Financeiro
-                    const resFin = await fetch(`${API_URL}/finance`, { headers });
-                    if (resFin.ok) {
-                        globalData.financeiro = (await resFin.json()).map(f => ({
-                            id: f.id, data: f.transaction_date, desc: f.description, tipo: f.type, 
-                            valor: Number(f.amount), status: f.status
-                        }));
-                    }
-
-                    // Estoque (Módulo mantido hibrido local pois o CRUD de backend não foi passado 100% no main.py)
-                    globalData.estoque = JSON.parse(localStorage.getItem(`nailboss_${currentTenantId}_estoque`)) || [];
-
-                    // Renderizar Telas
-                    renderTabelaServicosCatalogo();
-                    renderTabelaClientes();
-                    renderTabelaEstoque();
-                    renderAgendaEFinanceiro();
-                    renderDashboardData();
-                    renderCrmAusentes();
-                }
-            } catch (error) {
-                console.error("Erro ao sincronizar com a API:", error);
-                alert("Erro ao conectar ao Servidor. Verifique se o Back-end está rodando (FastAPI).");
-            }
+        function exibirToast(titulo, mensagem, tipo = "sucesso") {
+            const toast = document.getElementById('toastNotification');
+            if (!toast) return;
+            document.getElementById('toastTitle').innerText = titulo;
+            document.getElementById('toastMsg').innerText = mensagem;
+            document.getElementById('toastIcon').innerText = tipo === "sucesso" ? "✅" : "⚠️";
+            toast.style.display = 'flex';
+            setTimeout(() => { fecharToast(); }, 4000);
+        }
+        function fecharToast() {
+            const toast = document.getElementById('toastNotification');
+            if (toast) toast.style.display = 'none';
         }
 
-        // ==========================================
-        // FLUXO DE LOGIN E CADASTRO
-        // ==========================================
-
-        async function executeLogin() {
-            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-            const pass = document.getElementById('loginPassword').value.trim();
-
-            if (targetAuthRole === 'master') {
-                if (pass === 'admin123' || email.includes('master')) {
-                    loginAs('master');
-                } else {
-                    showConfirm('Acesso Negado', 'Senha Master incorreta.', null, false);
-                }
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_URL}/auth/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, password: pass })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    showConfirm('Acesso Negado', errorData.detail || 'E-mail ou senha incorretos.', null, false);
-                    return;
-                }
-
-                const data = await response.json();
-                currentTenantId = data.tenant_id;
-                currentPlan = data.plan;
-                loginAs('studio', data.studio_name);
-            } catch (e) {
-                showConfirm('Erro de Conexão', 'Não foi possível conectar ao servidor.', null, false);
-            }
+        function showConfirm(title, message, callbackConfirm, showCancel = true) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMsg').innerText = message;
+            document.getElementById('btnModalCancel').style.display = showCancel ? 'inline-block' : 'none';
+            document.getElementById('customModal').style.display = 'flex';
+            onConfirmCallback = callbackConfirm;
         }
 
-        async function finalizarCadastroEAtivar() {
-            const studio = document.getElementById('regStudio').value.trim();
-            const email = document.getElementById('regEmail').value.trim().toLowerCase();
-            const whats = document.getElementById('regWhats').value.trim();
-            const senha = document.getElementById('regSenha').value.trim();
-            
-            if (!studio || !email || !senha) { 
-                showConfirm('Atenção', 'Preencha todos os campos e a senha!', null, false); return; 
-            }
-
-            try {
-                const response = await fetch(`${API_URL}/auth/register`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        studio_name: studio,
-                        email: email,
-                        phone: whats,
-                        password: senha,
-                        plan: regSelectedPlan
-                    })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    showConfirm('Erro no Cadastro', errorData.detail || 'Erro ao registrar.', null, false);
-                    return;
-                }
-                
-                showConfirm('Cadastro Enviado!', 'Studio cadastrado com sucesso! Aguardando aprovação Master. Tente fazer login em breve.', () => {
-                    showAuthInputs('studio');
-                    document.getElementById('loginEmail').value = email;
-                }, false);
-            } catch (e) {
-                showConfirm('Erro de Conexão', 'O Servidor Back-end parece estar offline.', null, false);
-            }
-        }
-
-        function loginAs(role, studioName = "Studio Demo") {
-            document.getElementById('landing-page').style.display = 'none';
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('app-layout').style.display = 'flex';
-            currentRole = role;
-            
-            localStorage.setItem('nailboss_active_session', JSON.stringify({
-                role: role, tenantId: currentTenantId, plan: currentPlan, studioName: studioName
-            }));
-            
-            if (role === 'master') {
-                document.getElementById('userRoleName').innerText = 'Proprietário SaaS 👑';
-                document.getElementById('mobileStudioName').innerText = 'NailBoss Master 👑';
-                document.getElementById('nav-master-item').style.display = 'flex';
-                document.getElementById('btnSidebarUpgrade').style.display = 'none';
-                recarregarDadosCompletos();
-                navigateTo('admin');
-            } else {
-                document.getElementById('userRoleName').innerText = studioName;
-                document.getElementById('mobileStudioName').innerText = studioName;
-                document.getElementById('nav-master-item').style.display = 'none';
-                document.getElementById('btnSidebarUpgrade').style.display = 'block';
-                applyPlanPermissions();
-                recarregarDadosCompletos();
-                navigateTo('dash');
-            }
-        }
-
-        function logout() {
-            showConfirm('Encerrar Sessão', 'Deseja realmente sair do sistema?', () => {
-                currentTenantId = "";
-                localStorage.removeItem('nailboss_active_session');
-                localStorage.removeItem('nailboss_active_view');
-                document.getElementById('app-layout').style.display = 'none';
-                document.getElementById('landing-page').style.display = 'flex';
-            });
-        }
+        document.getElementById('btnModalConfirm').onclick = function() {
+            document.getElementById('customModal').style.display = 'none';
+            if (onConfirmCallback) onConfirmCallback();
+        };
+        document.getElementById('btnModalCancel').onclick = function() {
+            document.getElementById('customModal').style.display = 'none';
+        };
 
         // ==========================================
-        // FLUXO DE NAVEGAÇÃO E UX 
+        // NAVEGAÇÃO, TEMAS & PERMISSÕES
         // ==========================================
-        
         function abrirTelaLogin() {
             document.getElementById('landing-page').style.display = 'none';
             document.getElementById('login-screen').style.display = 'flex';
@@ -1142,6 +1079,7 @@
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('landing-page').style.display = 'flex';
         }
+
         function mudarTemaCores(themeKey) {
             document.body.classList.remove('theme-rosegold', 'theme-purple');
             if (themeKey === 'rosegold') document.body.classList.add('theme-rosegold');
@@ -1151,9 +1089,9 @@
             if (selDesk) selDesk.value = themeKey;
             if (selMob) selMob.value = themeKey;
             localStorage.setItem('nailboss_preferred_theme', themeKey);
-            if(chartFinInstance) renderCharts();
+            if (chartFinInstance) renderCharts();
         }
-        
+
         function navigateTo(viewId, element) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
@@ -1173,6 +1111,29 @@
             applyPlanPermissions();
         }
 
+        function applyPlanPermissions() {
+            const lockCrm = document.getElementById('lockCrm');
+            const lockConc = document.getElementById('lockConc');
+            const lockEst = document.getElementById('lockEst');
+
+            if (currentRole === 'master') {
+                if (lockCrm) lockCrm.style.display = 'none';
+                if (lockConc) lockConc.style.display = 'none';
+                if (lockEst) lockEst.style.display = 'none';
+                return;
+            }
+
+            if (lockCrm) lockCrm.style.display = (currentPlan === 'STARTER') ? 'flex' : 'none';
+            if (lockEst) lockEst.style.display = (currentPlan === 'STARTER') ? 'flex' : 'none';
+            if (lockConc) lockConc.style.display = (currentPlan === 'VIP') ? 'none' : 'flex';
+
+            const badge = document.getElementById('planBadge');
+            if (badge) badge.innerText = currentPlan;
+        }
+
+        // ==========================================
+        // AUTENTICAÇÃO E LOGIN
+        // ==========================================
         function showAuthInputs(role) {
             targetAuthRole = role;
             document.getElementById('loginStepSelect').style.display = 'none';
@@ -1220,82 +1181,344 @@
             if (plano === 'VIP') document.getElementById('cardPlanVip').classList.add('selected');
         }
 
-        // ==========================================
-        // LÓGICA DE DADOS (AGORA CONSUMINDO A API)
-        // ==========================================
+        async function executeLogin() {
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+            const pass = document.getElementById('loginPassword').value.trim();
 
+            if (targetAuthRole === 'master') {
+                if (pass === 'admin123' || email.includes('master')) {
+                    loginAs('master', 'NailBoss Master 👑');
+                } else {
+                    showConfirm('Acesso Negado', 'Senha Master incorreta.', null, false);
+                }
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, password: pass })
+                });
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    showConfirm('Acesso Negado', errorData.detail || 'E-mail ou senha incorretos.', null, false);
+                    return;
+                }
+                const data = await response.json();
+                currentTenantId = data.tenant_id;
+                currentToken = data.access_token || "token_demo";
+                currentPlan = data.plan || "PRO";
+                loginAs('studio', data.studio_name || "Studio Demo");
+            } catch (e) {
+                showConfirm('Erro de Conexão', 'Não foi possível conectar ao servidor.', null, false);
+            }
+        }
+
+        async function finalizarCadastroEAtivar() {
+            const studio = document.getElementById('regStudio').value.trim();
+            const email = document.getElementById('regEmail').value.trim().toLowerCase();
+            const whats = document.getElementById('regWhats').value.trim();
+            const senha = document.getElementById('regSenha').value.trim();
+
+            if (!studio || !email || !senha) {
+                showConfirm('Atenção', 'Preencha todos os campos e a senha!', null, false); return;
+            }
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        studio_name: studio,
+                        email: email,
+                        phone: whats,
+                        password: senha,
+                        plan: regSelectedPlan
+                    })
+                });
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    showConfirm('Erro no Cadastro', errorData.detail || 'Erro ao registrar.', null, false);
+                    return;
+                }
+
+                showConfirm('Cadastro Enviado!', 'Studio cadastrado com sucesso! Aguardando aprovação Master. Tente fazer login em breve.', () => {
+                    showAuthInputs('studio');
+                    document.getElementById('loginEmail').value = email;
+                }, false);
+            } catch (e) {
+                showConfirm('Erro de Conexão', 'O Servidor Back-end parece estar offline.', null, false);
+            }
+        }
+
+        function loginAs(role, studioName = "Studio Demo") {
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('app-layout').style.display = 'flex';
+            currentRole = role;
+
+            localStorage.setItem('nailboss_active_session', JSON.stringify({
+                role: role, tenantId: currentTenantId, plan: currentPlan, studioName: studioName, token: currentToken
+            }));
+
+            if (role === 'master') {
+                document.getElementById('userRoleName').innerText = 'Proprietário SaaS 👑';
+                document.getElementById('mobileStudioName').innerText = 'NailBoss Master 👑';
+                document.getElementById('nav-master-item').style.display = 'flex';
+                document.getElementById('btnSidebarUpgrade').style.display = 'none';
+                recarregarDadosCompletos();
+                navigateTo('admin');
+            } else {
+                document.getElementById('userRoleName').innerText = studioName;
+                document.getElementById('mobileStudioName').innerText = studioName;
+                document.getElementById('nav-master-item').style.display = 'none';
+                document.getElementById('btnSidebarUpgrade').style.display = 'block';
+                applyPlanPermissions();
+                recarregarDadosCompletos();
+                navigateTo('dash');
+            }
+        }
+
+        function logout() {
+            showConfirm('Encerrar Sessão', 'Deseja realmente sair do sistema?', () => {
+                currentTenantId = "";
+                currentToken = "";
+                localStorage.removeItem('nailboss_active_session');
+                localStorage.removeItem('nailboss_active_view');
+                document.getElementById('app-layout').style.display = 'none';
+                document.getElementById('landing-page').style.display = 'flex';
+            });
+        }
+
+        function openChangePasswordModal() { document.getElementById('changePassModal').style.display = 'flex'; }
+        function closeChangePasswordModal() { document.getElementById('changePassModal').style.display = 'none'; }
+        function saveNewPassword() { closeChangePasswordModal(); showConfirm('Sucesso', 'Senha alterada com sucesso!', null, false); }
+
+        // ==========================================
+        // SINCRONIZAÇÃO COMPLETA DA NUVEM (API)
+        // ==========================================
+        async function recarregarDadosCompletos() {
+            const btn = document.getElementById('btnSincronizarNuvem');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '⏳ Sincronizando...';
+            }
+
+            try {
+                if (currentRole === 'master') {
+                    const res = await fetch(`${API_URL}/admin/studios`, { headers: getAuthHeaders() });
+                    if (res.ok) {
+                        const json = await res.json();
+                        globalData.masterStudios = json.map(s => ({
+                            id: s.id, estudio: s.studio_name, email: s.email, whats: s.phone || '', plano: s.plan, status: s.status
+                        }));
+                    }
+                    globalData.masterPagamentos = JSON.parse(localStorage.getItem('nailboss_master_pagamentos')) || [];
+                    renderMasterSaaS();
+                } else {
+                    const headers = getAuthHeaders();
+
+                    const [resServ, resCli, resAg, resFin] = await Promise.all([
+                        fetch(`${API_URL}/services`, { headers }),
+                        fetch(`${API_URL}/clients`, { headers }),
+                        fetch(`${API_URL}/appointments`, { headers }),
+                        fetch(`${API_URL}/finance`, { headers })
+                    ]);
+
+                    if (resServ.ok) {
+                        globalData.servicos = (await resServ.json()).map(s => ({
+                            id: s.id, nome: s.name, valor: Number(s.price), duracao: s.estimated_duration_minutes
+                        }));
+                    }
+                    if (resCli.ok) {
+                        globalData.clientes = (await resCli.json()).map(c => ({
+                            id: c.id, nome: c.name, whats: c.phone || '', desde: c.client_since || '', pref: c.preference || ''
+                        }));
+                    }
+                    if (resAg.ok) {
+                        globalData.agenda = (await resAg.json()).map(a => ({
+                            id: a.id, data: a.appointment_date, horaInicio: a.start_time, horaFim: a.end_time || '',
+                            cliente: a.client_name, whats: a.client_phone || '', servico: a.service_name,
+                            total: Number(a.total_amount), sinal: Number(a.pix_deposit_amount), pendente: Number(a.pending_amount),
+                            quitado: a.is_settled, ehBloqueio: a.is_block, origemLink: a.is_from_link
+                        }));
+                    }
+                    if (resFin.ok) {
+                        globalData.financeiro = (await resFin.json()).map(f => ({
+                            id: f.id, data: f.transaction_date, desc: f.description, tipo: f.type,
+                            valor: Number(f.amount), status: f.status
+                        }));
+                    }
+
+                    globalData.estoque = JSON.parse(localStorage.getItem(`nailboss_${currentTenantId}_estoque`)) || [];
+                    globalData.historicoRepasses = JSON.parse(localStorage.getItem(`nailboss_${currentTenantId}_repasses`)) || [];
+
+                    renderTabelaServicosCatalogo();
+                    renderTabelaClientes();
+                    renderTabelaEstoque();
+                    renderAgendaEFinanceiro();
+                    renderHistoricoRepasses();
+                    renderDashboardData();
+                    renderCrmAusentes();
+                }
+                exibirToast("Sincronizado", "Todos os dados foram atualizados com a nuvem.", "sucesso");
+            } catch (error) {
+                console.error("Erro na sincronização API:", error);
+                exibirToast("Erro de Conexão", "Não foi possível sincronizar com o servidor.", "erro");
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '🔄 Sincronizar Nuvem API';
+                }
+            }
+        }
+
+        // ==========================================
+        // MÓDULO: SERVIÇOS & CATÁLOGO
+        // ==========================================
         async function salvarServicoCatalogo() {
+            const idEdit = document.getElementById('srvIdEdicao').value;
             const nome = document.getElementById('srvNome').value.trim();
             const valor = parseFloat(document.getElementById('srvValor').value) || 0;
             const duracao = parseInt(document.getElementById('srvDuracao').value) || 60;
+
             if (!nome || valor <= 0) { showConfirm('Atenção', 'Informe o nome do serviço e valor válido.', null, false); return; }
-            
-            await fetch(`${API_URL}/services`, {
-                method: 'POST',
-                headers: { 'tenant-id': currentTenantId, 'Content-Type': 'application/json' },
+
+            const method = idEdit ? 'PUT' : 'POST';
+            const url = idEdit ? `${API_URL}/services/${idEdit}` : `${API_URL}/services`;
+
+            await fetch(url, {
+                method: method,
+                headers: getAuthHeaders(),
                 body: JSON.stringify({ name: nome, price: valor, estimated_duration_minutes: duracao })
             });
+
+            cancelarEdicaoServico();
+            recarregarDadosCompletos();
+        }
+
+        function prepararEdicaoServico(id, nome, valor, duracao) {
+            document.getElementById('srvIdEdicao').value = id;
+            document.getElementById('srvNome').value = nome;
+            document.getElementById('srvValor').value = valor;
+            document.getElementById('srvDuracao').value = duracao;
+
+            document.getElementById('headerFormServico').innerText = '✏️ Editar Serviço do Catálogo';
+            document.getElementById('btnSalvarServico').innerText = 'Atualizar Serviço';
+            document.getElementById('btnCancelarEditServico').style.display = 'inline-block';
+        }
+
+        function cancelarEdicaoServico() {
+            document.getElementById('srvIdEdicao').value = '';
             document.getElementById('srvNome').value = '';
             document.getElementById('srvValor').value = '';
-            
-            recarregarDadosCompletos();
-            showConfirm('Sucesso', 'Serviço cadastrado no catálogo e sincronizado!', null, false);
+            document.getElementById('srvDuracao').value = '90';
+
+            document.getElementById('headerFormServico').innerText = '💅 Cadastrar Serviço no Catálogo';
+            document.getElementById('btnSalvarServico').innerText = 'Salvar Serviço';
+            document.getElementById('btnCancelarEditServico').style.display = 'none';
+        }
+
+        async function excluirServico(id) {
+            showConfirm('Excluir Serviço', 'Deseja eliminar este serviço?', async () => {
+                await fetch(`${API_URL}/services/${id}`, { method: 'DELETE', headers: getAuthHeaders() });
+                recarregarDadosCompletos();
+            });
         }
 
         function renderTabelaServicosCatalogo() {
             const tbody = document.getElementById('tbServicosCatalogo');
             const selectAg = document.getElementById('agServicoSelect');
-            if (!tbody || !selectAg) return;
+            const selectPub = document.getElementById('pubCliServico');
+
+            if (!tbody) return;
             tbody.innerHTML = '';
-            selectAg.innerHTML = '<option value="">Selecione um Serviço...</option>';
-            
+            if (selectAg) selectAg.innerHTML = '<option value="">Selecione um Serviço...</option>';
+            if (selectPub) selectPub.innerHTML = '<option value="">Selecione um serviço...</option>';
+
             globalData.servicos.forEach(s => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><strong>${s.nome}</strong></td>
                     <td>${s.duracao} min</td>
                     <td style="color:var(--green-success); font-weight:bold;">R$ ${s.valor.toFixed(2)}</td>
-                    <td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;">Excluir</button></td>
+                    <td style="display:flex; gap:6px;">
+                        <button class="btn-action btn-gold" style="padding:4px 8px; font-size:0.72rem;" onclick="prepararEdicaoServico('${s.id}', '${s.nome}', ${s.valor}, ${s.duracao})">✏️ Editar</button>
+                        <button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="excluirServico('${s.id}')">🗑️ Excluir</button>
+                    </td>
                 `;
                 tbody.appendChild(tr);
-                
-                const opt = document.createElement('option');
-                opt.value = s.nome;
-                opt.setAttribute('data-valor', s.valor);
-                opt.innerText = `${s.nome} (R$ ${s.valor.toFixed(2)})`;
-                selectAg.appendChild(opt);
+
+                if (selectAg) selectAg.innerHTML += `<option value="${s.nome}" data-valor="${s.valor}">${s.nome} (R$ ${s.valor.toFixed(2)})</option>`;
+                if (selectPub) selectPub.innerHTML += `<option value="${s.nome}" data-valor="${s.valor}">${s.nome} (R$ ${s.valor.toFixed(2)})</option>`;
             });
         }
 
+        // ==========================================
+        // MÓDULO: CLIENTES & HISTÓRICO
+        // ==========================================
         async function salvarCliente() {
-            const nome = document.getElementById('cliNome').value;
-            const whats = document.getElementById('cliWhats').value;
-            const pref = document.getElementById('cliPref').value;
-            if (!nome) { showConfirm('Atenção', 'Informe o nome da cliente.', null, false); return; }
+            const idEdit = document.getElementById('cliIdEdicao').value;
+            const nome = document.getElementById('cliNome').value.trim();
+            const whats = document.getElementById('cliWhats').value.trim();
+            const desde = document.getElementById('cliDesde').value;
+            const pref = document.getElementById('cliPref').value.trim();
 
-            await fetch(`${API_URL}/clients`, {
-                method: 'POST',
-                headers: { 'tenant-id': currentTenantId, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: nome, phone: whats, preference: pref })
+            if (!nome) { showConfirm('Atenção', 'Informe o nome do cliente.', null, false); return; }
+
+            const method = idEdit ? 'PUT' : 'POST';
+            const url = idEdit ? `${API_URL}/clients/${idEdit}` : `${API_URL}/clients`;
+
+            await fetch(url, {
+                method: method,
+                headers: getAuthHeaders(),
+                body: JSON.stringify({ name: nome, phone: whats, client_since: desde, preference: pref })
             });
 
+            cancelarEdicaoCliente();
+            recarregarDadosCompletos();
+        }
+
+        function prepararEdicaoCliente(id, nome, whats, pref) {
+            document.getElementById('cliIdEdicao').value = id;
+            document.getElementById('cliNome').value = nome;
+            document.getElementById('cliWhats').value = whats;
+            document.getElementById('cliPref').value = pref;
+
+            document.getElementById('headerFormCliente').innerText = '✏️ Editar Dados do Cliente';
+            document.getElementById('btnSalvarCliente').innerText = 'Atualizar Cliente';
+            document.getElementById('btnCancelarEditCliente').style.display = 'inline-block';
+        }
+
+        function cancelarEdicaoCliente() {
+            document.getElementById('cliIdEdicao').value = '';
             document.getElementById('cliNome').value = '';
             document.getElementById('cliWhats').value = '';
+            document.getElementById('cliDesde').value = '';
             document.getElementById('cliPref').value = '';
-            recarregarDadosCompletos();
-            showConfirm('Sucesso', 'Cliente cadastrado no servidor!', null, false);
+
+            document.getElementById('headerFormCliente').innerText = '👤 Cadastrar Novo Cliente';
+            document.getElementById('btnSalvarCliente').innerText = 'Salvar Cliente';
+            document.getElementById('btnCancelarEditCliente').style.display = 'none';
+        }
+
+        async function excluirCliente(id) {
+            showConfirm('Excluir Cliente', 'Remover este cliente da base?', async () => {
+                await fetch(`${API_URL}/clients/${id}`, { method: 'DELETE', headers: getAuthHeaders() });
+                recarregarDadosCompletos();
+            });
         }
 
         function renderTabelaClientes() {
             const tbody = document.getElementById('tbClientes');
             if (!tbody) return;
             tbody.innerHTML = '';
-            
+
             if (globalData.clientes.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-muted)">Nenhum cliente cadastrado.</td></tr>';
                 return;
             }
-            
+
             globalData.clientes.forEach(c => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -1304,109 +1527,321 @@
                     <td>${formatDateBR(c.desde)}</td>
                     <td>${c.pref || '-'}</td>
                     <td style="display:flex; gap:6px;">
+                        <button class="btn-action btn-gold" style="padding:4px 8px; font-size:0.72rem;" onclick="prepararEdicaoCliente('${c.id}', '${c.nome}', '${c.whats}', '${c.pref}')">✏️ Editar</button>
                         <button class="btn-action" style="padding:4px 8px; font-size:0.72rem;" onclick="abrirHistoricoCliente('${c.nome}')">📜 Histórico</button>
+                        <button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="excluirCliente('${c.id}')">🗑️ Excluir</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
+        function abrirHistoricoCliente(nomeCliente) {
+            document.getElementById('histTitle').innerText = `📜 Histórico de ${nomeCliente}`;
+            const divContent = document.getElementById('histContent');
+            const servs = globalData.agenda.filter(a => a.cliente.toLowerCase() === nomeCliente.toLowerCase());
+
+            if (servs.length === 0) {
+                divContent.innerHTML = '<p style="color:var(--text-muted)">Nenhum agendamento registrado para esta cliente.</p>';
+            } else {
+                let html = '<ul style="list-style:none; padding:0;">';
+                servs.forEach(s => {
+                    html += `<li style="padding:8px; border-bottom:1px solid var(--card-border); font-size:0.85rem;">
+                        <strong>${formatDateBR(s.data)} - ${s.horaInicio}</strong><br>
+                        <span>Serviço: ${s.servico} (R$ ${s.total.toFixed(2)})</span>
+                    </li>`;
+                });
+                html += '</ul>';
+                divContent.innerHTML = html;
+            }
+            document.getElementById('historyModal').style.display = 'flex';
+        }
+        function fecharHistoricoModal() { document.getElementById('historyModal').style.display = 'none'; }
+
+        // ==========================================
+        // MÓDULO: AGENDA, SLOTS & LINK PÚBLICO
+        // ==========================================
+        function salvarConfigSinalPix() {
+            const cobrar = document.getElementById('cfgExigirSinalPix').checked;
+            localStorage.setItem(`nailboss_${currentTenantId}_cfg_sinal`, cobrar ? 'true' : 'false');
+            exibirToast("Configuração Salva", `Cobrança de Sinal PIX no link ${cobrar ? 'Ativada' : 'Desativada'}.`, "sucesso");
+        }
+
+        function atualizarPendenteForm() {
+            const total = parseFloat(document.getElementById('agValor').value) || 0;
+            const sinal = parseFloat(document.getElementById('agSinal').value) || 0;
+            const pendente = Math.max(0, total - sinal);
+            document.getElementById('agPendente').value = `R$ ${pendente.toFixed(2).replace('.', ',')}`;
+        }
+
+        function aoSelecionarServicoAgendamento(nomeServico) {
+            const select = document.getElementById('agServicoSelect');
+            const valor = parseFloat(select.options[select.selectedIndex]?.getAttribute('data-valor')) || 0;
+            document.getElementById('agValor').value = valor;
+            document.getElementById('agSinal').value = Math.min(30, valor);
+            atualizarPendenteForm();
+        }
+
         async function salvarAgendamento() {
             const data = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
             const horaInicio = document.getElementById('agHoraInicio').value;
+            const horaFim = document.getElementById('agHoraFim').value;
             const nome = document.getElementById('agNome').value;
             const servicoSelect = document.getElementById('agServicoSelect').value;
             const total = parseFloat(document.getElementById('agValor').value) || 0;
             const sinal = parseFloat(document.getElementById('agSinal').value) || 0;
-            
-            if (!nome || !servicoSelect || total <= 0) { showConfirm('Atenção', 'Preencha os dados e valor!', null, false); return; }
+
+            if (!nome || !servicoSelect || total <= 0) { showConfirm('Atenção', 'Preencha todos os campos e o valor!', null, false); return; }
 
             await fetch(`${API_URL}/appointments`, {
                 method: 'POST',
-                headers: { 'tenant-id': currentTenantId, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    appointment_date: data, start_time: horaInicio, 
-                    client_name: nome, service_name: servicoSelect, 
+                headers: getAuthHeaders(),
+                body: JSON.stringify({
+                    appointment_date: data, start_time: horaInicio, end_time: horaFim,
+                    client_name: nome, service_name: servicoSelect,
                     total_amount: total, pix_deposit_amount: sinal, is_block: false, is_from_link: false
                 })
             });
-
             document.getElementById('agNome').value = '';
             document.getElementById('agValor').value = '';
             document.getElementById('agSinal').value = '';
             atualizarPendenteForm();
             recarregarDadosCompletos();
-            showConfirm('Sucesso', 'Agendamento sincronizado com sucesso e vinculado à DFC!', null, false);
+            showConfirm('Sucesso', 'Agendamento salvo e sincronizado!', null, false);
         }
-        
+
+        async function excluirAgendamento(id) {
+            showConfirm('Excluir Agendamento', 'Deseja remover este registro?', async () => {
+                await fetch(`${API_URL}/appointments/${id}`, { method: 'DELETE', headers: getAuthHeaders() });
+                recarregarDadosCompletos();
+            });
+        }
+
+        function abrirModalBloqueioHorario() {
+            const dataAtual = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
+            document.getElementById('blockDate').value = dataAtual;
+            document.getElementById('blockTimeModal').style.display = 'flex';
+        }
+        function fecharModalBloqueioHorario() { document.getElementById('blockTimeModal').style.display = 'none'; }
+
         async function confirmarBloqueioHorarioModal() {
             const data = document.getElementById('blockDate').value;
             const inicio = document.getElementById('blockStart').value;
             const fim = document.getElementById('blockEnd').value;
             const motivo = document.getElementById('blockReason').value || 'Bloqueio Interno';
+
             if (!data || !inicio) { showConfirm('Atenção', 'Informe data e horário.', null, false); return; }
 
             await fetch(`${API_URL}/appointments`, {
                 method: 'POST',
-                headers: { 'tenant-id': currentTenantId, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
+                headers: getAuthHeaders(),
+                body: JSON.stringify({
                     appointment_date: data, start_time: inicio, end_time: fim,
-                    client_name: "BLOQUEADO", service_name: motivo, 
+                    client_name: "BLOQUEADO", service_name: motivo,
                     total_amount: 0, pix_deposit_amount: 0, is_block: true
                 })
             });
-
             fecharModalBloqueioHorario();
             recarregarDadosCompletos();
-            showConfirm('Horário Bloqueado', `Bloqueio realizado via API.`, null, false);
         }
 
+        function abrirPopupGradeDia() {
+            const dataSel = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
+            document.getElementById('modalSlotsDataSel').value = dataSel;
+            renderGradeHorariosModal(dataSel);
+            document.getElementById('slotsModal').style.display = 'flex';
+        }
+        function fecharSlotsModal() { document.getElementById('slotsModal').style.display = 'none'; }
+
+        function renderGradeHorariosModal(dataSel) {
+            document.getElementById('slotsTitle').innerText = `Visão dos Slots: ${formatDateBR(dataSel)}`;
+            const container = document.getElementById('slotsContainer');
+            container.innerHTML = '';
+
+            const horariosPadrao = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
+            const agsDia = globalData.agenda.filter(a => a.data === dataSel);
+
+            horariosPadrao.forEach(hora => {
+                const ocupado = agsDia.find(a => a.horaInicio === hora);
+                const card = document.createElement('div');
+                if (ocupado) {
+                    if (ocupado.ehBloqueio) {
+                        card.className = 'time-slot-card blocked';
+                        card.innerText = `${hora}\n🔒 BLOQUEADO`;
+                    } else {
+                        card.className = 'time-slot-card occupied';
+                        card.innerText = `${hora}\n👤 ${ocupado.cliente}`;
+                    }
+                } else {
+                    card.className = 'time-slot-card';
+                    card.innerText = `${hora}\n✅ Livre`;
+                    card.onclick = function() {
+                        document.getElementById('agHoraInicio').value = hora;
+                        fecharSlotsModal();
+                    };
+                }
+                container.appendChild(card);
+            });
+        }
+
+        function gerarLinkPublicoAgendamento() {
+            const link = `${window.location.origin}${window.location.pathname}?agendar=true&tenant=${currentTenantId}`;
+            navigator.clipboard.writeText(link);
+            exibirToast("Link Copiado!", "O link de agendamento público foi copiado para a área de transferência.", "sucesso");
+        }
+
+        function aoSelecionarServicoPublico(nomeServico) {
+            const select = document.getElementById('pubCliServico');
+            const valor = parseFloat(select.options[select.selectedIndex]?.getAttribute('data-valor')) || 0;
+            const exigeSinal = localStorage.getItem(`nailboss_${currentTenantId}_cfg_sinal`) !== 'false';
+
+            const sinalVal = exigeSinal ? Math.min(30, valor) : 0;
+            document.getElementById('pubValResumo').innerText = `Total: R$ ${valor.toFixed(2)} ${exigeSinal ? `| Sinal PIX: R$ ${sinalVal.toFixed(2)}` : '(Sem cobrança de sinal)'}`;
+            document.getElementById('pubBoxPixChave').style.display = exigeSinal ? 'block' : 'none';
+        }
+
+        function renderPublicTimeSlots() {
+            const container = document.getElementById('pubSlotsContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            const dataSel = document.getElementById('pubCliData').value;
+            if (!dataSel) return;
+
+            const horariosPadrao = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
+            const agsDia = globalData.agenda.filter(a => a.data === dataSel);
+
+            horariosPadrao.forEach(hora => {
+                const ocupado = agsDia.find(a => a.horaInicio === hora);
+                const card = document.createElement('div');
+                if (ocupado) {
+                    card.className = 'time-slot-card occupied';
+                    card.innerText = `${hora}\nOcupado`;
+                } else {
+                    card.className = 'time-slot-card';
+                    card.innerText = `${hora}\nLivre`;
+                    card.onclick = function() {
+                        document.querySelectorAll('#pubSlotsContainer .time-slot-card').forEach(c => c.classList.remove('selected'));
+                        card.classList.add('selected');
+                        selectedPublicSlotTime = hora;
+                    };
+                }
+                container.appendChild(card);
+            });
+        }
+
+        async function confirmarAgendamentoPublicoCliente() {
+            const nome = document.getElementById('pubCliNome').value.trim();
+            const whats = document.getElementById('pubCliWhats').value.trim();
+            const servico = document.getElementById('pubCliServico').value;
+            const data = document.getElementById('pubCliData').value;
+
+            if (!nome || !whats || !servico || !data || !selectedPublicSlotTime) {
+                showConfirm('Atenção', 'Preencha seus dados, selecione o serviço, a data e um horário livre.', null, false);
+                return;
+            }
+
+            const select = document.getElementById('pubCliServico');
+            const valor = parseFloat(select.options[select.selectedIndex]?.getAttribute('data-valor')) || 0;
+            const exigeSinal = localStorage.getItem(`nailboss_${currentTenantId}_cfg_sinal`) !== 'false';
+            const sinalVal = exigeSinal ? Math.min(30, valor) : 0;
+
+            await fetch(`${API_URL}/appointments`, {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({
+                    appointment_date: data, start_time: selectedPublicSlotTime,
+                    client_name: nome, client_phone: whats, service_name: servico,
+                    total_amount: valor, pix_deposit_amount: sinalVal, is_block: false, is_from_link: true
+                })
+            });
+
+            const msg = encodeURIComponent(`Olá! Fiz meu agendamento no Studio!\n\n👤 *Nome:* ${nome}\n💅 *Serviço:* ${servico}\n📅 *Data:* ${formatDateBR(data)} às ${selectedPublicSlotTime}\n💰 *Valor:* R$ ${valor.toFixed(2)}${exigeSinal ? `\n🔑 *Sinal PIX:* R$ ${sinalVal.toFixed(2)}` : ''}`);
+            window.open(`https://wa.me/5511947887105?text=${msg}`, '_blank');
+
+            showConfirm('Sucesso!', 'Agendamento pré-reservado! A janela do WhatsApp foi aberta para envio do comprovante ao Studio.', () => {
+                location.href = window.location.pathname;
+            }, false);
+        }
+
+        // ==========================================
+        // MÓDULO: TESOURARIA DFC
+        // ==========================================
         async function salvarLancamentoDFC() {
             const tipo = document.getElementById('dfcTipo').value;
-            const desc = document.getElementById('dfcDesc').value;
+            const desc = document.getElementById('dfcDesc').value.trim();
             const valor = parseFloat(document.getElementById('dfcValor').value) || 0;
             const data = document.getElementById('dfcData').value || new Date().toISOString().split('T')[0];
+
             if (!desc || valor <= 0) { showConfirm('Atenção', 'Informe a descrição e o valor.', null, false); return; }
 
             await fetch(`${API_URL}/finance`, {
                 method: 'POST',
-                headers: { 'tenant-id': currentTenantId, 'Content-Type': 'application/json' },
+                headers: getAuthHeaders(),
                 body: JSON.stringify({ transaction_date: data, description: desc, type: tipo, amount: valor, status: "PENDENTE" })
             });
-
             document.getElementById('dfcDesc').value = '';
             document.getElementById('dfcValor').value = '';
             recarregarDadosCompletos();
-            showConfirm('Lançado', 'Lançamento registrado como PENDENTE no Banco!', null, false);
         }
 
         async function darBaixaDFC(id) {
             showConfirm('Dar Baixa na Tesouraria', 'Confirmar recebimento do valor?', async () => {
                 await fetch(`${API_URL}/finance/${id}/settle`, {
                     method: 'PUT',
-                    headers: { 'tenant-id': currentTenantId }
+                    headers: getAuthHeaders()
                 });
                 recarregarDadosCompletos();
             });
         }
 
-        // --- MANIPULAÇÕES VISUAIS DA AGENDA E DFC (BASEADO NA API) ---
+        function abrirModalEditarDFC(id, desc, valor, tipo) {
+            document.getElementById('editDfcId').value = id;
+            document.getElementById('editDfcDesc').value = desc;
+            document.getElementById('editDfcValor').value = valor;
+            document.getElementById('editDfcTipo').value = tipo;
+            document.getElementById('editDfcModal').style.display = 'flex';
+        }
+        function fecharModalEditDFC() { document.getElementById('editDfcModal').style.display = 'none'; }
+
+        async function salvarEdicaoDFC() {
+            const id = document.getElementById('editDfcId').value;
+            const desc = document.getElementById('editDfcDesc').value;
+            const valor = parseFloat(document.getElementById('editDfcValor').value) || 0;
+            const tipo = document.getElementById('editDfcTipo').value;
+
+            await fetch(`${API_URL}/finance/${id}`, {
+                method: 'PUT',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({ description: desc, amount: valor, type: tipo })
+            });
+
+            fecharModalEditDFC();
+            recarregarDadosCompletos();
+        }
+
+        async function excluirLancamentoDFC(id) {
+            showConfirm('Excluir Lançamento', 'Remover este registro da Tesouraria?', async () => {
+                await fetch(`${API_URL}/finance/${id}`, { method: 'DELETE', headers: getAuthHeaders() });
+                recarregarDadosCompletos();
+            });
+        }
+
         function renderAgendaEFinanceiro() {
             const tbAgenda = document.getElementById('tbAgenda');
             const tbFin = document.getElementById('tbFinanceiro');
             const tbBloq = document.getElementById('tbHorariosBloqueados');
             if (!tbAgenda || !tbFin) return;
-            
+
             tbAgenda.innerHTML = '';
             tbFin.innerHTML = '';
             if (tbBloq) tbBloq.innerHTML = '';
-            
+
             const filCliente = document.getElementById('filAgCliente') ? document.getElementById('filAgCliente').value.toLowerCase() : '';
             const filAgDe = document.getElementById('filAgDe') ? document.getElementById('filAgDe').value : '';
             const filAgAte = document.getElementById('filAgAte') ? document.getElementById('filAgAte').value : '';
-            
+
             let temBloqueio = false;
-            
+
             globalData.agenda.forEach(item => {
                 if (item.ehBloqueio || item.cliente === 'BLOQUEADO') {
                     temBloqueio = true;
@@ -1416,19 +1851,19 @@
                             <td><strong>${formatDateBR(item.data)}</strong></td>
                             <td><span class="badge-status badge-danger">${item.horaInicio} às ${item.horaFim || item.horaInicio}</span></td>
                             <td>${item.servico || 'Bloqueio'}</td>
-                            <td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;">Excluir</button></td>
+                            <td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="excluirAgendamento('${item.id}')">Excluir</button></td>
                         `;
                         tbBloq.appendChild(trB);
                     }
                     return;
                 }
-                
+
                 if (filCliente && !item.cliente.toLowerCase().includes(filCliente)) return;
                 if (filAgDe && item.data < filAgDe) return;
                 if (filAgAte && item.data > filAgAte) return;
-                
+
                 const tagOrigem = item.origemLink ? '<span class="badge-status badge-link">⚡ Link</span>' : '<span class="badge-status badge-gold">🏢 Balcão</span>';
-                
+
                 const trAg = document.createElement('tr');
                 trAg.innerHTML = `
                     <td>${tagOrigem}<br><small style="font-weight:bold;">${formatDateBR(item.data)} (${item.horaInicio})</small></td>
@@ -1438,10 +1873,11 @@
                     <td style="color:var(--green-success)">R$ ${item.sinal.toFixed(2)}</td>
                     <td style="color:var(--gold-warning)">R$ ${item.pendente.toFixed(2)}</td>
                     <td>${item.quitado ? '<span class="badge-status badge-green">Liquidado ✓</span>' : '<span class="badge-status badge-gold">Pendente DFC</span>'}</td>
-                    <td style="display:flex; gap:4px;"><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;">Excluir API</button></td>
+                    <td style="display:flex; gap:4px;"><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="excluirAgendamento('${item.id}')">🗑️ Excluir</button></td>
                 `;
                 tbAgenda.appendChild(trAg);
             });
+
             if (tbBloq && !temBloqueio) {
                 tbBloq.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted)">Nenhum horário bloqueado.</td></tr>';
             }
@@ -1451,24 +1887,30 @@
             const finAte = document.getElementById('finFilAte') ? document.getElementById('finFilAte').value : '';
             const finStatus = document.getElementById('finFilStatus') ? document.getElementById('finFilStatus').value : 'TODOS';
             let caixaTotal = 0, pendenteTotal = 0, despesasTotal = 0;
-            
+
             globalData.financeiro.forEach(d => {
                 if (finDesc && !d.desc.toLowerCase().includes(finDesc)) return;
                 if (finDe && d.data < finDe) return;
                 if (finAte && d.data > finAte) return;
                 if (finStatus !== 'TODOS' && d.status !== finStatus) return;
-                
+
                 if (d.status === 'LIQUIDADO') {
                     if (d.tipo === 'receita') caixaTotal += d.valor;
                     else despesasTotal += d.valor;
                 } else {
                     if (d.tipo === 'receita') pendenteTotal += d.valor;
                 }
-                
-                const btnAcao = d.status === 'PENDENTE'
-                    ? `<button class="btn-action btn-green" style="padding:4px 8px; font-size:0.72rem;" onclick="darBaixaDFC('${d.id}')">💵 Liquidar</button>`
-                    : `<span class="badge-status badge-green">Liquidado ✓</span>`;
-                
+
+                const acoes = `
+                    <div style="display:flex; gap:4px; align-items:center;">
+                        ${d.status === 'PENDENTE'
+                            ? `<button class="btn-action btn-green" style="padding:4px 8px; font-size:0.72rem;" onclick="darBaixaDFC('${d.id}')">💵 Liquidar</button>`
+                            : `<span class="badge-status badge-green">Liquidado ✓</span>`}
+                        <button class="btn-action btn-gold" style="padding:4px 6px; font-size:0.72rem;" onclick="abrirModalEditarDFC('${d.id}', '${d.desc}', ${d.valor}, '${d.tipo}')">✏️</button>
+                        <button class="btn-action btn-danger" style="padding:4px 6px; font-size:0.72rem;" onclick="excluirLancamentoDFC('${d.id}')">🗑️</button>
+                    </div>
+                `;
+
                 const trFin = document.createElement('tr');
                 trFin.innerHTML = `
                     <td>${formatDateBR(d.data)}</td>
@@ -1476,109 +1918,490 @@
                     <td><span class="badge-status ${d.tipo === 'receita' ? 'badge-green' : 'badge-danger'}">${d.tipo.toUpperCase()}</span></td>
                     <td style="font-weight:bold; color:${d.tipo === 'receita' ? 'var(--green-success)' : 'var(--danger)'}">R$ ${d.valor.toFixed(2)}</td>
                     <td><span class="badge-status ${d.status === 'LIQUIDADO' ? 'badge-green' : 'badge-gold'}">${d.status}</span></td>
-                    <td>${btnAcao}</td>
+                    <td>${acoes}</td>
                 `;
                 tbFin.appendChild(trFin);
             });
+
             document.getElementById('finCaixaHoje').innerText = `R$ ${caixaTotal.toFixed(2).replace('.', ',')}`;
             document.getElementById('finPendenteFuturo').innerText = `R$ ${pendenteTotal.toFixed(2).replace('.', ',')}`;
             document.getElementById('finDespesas').innerText = `R$ ${despesasTotal.toFixed(2).replace('.', ',')}`;
             document.getElementById('finSaldoLiquido').innerText = `R$ ${(caixaTotal - despesasTotal).toFixed(2).replace('.', ',')}`;
+
             atualizarConciliacaoPeriodo();
         }
 
-        async function alterarStatusEstudioMaster(id, novoStatus) {
-            // Chamada API fictícia para painel MASTER (já mapeado no back-end)
-            await fetch(`${API_URL}/admin/studios/${id}/status?new_status=${novoStatus}`, {
-                method: 'PUT'
+        // ==========================================
+        // MÓDULO: CONCILIAÇÃO SALÃO & HISTÓRICO REPASSES
+        // ==========================================
+        function atualizarConciliacaoPeriodo() {
+            const taxa = parseFloat(document.getElementById('concTaxa').value) || 30;
+            let bruto = 0;
+
+            globalData.agenda.forEach(a => { bruto += a.total; });
+
+            const valSalao = bruto * (taxa / 100);
+            const valManicure = bruto - valSalao;
+
+            document.getElementById('concBrutoPeriodo').innerText = `R$ ${bruto.toFixed(2).replace('.', ',')}`;
+            document.getElementById('concSalaoPeriodo').innerText = `R$ ${valSalao.toFixed(2).replace('.', ',')}`;
+            document.getElementById('concManicurePeriodo').innerText = `R$ ${valManicure.toFixed(2).replace('.', ',')}`;
+        }
+
+        function lancarDespesaSalaoNoFinanceiro() {
+            const dataDe = document.getElementById('concDataDe').value;
+            const dataAte = document.getElementById('concDataAte').value;
+            const taxa = parseFloat(document.getElementById('concTaxa').value) || 30;
+
+            const bruto = parseFloat(document.getElementById('concBrutoPeriodo').innerText.replace('R$', '').replace('.', '').replace(',', '.')) || 0;
+            const valSalao = parseFloat(document.getElementById('concSalaoPeriodo').innerText.replace('R$', '').replace('.', '').replace(',', '.')) || 0;
+            const valManicure = parseFloat(document.getElementById('concManicurePeriodo').innerText.replace('R$', '').replace('.', '').replace(',', '.')) || 0;
+
+            if (valSalao <= 0) { showConfirm('Atenção', 'Não há valores de repasse no período.', null, false); return; }
+
+            const repasseItem = {
+                id: Date.now().toString(),
+                dataReg: new Date().toISOString().split('T')[0],
+                periodo: `${formatDateBR(dataDe)} até ${formatDateBR(dataAte)}`,
+                bruto: bruto,
+                taxa: taxa,
+                valSalao: valSalao,
+                valManicure: valManicure
+            };
+
+            globalData.historicoRepasses.unshift(repasseItem);
+            localStorage.setItem(`nailboss_${currentTenantId}_repasses`, JSON.stringify(globalData.historicoRepasses));
+
+            renderHistoricoRepasses();
+            exibirToast("Repasse Salvo", "Fechamento guardado no histórico do salão.", "sucesso");
+        }
+
+        function renderHistoricoRepasses() {
+            const tbody = document.getElementById('tbHistoricoRepasses');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            if (globalData.historicoRepasses.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-muted)">Nenhum histórico de repasse guardado.</td></tr>';
+                return;
+            }
+
+            globalData.historicoRepasses.forEach((r, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${formatDateBR(r.dataReg)}</td>
+                    <td><strong>${r.periodo}</strong></td>
+                    <td>R$ ${r.bruto.toFixed(2)}</td>
+                    <td>${r.taxa}%</td>
+                    <td style="color:var(--pink-neon); font-weight:bold;">R$ ${r.valSalao.toFixed(2)}</td>
+                    <td style="color:var(--green-success); font-weight:bold;">R$ ${r.valManicure.toFixed(2)}</td>
+                    <td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="excluirHistoricoRepasse(${idx})">🗑️</button></td>
+                `;
+                tbody.appendChild(tr);
             });
-            recarregarDadosCompletos();
-            showConfirm('Status Atualizado', `Estúdio alterado para ${novoStatus}.`, null, false);
+        }
+
+        function excluirHistoricoRepasse(idx) {
+            globalData.historicoRepasses.splice(idx, 1);
+            localStorage.setItem(`nailboss_${currentTenantId}_repasses`, JSON.stringify(globalData.historicoRepasses));
+            renderHistoricoRepasses();
         }
 
         // ==========================================
-        // INICIALIZAÇÃO DA APLICAÇÃO 
+        // MÓDULO: ESTOQUE & PRECIFICAÇÃO COMBINADA (CMV)
+        // ==========================================
+        function salvarInsumoEstoque() {
+            const nome = document.getElementById('estNome').value.trim();
+            const qtd = parseInt(document.getElementById('estQtd').value) || 0;
+            const custo = parseFloat(document.getElementById('estCusto').value) || 0;
+            const rend = parseInt(document.getElementById('estRendimento').value) || 1;
+
+            if (!nome || custo <= 0) { showConfirm('Atenção', 'Informe nome e custo do insumo.', null, false); return; }
+
+            const item = { id: Date.now().toString(), nome: nome, qtd: qtd, custo: custo, rendimento: rend, custoPorAplicacao: custo / Math.max(1, rend) };
+            globalData.estoque.push(item);
+            localStorage.setItem(`nailboss_${currentTenantId}_estoque`, JSON.stringify(globalData.estoque));
+
+            document.getElementById('estNome').value = '';
+            document.getElementById('estQtd').value = '';
+            document.getElementById('estCusto').value = '';
+            document.getElementById('estRendimento').value = '';
+
+            renderTabelaEstoque();
+            exibirToast("Estoque Atualizado", "Insumo cadastrado com sucesso.", "sucesso");
+        }
+
+        function excluirInsumoEstoque(idx) {
+            globalData.estoque.splice(idx, 1);
+            localStorage.setItem(`nailboss_${currentTenantId}_estoque`, JSON.stringify(globalData.estoque));
+            renderTabelaEstoque();
+        }
+
+        function renderTabelaEstoque() {
+            const tbody = document.getElementById('tbEstoque');
+            const containerCheck = document.getElementById('checkEstoqueProdutos');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            if (containerCheck) containerCheck.innerHTML = '';
+
+            if (globalData.estoque.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted)">Nenhum insumo cadastrado no estoque.</td></tr>';
+                if (containerCheck) containerCheck.innerHTML = '<span style="color:var(--text-muted); font-size:0.8rem;">Cadastre insumos acima para usar no calculador.</span>';
+                return;
+            }
+
+            globalData.estoque.forEach((p, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${p.nome}</strong></td>
+                    <td>${p.qtd} un.</td>
+                    <td>R$ ${p.custo.toFixed(2)}</td>
+                    <td>${p.rendimento} aplic.</td>
+                    <td style="color:var(--gold-warning); font-weight:bold;">R$ ${p.custoPorAplicacao.toFixed(2)}</td>
+                    <td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="excluirInsumoEstoque(${idx})">🗑️</button></td>
+                `;
+                tbody.appendChild(tr);
+
+                if (containerCheck) {
+                    const div = document.createElement('div');
+                    div.style.display = 'flex';
+                    div.style.alignItems = 'center';
+                    div.style.gap = '8px';
+                    div.innerHTML = `<input type="checkbox" class="chk-insumo" value="${p.custoPorAplicacao}" onchange="calcularPrecoMacroSugerido()" style="accent-color:var(--pink-neon);"> <label style="font-size:0.85rem;">${p.nome} (R$ ${p.custoPorAplicacao.toFixed(2)}/aplic)</label>`;
+                    containerCheck.appendChild(div);
+                }
+            });
+
+            calcularPrecoMacroSugerido();
+        }
+
+        function calcularPrecoMacroSugerido() {
+            let cmvCombinado = 0;
+            document.querySelectorAll('.chk-insumo:checked').forEach(chk => {
+                cmvCombinado += parseFloat(chk.value) || 0;
+            });
+
+            const lucro = parseFloat(document.getElementById('prLucro').value) || 0;
+            const comissao = parseFloat(document.getElementById('prComissao').value) || 0;
+
+            document.getElementById('prCmvCombinado').value = `R$ ${cmvCombinado.toFixed(2).replace('.', ',')}`;
+
+            const precoBase = cmvCombinado + lucro;
+            const precoFinal = comissao < 100 ? precoBase / (1 - (comissao / 100)) : precoBase;
+
+            document.getElementById('resPrecoMacroSugerido').innerText = `R$ ${precoFinal.toFixed(2).replace('.', ',')}`;
+        }
+
+        // ==========================================
+        // MÓDULO: CRM (CLIENTES AUSENTES / SUMIDAS)
+        // ==========================================
+        function renderCrmAusentes() {
+            const tbody = document.getElementById('tbCrmAusentes');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            const hoje = new Date();
+            const ausentes = [];
+
+            globalData.clientes.forEach(c => {
+                const servs = globalData.agenda.filter(a => a.cliente.toLowerCase() === c.nome.toLowerCase()).sort((a,b) => new Date(b.data) - new Date(a.data));
+                if (servs.length > 0) {
+                    const ultData = new Date(servs[0].data);
+                    const diffDays = Math.floor((hoje - ultData) / (1000 * 60 * 60 * 24));
+                    if (diffDays >= 20) {
+                        ausentes.push({ nome: c.nome, whats: c.whats, ultServ: servs[0].servico, ultData: servs[0].data, dias: diffDays });
+                    }
+                }
+            });
+
+            if (ausentes.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted)">Nenhuma cliente ausente a mais de 20 dias! 🎉</td></tr>';
+                return;
+            }
+
+            ausentes.forEach(a => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${a.nome}</strong></td>
+                    <td>${a.ultServ} (${formatDateBR(a.ultData)})</td>
+                    <td><span class="badge-status badge-danger">${a.dias} dias sumida</span></td>
+                    <td><button class="btn-action btn-green" style="padding:5px 10px; font-size:0.75rem;" onclick="dispararWhatsCrm('${a.nome}', '${a.whats}')">💬 Enviar Convite</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function dispararWhatsCrm(nome, whats) {
+            const numClean = (whats || '').replace(/\D/g, '');
+            const msg = encodeURIComponent(`Olá ${nome}, saudades de você no Studio! 💅 Que tal agendarmos a sua manutenção esta semana com um carinho especial?`);
+            window.open(`https://wa.me/55${numClean}?text=${msg}`, '_blank');
+        }
+
+        // ==========================================
+        // MÓDULO: MASTER SAAS & GESTÃO
+        // ==========================================
+        function renderMasterSaaS() {
+            const tbody = document.getElementById('tbMasterClientes');
+            const tbodyPag = document.getElementById('tbMasterPagamentosSaaS');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            let mrr = 0, ativos = 0, pendentes = 0;
+
+            globalData.masterStudios.forEach(m => {
+                if (m.status === 'ATIVO') {
+                    ativos++;
+                    if (m.plano === 'PRO') mrr += masterPrices.PRO;
+                    if (m.plano === 'VIP') mrr += masterPrices.VIP;
+                } else {
+                    pendentes++;
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${m.estudio}</strong></td>
+                    <td>${m.email}<br><small style="color:var(--text-muted);">${m.whats}</small></td>
+                    <td><span class="badge-status badge-gold">${m.plano}</span></td>
+                    <td><span class="badge-status ${m.status === 'ATIVO' ? 'badge-green' : 'badge-danger'}">${m.status}</span></td>
+                    <td>R$ ${m.plano === 'PRO' ? masterPrices.PRO.toFixed(2) : (m.plano === 'VIP' ? masterPrices.VIP.toFixed(2) : '0,00')}</td>
+                    <td style="display:flex; gap:6px;">
+                        <button class="btn-action btn-green" style="padding:4px 8px; font-size:0.7rem;" onclick="alterarStatusEstudioMaster('${m.id}', 'ATIVO')">Ativar</button>
+                        <button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.7rem;" onclick="alterarStatusEstudioMaster('${m.id}', 'BLOQUEADO')">Bloquear</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('masterMrrVal').innerText = `R$ ${mrr.toFixed(2).replace('.', ',')}/mês`;
+            document.getElementById('masterArrVal').innerText = `R$ ${(mrr * 12).toFixed(2).replace('.', ',')}/ano`;
+            document.getElementById('masterAtivosVal').innerText = ativos;
+            document.getElementById('masterPendenteVal').innerText = pendentes;
+
+            if (tbodyPag) {
+                tbodyPag.innerHTML = '';
+                if (globalData.masterPagamentos.length === 0) {
+                    tbodyPag.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted)">Nenhum extrato de pagamento PIX recente.</td></tr>';
+                } else {
+                    globalData.masterPagamentos.forEach(p => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${formatDateBR(p.data)}</td>
+                            <td><strong>${p.estudio}</strong></td>
+                            <td>${p.plano}</td>
+                            <td>R$ ${p.valor.toFixed(2)}</td>
+                            <td><span class="badge-status badge-green">Recebido ✓</span></td>
+                            <td><button class="btn-action btn-gold" style="padding:4px 8px; font-size:0.7rem;">Comprovante</button></td>
+                        `;
+                        tbodyPag.appendChild(tr);
+                    });
+                }
+            }
+        }
+
+        async function alterarStatusEstudioMaster(id, novoStatus) {
+            await fetch(`${API_URL}/admin/studios/${id}/status?new_status=${novoStatus}`, {
+                method: 'PUT',
+                headers: getAuthHeaders()
+            });
+            recarregarDadosCompletos();
+            exibirToast("Status Atualizado", `Estúdio alterado para ${novoStatus}.`, "sucesso");
+        }
+
+        function salvarPrecosPlanosMaster() {
+            const pro = parseFloat(document.getElementById('masterPricePro').value) || 19.90;
+            const vip = parseFloat(document.getElementById('masterPriceVip').value) || 39.90;
+            masterPrices = { PRO: pro, VIP: vip };
+            localStorage.setItem('nailboss_master_prices', JSON.stringify(masterPrices));
+
+            document.getElementById('labelPriceProReg').innerText = `R$ ${pro.toFixed(2)}/mês`;
+            document.getElementById('labelPriceVipReg').innerText = `R$ ${vip.toFixed(2)}/mês`;
+            document.getElementById('labelPriceProPub').innerText = `R$ ${pro.toFixed(2)}/mês`;
+            document.getElementById('labelPriceVipPub').innerText = `R$ ${vip.toFixed(2)}/mês`;
+
+            renderMasterSaaS();
+            exibirToast("Preços Salvos", "Valores dos planos atualizados.", "sucesso");
+        }
+
+        function enviarComprovanteWhatsApp() {
+            const msg = encodeURIComponent("Olá Master! Efetuei o pagamento do meu plano NailBoss Pro via PIX. Segue o comprovante para liberação!");
+            window.open(`https://wa.me/5511947887105?text=${msg}`, '_blank');
+        }
+
+        // ==========================================
+        // DASHBOARD & GRÁFICOS VISUAIS (CHART.JS)
+        // ==========================================
+        function renderDashboardData() {
+            let bruto = 0, caixa = 0, pendente = 0, totalAtend = 0;
+            const servCount = {};
+
+            const dataDe = document.getElementById('dashDataDe') ? document.getElementById('dashDataDe').value : '';
+            const dataAte = document.getElementById('dashDataAte') ? document.getElementById('dashDataAte').value : '';
+
+            globalData.agenda.forEach(a => {
+                if (a.ehBloqueio) return;
+                if (dataDe && a.data < dataDe) return;
+                if (dataAte && a.data > dataAte) return;
+
+                bruto += a.total;
+                if (a.quitado) caixa += a.total;
+                else pendente += a.pendente;
+
+                totalAtend++;
+                servCount[a.servico] = (servCount[a.servico] || 0) + a.total;
+            });
+
+            const ticket = totalAtend > 0 ? bruto / totalAtend : 0;
+            const inad = bruto > 0 ? (pendente / bruto) * 100 : 0;
+
+            document.getElementById('dashBruto').innerText = `R$ ${bruto.toFixed(2).replace('.', ',')}`;
+            document.getElementById('dashCaixaEfetivo').innerText = `R$ ${caixa.toFixed(2).replace('.', ',')}`;
+            document.getElementById('dashPendente').innerText = `R$ ${pendente.toFixed(2).replace('.', ',')}`;
+            document.getElementById('dashTicketMedio').innerText = `R$ ${ticket.toFixed(2).replace('.', ',')}`;
+            document.getElementById('dashTaxaInadimplencia').innerText = `${inad.toFixed(1)}%`;
+
+            const tbRankS = document.getElementById('tbDashRankingServicos');
+            if (tbRankS) {
+                tbRankS.innerHTML = '';
+                Object.entries(servCount).sort((a,b) => b[1] - a[1]).forEach(([nome, val]) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td><strong>${nome}</strong></td><td style="color:var(--green-success)">R$ ${val.toFixed(2)}</td>`;
+                    tbRankS.appendChild(tr);
+                });
+            }
+
+            const tbRankI = document.getElementById('tbDashRankingInsumos');
+            if (tbRankI) {
+                tbRankI.innerHTML = '';
+                globalData.estoque.forEach(i => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td><strong>${i.nome}</strong></td><td style="color:var(--danger)">R$ ${i.custo.toFixed(2)}</td>`;
+                    tbRankI.appendChild(tr);
+                });
+            }
+
+            renderCharts();
+        }
+
+        function renderCharts() {
+            const ctxFin = document.getElementById('chartFinanceiro');
+            const ctxServ = document.getElementById('chartServicos');
+            if (!ctxFin || !ctxServ) return;
+
+            if (chartFinInstance) chartFinInstance.destroy();
+            if (chartServInstance) chartServInstance.destroy();
+
+            const isDark = !document.body.classList.contains('theme-rosegold');
+            const textColor = isDark ? '#f8fafc' : '#2d2424';
+
+            chartFinInstance = new Chart(ctxFin, {
+                type: 'bar',
+                data: {
+                    labels: ['Bruto', 'Caixa Efetivo', 'Pendentes'],
+                    datasets: [{
+                        label: 'R$',
+                        data: [
+                            parseFloat(document.getElementById('dashBruto').innerText.replace('R$', '').replace('.', '').replace(',', '.')) || 0,
+                            parseFloat(document.getElementById('dashCaixaEfetivo').innerText.replace('R$', '').replace('.', '').replace(',', '.')) || 0,
+                            parseFloat(document.getElementById('dashPendente').innerText.replace('R$', '').replace('.', '').replace(',', '.')) || 0
+                        ],
+                        backgroundColor: ['#ff2a85', '#00e676', '#ffb800']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } }
+                }
+            });
+
+            const servLabels = globalData.servicos.map(s => s.nome);
+            const servData = globalData.servicos.map(s => s.valor);
+
+            chartServInstance = new Chart(ctxServ, {
+                type: 'doughnut',
+                data: {
+                    labels: servLabels.length ? servLabels : ['Sem dados'],
+                    datasets: [{
+                        data: servData.length ? servData : [1],
+                        backgroundColor: ['#ff2a85', '#a855f7', '#00e676', '#ffb800', '#00b0ff']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: textColor } } }
+                }
+            });
+        }
+
+        function calcularRoiLanding() {
+            const atend = parseInt(document.getElementById('calcAtendimentos').value);
+            const preco = parseInt(document.getElementById('calcPreco').value);
+
+            document.getElementById('calcAtendimentosVal').innerText = atend;
+            document.getElementById('calcPrecoVal').innerText = `R$ ${preco},00`;
+
+            const ganhoEstimado = (atend * 22) * preco * 0.15;
+            document.getElementById('calcResultadoVal').innerText = `+ R$ ${ganhoEstimado.toFixed(2).replace('.', ',')}/mês`;
+        }
+
+        function filtrarPeriodoRapido(tipo) {
+            const hoje = new Date();
+            let inicio = new Date();
+
+            if (tipo === 'hoje') {
+                inicio = hoje;
+            } else if (tipo === 'semana') {
+                const day = hoje.getDay();
+                inicio.setDate(hoje.getDate() - day);
+            } else if (tipo === 'mes') {
+                inicio = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+            }
+
+            document.getElementById('dashDataDe').value = inicio.toISOString().split('T')[0];
+            document.getElementById('dashDataAte').value = hoje.toISOString().split('T')[0];
+            renderDashboardData();
+        }
+
+        // ==========================================
+        // INICIALIZAÇÃO AO CARREGAR A PÁGINA
         // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
+            calcularRoiLanding();
             const savedTheme = localStorage.getItem('nailboss_preferred_theme') || 'default';
             mudarTemaCores(savedTheme);
 
+            const cfg = localStorage.getItem(`nailboss_${currentTenantId}_cfg_sinal`);
+            if (document.getElementById('cfgExigirSinalPix')) {
+                document.getElementById('cfgExigirSinalPix').checked = cfg !== 'false';
+            }
+
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('agendar')) {
-                // Lógica de agendamento público (Local UI, não integra tenant UUID real ainda)
                 document.getElementById('landing-page').style.display = 'none';
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('public-booking-screen').style.display = 'block';
+                if (urlParams.get('tenant')) currentTenantId = urlParams.get('tenant');
+                recarregarDadosCompletos();
                 return;
             }
 
             const sessionRaw = localStorage.getItem('nailboss_active_session');
             if (sessionRaw) {
-                const session = JSON.parse(sessionRaw);
-                currentRole = session.role;
-                currentTenantId = session.tenantId || "";
-                currentPlan = session.plan || "STARTER";
-                loginAs(currentRole, session.studioName);
+                try {
+                    const session = JSON.parse(sessionRaw);
+                    currentRole = session.role;
+                    currentTenantId = session.tenantId || "";
+                    currentToken = session.token || "";
+                    currentPlan = session.plan || "PRO";
+                    loginAs(currentRole, session.studioName);
+                } catch (e) {
+                    console.error("Erro ao restaurar sessão:", e);
+                }
             }
         });
-
-        // (Todas as lógicas visuais e cálculos dependentes de globalData seguem intactas abaixo)
-        function renderDashboardData() { /* idêntico ao original mas usando globalData */ }
-        function renderCrmAusentes() { /* idêntico ao original mas usando globalData */ }
-        function atualizarConciliacaoPeriodo() { /* ... */ }
-        function renderTabelaEstoque() { /* ... */ }
-        function abrirHistoricoCliente(nome) { /* ... */ }
-        function fecharHistoricoModal() { document.getElementById('historyModal').style.display = 'none'; }
-        function fecharSlotsModal() { document.getElementById('slotsModal').style.display = 'none'; }
-        function fecharModalBloqueioHorario() { document.getElementById('blockTimeModal').style.display = 'none'; }
-        function openChangePasswordModal() { document.getElementById('changePassModal').style.display = 'flex'; }
-        function closeChangePasswordModal() { document.getElementById('changePassModal').style.display = 'none'; }
-        function saveNewPassword() { closeChangePasswordModal(); showConfirm('Sucesso', 'Senha alterada!', null, false); }
-        function renderMasterSaaS() {
-            const tbody = document.getElementById('tbMasterClientes');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            globalData.masterStudios.forEach(m => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>${m.estudio}</strong></td>
-                    <td>${m.email}</td>
-                    <td>${m.plano}</td>
-                    <td><span class="badge-status ${m.status === 'ATIVO' ? 'badge-green' : 'badge-danger'}">${m.status}</span></td>
-                    <td>R$ - </td>
-                    <td>
-                        <button class="btn-action btn-gold" style="padding:4px; font-size:0.7rem;" onclick="alterarStatusEstudioMaster('${m.id}', 'BLOQUEADO')">Bloquear</button>
-                        <button class="btn-action btn-green" style="padding:4px; font-size:0.7rem;" onclick="alterarStatusEstudioMaster('${m.id}', 'ATIVO')">Ativar</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-        function atualizarPendenteForm() {
-            const total = parseFloat(document.getElementById('agValor').value) || 0;
-            const sinal = parseFloat(document.getElementById('agSinal').value) || 0;
-            const pendente = Math.max(0, total - sinal);
-            document.getElementById('agPendente').value = `R$ ${pendente.toFixed(2).replace('.', ',')}`;
-        }
-        function abrirModalBloqueioHorario() {
-            const dataAtual = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
-            document.getElementById('blockDate').value = dataAtual;
-            document.getElementById('blockTimeModal').style.display = 'flex';
-        }
-        function showConfirm(title, message, callbackConfirm, showCancel = true) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalMsg').innerText = message;
-            document.getElementById('btnModalCancel').style.display = showCancel ? 'inline-block' : 'none';
-            document.getElementById('customModal').style.display = 'flex';
-            onConfirmCallback = callbackConfirm;
-        }
-        document.getElementById('btnModalConfirm').onclick = function() {
-            document.getElementById('customModal').style.display = 'none';
-            if (onConfirmCallback) onConfirmCallback();
-        };
-        document.getElementById('btnModalCancel').onclick = function() { document.getElementById('customModal').style.display = 'none'; };
-        function applyPlanPermissions() { /* idêntico original */ }
-        function renderCharts() { /* idêntico original */ }
     </script>
 </body>
 </html>
