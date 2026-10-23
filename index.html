@@ -58,7 +58,12 @@
         .hero-container { max-width: 1150px; margin: 0 auto; padding: 50px 20px; text-align: center; }
         .hero-badge { background: linear-gradient(135deg, rgba(255, 42, 133, 0.2), rgba(168, 85, 247, 0.2)); color: var(--pink-neon); border: 1px solid var(--pink-neon); padding: 8px 20px; border-radius: 30px; font-size: 0.82rem; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; box-shadow: 0 0 20px var(--pink-glow); }
         .hero-title { font-size: 3.2rem; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 20px; line-height: 1.15; }
-        .hero-title span { background: linear-gradient(135deg, var(--pink-neon), #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-title span { 
+    background: linear-gradient(135deg, var(--pink-neon), #a855f7); 
+    -webkit-background-clip: text; 
+    background-clip: text; /* <- Adicione esta linha */
+    -webkit-text-fill-color: transparent; 
+}
         .hero-subtitle { font-size: 1.2rem; color: var(--text-muted); max-width: 750px; margin: 0 auto 35px; line-height: 1.6; }
         
         /* SIMULADOR DE GANHOS NA LANDING PAGE */
@@ -1060,7 +1065,7 @@
         // ==========================================
         // CONFIGURAÇÕES DA API REST FASTAPI E MULTITENANT
         // ==========================================
-        const API_URL = "http://localhost:8000/api";
+        const API_URL = "https://nailboss-app.onrender.com/api";
         
         let currentTenantId = "";
         let currentToken = "";
