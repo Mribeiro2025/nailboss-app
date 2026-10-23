@@ -21,7 +21,6 @@
             --text-muted: #94a3b8;
             --input-bg: #0c101d;
         }
-
         body.theme-rosegold {
             --bg-dark: #fdf8f5;
             --sidebar-bg: #f7ede2;
@@ -36,7 +35,6 @@
             --text-muted: #786c6c;
             --input-bg: #f9f0ea;
         }
-
         body.theme-purple {
             --bg-dark: #0f0a1c;
             --sidebar-bg: #160f29;
@@ -51,44 +49,45 @@
             --text-muted: #a799cc;
             --input-bg: #130c24;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-dark); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; transition: background-color 0.3s, color 0.3s; }
+        body { background-color: var(--bg-dark); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; transition: background-color 0.3s, color 0.3s; flex-direction: column; }
+
+        /* TELA HOME LANDING PAGE ELEGANTE */
+        #landing-page { position: fixed; inset: 0; background: var(--bg-dark); z-index: 8000; overflow-y: auto; display: flex; flex-direction: column; }
+        .hero-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 1px solid var(--card-border); background: var(--sidebar-bg); }
+        .hero-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; text-align: center; }
+        .hero-title { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 16px; }
+        .hero-title span { color: var(--pink-neon); text-shadow: 0 0 20px var(--pink-glow); }
+        .hero-subtitle { font-size: 1.15rem; color: var(--text-muted); max-width: 680px; margin: 0 auto 35px; line-height: 1.6; }
+
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 40px; text-align: left; }
+        .feature-card { background: var(--card-bg); border: 1px solid var(--card-border); padding: 26px; border-radius: 20px; transition: 0.3s; }
+        .feature-card:hover { border-color: var(--pink-neon); transform: translateY(-4px); }
+        .feature-icon { width: 48px; height: 48px; background: rgba(255, 42, 133, 0.12); border: 1px solid var(--pink-neon); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 16px; }
 
         /* OVERLAY DE LOGIN / REGISTRO */
-        #login-screen { position: fixed; inset: 0; background: rgba(9, 13, 22, 0.97); backdrop-filter: blur(14px); z-index: 5000; display: flex; align-items: center; justify-content: center; padding: 16px; }
+        #login-screen { position: fixed; inset: 0; background: rgba(9, 13, 22, 0.97); backdrop-filter: blur(14px); z-index: 8500; display: none; align-items: center; justify-content: center; padding: 16px; }
         .login-card-v2 { background: var(--card-bg); border: 1px solid var(--pink-glow); padding: 30px; border-radius: 24px; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 0 50px rgba(255, 42, 133, 0.18); max-height: 92vh; overflow-y: auto; }
         .login-icon-box { width: 64px; height: 64px; background: linear-gradient(135deg, var(--pink-neon), #d6005d); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 2rem; box-shadow: 0 8px 25px rgba(255, 42, 133, 0.4); }
         .login-card-v2 h2 { color: var(--text-main); font-size: 1.8rem; font-weight: 800; }
         .login-card-v2 p { color: var(--text-muted); font-size: 0.85rem; margin: 6px 0 20px; }
-
         .btn-login-option { width: 100%; padding: 14px; border-radius: 12px; font-weight: bold; font-size: 0.9rem; cursor: pointer; border: none; margin-bottom: 10px; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-pink-gradient { background: linear-gradient(135deg, #ff2a85, #d6005d); color: white; box-shadow: 0 4px 15px rgba(255, 42, 133, 0.3); }
         .btn-outline-dark { background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); color: var(--text-main); }
         .btn-outline-dark:hover { border-color: var(--pink-neon); }
-
+        
         /* TELA PÚBLICA DE AGENDAMENTO CLIENTE */
         #public-booking-screen { position: fixed; inset: 0; background: var(--bg-dark); z-index: 9000; overflow-y: auto; padding: 20px 15px; display: none; }
         .booking-container { max-width: 500px; margin: 0 auto; background: var(--card-bg); border: 1px solid var(--pink-neon); border-radius: 24px; padding: 24px; box-shadow: 0 0 40px rgba(255, 42, 133, 0.2); }
-
+        
         /* BANNER DE NOTIFICAÇÃO EM TEMPO REAL */
         #toastNotification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            background: var(--card-bg);
-            border: 2px solid var(--green-success);
-            border-radius: 16px;
-            padding: 16px 20px;
-            box-shadow: 0 10px 30px rgba(0, 230, 118, 0.3);
-            display: none;
-            align-items: center;
-            gap: 14px;
-            max-width: 380px;
-            animation: slideIn 0.3s ease-out;
+            position: fixed; top: 20px; right: 20px; z-index: 9999; background: var(--card-bg); border: 2px solid var(--green-success); border-radius: 16px; padding: 16px 20px; box-shadow: 0 10px 30px rgba(0, 230, 118, 0.3); display: none; align-items: center; gap: 14px; max-width: 380px; animation: slideIn 0.3s ease-out;
         }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        
+        /* APP LAYOUT */
+        #app-layout { display: none; min-height: 100vh; flex-direction: row; width: 100%; }
 
         /* Sidebar Lateral (Desktop) */
         .sidebar { width: 260px; background-color: var(--sidebar-bg); border-right: 1px solid var(--card-border); padding: 20px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; transition: all 0.3s ease; }
@@ -96,44 +95,41 @@
         .brand-logo { width: 38px; height: 38px; background: var(--pink-neon); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 1.1rem; }
         .brand-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; }
         .brand-badge { background: var(--pink-glow); color: var(--pink-neon); font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; border: 1px solid var(--pink-neon); font-weight: 700; }
-
         .nav-menu { display: flex; flex-direction: column; gap: 6px; }
         .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
         .nav-item:hover, .nav-item.active { background: rgba(255, 42, 133, 0.08); color: var(--text-main); }
         .nav-item.active { border-left: 4px solid var(--pink-neon); border-radius: 0 12px 12px 0; color: var(--pink-neon); font-weight: bold; }
-
         .sidebar-footer { display: flex; flex-direction: column; gap: 12px; }
         .btn-upgrade-sidebar { background: linear-gradient(135deg, #ffb800, #ff8c00); color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 0.85rem; cursor: pointer; text-align: center; }
         .user-status { background: var(--card-bg); padding: 12px; border-radius: 10px; font-size: 0.8rem; color: var(--text-muted); border: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; }
         .btn-logout { background: transparent; border: 1px solid var(--danger); color: var(--danger); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
-
+        
         /* Menu Flutuante Mobile (Bottom Nav) */
         .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background: var(--sidebar-bg); backdrop-filter: blur(16px); border-top: 1px solid var(--card-border); z-index: 4000; justify-content: space-around; align-items: center; padding: 0 4px; }
         .mobile-nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.65rem; font-weight: 600; text-decoration: none; border: none; background: transparent; gap: 3px; flex: 1; height: 100%; cursor: pointer; }
         .mobile-nav-btn.active { color: var(--pink-neon); font-weight: 800; }
         .mobile-nav-icon { font-size: 1.2rem; }
-
+        
         /* Top Bar Mobile */
         .mobile-top-bar { display: none; justify-content: space-between; align-items: center; background: var(--sidebar-bg); padding: 10px 14px; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 3900; }
-
+        
         /* Main Content */
         .main-content { flex: 1; padding: 25px; overflow-y: auto; position: relative; padding-bottom: 80px; }
         .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 12px; }
         .header-title h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.5px; }
         .header-title h1 span { color: var(--pink-neon); }
         .status-pill { background: rgba(0, 230, 118, 0.1); color: var(--green-success); border: 1px solid var(--green-success); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
-
+        
         /* BANNER DE BLOQUEIO DE PLANO */
         .plan-lock-overlay { position: absolute; inset: 0; background: rgba(9, 13, 22, 0.90); backdrop-filter: blur(8px); z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; border-radius: 16px; border: 1px dashed var(--gold-warning); }
         .plan-lock-card { max-width: 400px; background: var(--card-bg); padding: 28px; border-radius: 20px; border: 1px solid var(--card-border); box-shadow: 0 10px 35px rgba(0,0,0,0.6); }
-
+        
         /* Cards & Metrics */
         .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 25px; }
         .metric-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 18px; transition: transform 0.2s; }
         .metric-card:hover { transform: translateY(-2px); }
         .metric-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         .metric-value { font-size: 1.55rem; font-weight: 800; margin: 8px 0 2px; }
-
         .content-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 22px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
         .card-header { color: var(--pink-neon); font-size: 1.05rem; font-weight: 800; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         
@@ -147,48 +143,45 @@
         .btn-green { background: linear-gradient(135deg, #00e676, #00b0ff); color: #000; }
         .btn-gold { background: linear-gradient(135deg, #ffb800, #ff8c00); color: #000; }
         .btn-danger { background: var(--danger); color: white; }
-
+        
         /* Table Responsiveness */
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.88rem; min-width: 600px; }
         th { text-align: left; padding: 12px 10px; color: var(--text-muted); border-bottom: 1px solid var(--card-border); font-size: 0.72rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
         td { padding: 13px 10px; border-bottom: 1px solid var(--card-border); vertical-align: middle; }
-
         .badge-status { padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 800; display: inline-block; }
         .badge-green { background: rgba(0,230,118,0.15); color: var(--green-success); border: 1px solid rgba(0,230,118,0.3); }
         .badge-gold { background: rgba(255,184,0,0.15); color: var(--gold-warning); border: 1px solid rgba(255,184,0,0.3); }
         .badge-danger { background: rgba(255,77,77,0.15); color: var(--danger); border: 1px solid rgba(255,77,77,0.3); }
         .badge-link { background: rgba(168,85,247,0.2); color: #a855f7; border: 1px solid #a855f7; }
-
         .time-slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; margin-top: 15px; }
         .time-slot-card { background: var(--input-bg); border: 1px solid var(--card-border); padding: 10px; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.2s; }
         .time-slot-card:hover { border-color: var(--pink-neon); }
         .time-slot-card.selected { border-color: var(--green-success); background: rgba(0, 230, 118, 0.15); color: var(--green-success); font-weight: bold; }
         .time-slot-card.occupied { border-color: var(--pink-neon); background: rgba(255, 42, 133, 0.12); cursor: not-allowed; opacity: 0.8; }
         .time-slot-card.blocked { border-color: var(--danger); background: rgba(255, 77, 77, 0.25); color: #ff8888; font-weight: bold; cursor: not-allowed; opacity: 0.8; }
-
+        
         /* MODAIS */
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; z-index: 6000; padding: 16px; }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; z-index: 9500; padding: 16px; }
         .modal-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 25px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
         .modal-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; color: var(--pink-neon); }
         .modal-msg { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 20px; line-height: 1.4; }
         .modal-actions { display: flex; gap: 10px; justify-content: center; }
         .btn-modal-cancel { background: transparent; border: 1px solid var(--card-border); color: var(--text-muted); padding: 10px 18px; border-radius: 10px; cursor: pointer; font-weight: 600; }
         .btn-modal-confirm { background: var(--pink-neon); color: white; border: none; padding: 10px 18px; border-radius: 10px; cursor: pointer; font-weight: bold; }
-
+        
         /* PLANOS GRID */
         .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 15px; }
         .plan-card { background: var(--input-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 16px; text-align: center; transition: 0.3s; cursor: pointer; }
         .plan-card.highlight { border-color: var(--pink-neon); box-shadow: 0 0 20px rgba(255, 42, 133, 0.2); }
         .plan-card.selected { border-color: var(--green-success); background: rgba(0, 230, 118, 0.08); }
         .plan-price { font-size: 1.35rem; font-weight: 800; color: var(--pink-neon); margin: 6px 0; }
-
         .view-section { display: none; animation: fadeIn 0.25s ease-in-out; }
         .view-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-
+        
         @media (max-width: 768px) {
-            body { flex-direction: column; }
+            #app-layout { flex-direction: column; }
             .sidebar { display: none; }
             .mobile-bottom-nav { display: flex; }
             .mobile-top-bar { display: flex; }
@@ -196,6 +189,8 @@
             .metrics-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
             .form-grid { grid-template-columns: 1fr; }
             .top-header { display: none; }
+            .hero-nav { padding: 15px 20px; }
+            .hero-title { font-size: 2rem; }
         }
     </style>
 </head>
@@ -211,6 +206,54 @@
         <button onclick="fecharToast()" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; margin-left:auto;">✕</button>
     </div>
 
+    <!-- TELA HOME / LANDING PAGE ELEGANTE DO NAILBOSS PRO -->
+    <div id="landing-page">
+        <header class="hero-nav">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <div class="brand-logo">N</div>
+                <strong style="font-size:1.2rem; letter-spacing:-0.5px;">NailBoss <span style="color:var(--pink-neon);">Pro</span></strong>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-action btn-outline-dark" onclick="abrirTelaLogin()">Entrar no Sistema</button>
+                <button class="btn-action btn-pink-gradient" onclick="abrirTelaCadastroStudio()">Criar Meu Studio</button>
+            </div>
+        </header>
+
+        <div class="hero-container">
+            <span style="background:rgba(255,42,133,0.15); color:var(--pink-neon); border:1px solid var(--pink-neon); padding:6px 16px; border-radius:20px; font-size:0.8rem; font-weight:bold; display:inline-block; margin-bottom:20px;">💅 PLATAFORMA 360° PARA MANICURES & STUDIOS</span>
+            <h1 class="hero-title">A Inteligência Financeira e de Agenda que o seu Studio <span>precisa para lucrar mais</span></h1>
+            <p class="hero-subtitle">Controle total de caixa DFC, agendamentos automáticos com sinal PIX, precificação exata de insumos e recuperação de clientes ausentes em uma única plataforma.</p>
+            
+            <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+                <button class="btn-action btn-pink-gradient" style="padding:16px 32px; font-size:1rem;" onclick="abrirTelaCadastroStudio()">✨ COMEÇAR AGORA MESMO</button>
+                <button class="btn-action btn-outline-dark" style="padding:16px 32px; font-size:1rem;" onclick="abrirTelaLogin()">🏪 ACESSAR MEU PAINEL</button>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📲</div>
+                    <h3 style="margin-bottom:8px; color:var(--text-main);">Link de Agendamento 24h</h3>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Sua cliente escolhe o dia, horário vago e faz a reserva diretamente no celular com cobrança do Sinal PIX automático.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 style="margin-bottom:8px; color:var(--text-main);">Tesouraria DFC Inteligente</h3>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Demonstrativo de Fluxo de Caixa completo. Saiba exatamente o caixa liquidado, contas a receber e inadimplência em tempo real.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧪</div>
+                    <h3 style="margin-bottom:8px; color:var(--text-main);">Precificação de Insumos</h3>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Calcule o CMV exato por aplicação de gel, pó e preparadores para precificar seus serviços com margem garantida.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3 style="margin-bottom:8px; color:var(--text-main);">CRM de Resgate de Clientes</h3>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Identifique automaticamente clientes sumidas há mais de 20 dias e envie ofertas de retorno direto pelo WhatsApp.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- OVERLAY TELA PÚBLICA DE AGENDAMENTO CLIENTE -->
     <div id="public-booking-screen">
         <div class="booking-container">
@@ -219,7 +262,6 @@
                 <h2 style="font-size:1.5rem; color:var(--text-main);" id="pubStudioTitle">Studio Agendamento</h2>
                 <p style="color:var(--text-muted); font-size:0.82rem;">Escolha o dia, horário e serviço para reservar o seu horário.</p>
             </div>
-
             <div class="form-grid" style="text-align:left;">
                 <div class="input-group">
                     <label>Seu Nome Completo</label>
@@ -240,18 +282,15 @@
                     <input type="date" id="pubCliData" onchange="renderPublicTimeSlots()">
                 </div>
             </div>
-
             <div style="margin: 15px 0;">
                 <label style="font-size:0.8rem; color:var(--text-muted); font-weight:bold; display:block; margin-bottom:8px;">Horários Disponíveis no Dia:</label>
                 <div class="time-slots-grid" id="pubSlotsContainer"></div>
             </div>
-
             <div style="background:var(--input-bg); border:1px dashed var(--pink-neon); padding:15px; border-radius:12px; margin:20px 0; text-align:center;">
                 <small style="color:var(--text-muted);">VALOR DO SERVIÇO / SINAL PIX</small>
                 <div style="font-size:1.2rem; font-weight:800; color:var(--green-success);" id="pubValResumo">Total: R$ 0,00 | Sinal: R$ 30,00</div>
                 <small style="color:var(--gold-warning); font-size:0.75rem; display:block; margin-top:4px;">🔑 Chave PIX: 55-11-94788-7105</small>
             </div>
-
             <button class="btn-action btn-green" style="width:100%; padding:14px; font-size:0.9rem;" onclick="confirmarAgendamentoPublicoCliente()">📲 CONFIRMAR & RESERVAR HORÁRIO</button>
             <p style="text-align:center; font-size:0.72rem; color:var(--text-muted); margin-top:12px;">Sua reserva será enviada diretamente para o WhatsApp do Studio.</p>
         </div>
@@ -269,8 +308,8 @@
                 <button class="btn-login-option btn-outline-dark" onclick="showRegisterForm()">✨ Cadastrar Studio & Ativar Plano</button>
                 <button class="btn-login-option btn-outline-dark" style="color:var(--gold-warning); border-color:var(--gold-warning);" onclick="showPublicPlans()">💎 Ver Pacotes & Chave PIX</button>
                 <button class="btn-login-option btn-outline-dark" style="margin-top:10px;" onclick="showAuthInputs('master')">👑 Painel Restrito Dono (SaaS)</button>
+                <button class="btn-login-option btn-outline-dark" style="margin-top:10px;" onclick="voltarHome()">🏠 Voltar para a Home</button>
             </div>
-
             <div id="loginStepCredentials" style="display: none; text-align: left;">
                 <div class="input-group" style="margin-bottom: 12px;">
                     <label>E-mail registrado</label>
@@ -283,7 +322,6 @@
                 <button class="btn-action" style="width: 100%; margin-bottom: 10px;" onclick="executeLogin()">Entrar no Sistema</button>
                 <button class="btn-login-option btn-outline-dark" style="margin-bottom:0;" onclick="resetLoginStep()">Voltar</button>
             </div>
-
             <div id="loginStepRegister" style="display: none; text-align: left;">
                 <h4 style="color:var(--pink-neon); margin-bottom:12px; text-align:center;">1º Passo: Dados do Studio</h4>
                 <div class="input-group" style="margin-bottom: 10px;">
@@ -291,7 +329,7 @@
                     <input type="text" id="regStudio" placeholder="Ex: Studio Bella Unhas">
                 </div>
                 <div class="input-group" style="margin-bottom: 10px;">
-                    <label>E-mail Comercial</label>
+                    <label>E-mail Comercial (Único)</label>
                     <input type="email" id="regEmail" placeholder="seu@email.com">
                 </div>
                 <div class="input-group" style="margin-bottom: 10px;">
@@ -305,11 +343,9 @@
                 <button class="btn-action btn-green" style="width: 100%; margin-bottom: 10px;" onclick="avancarParaEscolhaPlano()">Avançar para Escolha de Plano ➔</button>
                 <button class="btn-login-option btn-outline-dark" style="margin-bottom:0;" onclick="resetLoginStep()">Voltar</button>
             </div>
-
             <div id="loginStepSelectPlan" style="display: none; text-align: center;">
                 <h4 style="color:var(--gold-warning); margin-bottom:6px;">2º Passo: Escolha o Pacote</h4>
                 <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px;">Selecione o plano desejado para enviar à análise do Master:</p>
-
                 <div class="plans-grid">
                     <div class="plan-card" id="cardPlanStarter" onclick="selecionarPlanoRegistro('STARTER')">
                         <h4 style="color:var(--text-main);">STARTER</h4>
@@ -327,17 +363,14 @@
                         <p style="font-size:0.7rem; color:var(--text-muted);">Tudo Ilimitado + Repasses.</p>
                     </div>
                 </div>
-
                 <div style="background:var(--input-bg); border:1px dashed var(--pink-neon); padding:15px; border-radius:12px; margin:15px 0;">
                     <strong style="color:var(--gold-warning); font-size:0.85rem;">🔑 CHAVE PIX CONECTADA:</strong><br>
                     <span style="font-size:1.1rem; font-weight:bold; color:var(--text-main);">55-11-94788-7105</span>
                     <button class="btn-action btn-green" style="width:100%; margin-top:8px; font-size:0.75rem; padding:8px;" onclick="enviarComprovanteWhatsApp()">📲 ENVIAR COMPROVANTE NO WHATSAPP</button>
                 </div>
-
                 <button class="btn-action" style="width: 100%; margin-bottom: 10px;" onclick="finalizarCadastroEAtivar()">Solicitar Acesso & Enviar Aprovação</button>
                 <button class="btn-login-option btn-outline-dark" style="margin-bottom:0;" onclick="voltarParaEtapa1Cadastro()">Voltar</button>
             </div>
-
             <div id="loginStepPlans" style="display: none; text-align: center;">
                 <h4 style="color:var(--gold-warning); margin-bottom:10px;">👑 Pacotes do NailBoss</h4>
                 <div class="plans-grid">
@@ -355,522 +388,505 @@
         </div>
     </div>
 
-    <!-- TOP BAR CELULAR COM BOTÃO DE COR -->
-    <div class="mobile-top-bar">
-        <div style="display:flex; align-items:center; gap:8px;">
-            <div class="brand-logo" style="width:30px; height:30px; font-size:0.9rem;">N</div>
-            <strong style="font-size:0.95rem; color:var(--text-main);" id="mobileStudioName">NailBoss</strong>
-        </div>
-        <div style="display:flex; gap:6px; align-items:center;">
-            <select id="mobileThemeSelector" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); font-size:0.75rem; padding:4px; border-radius:6px; outline:none;" onchange="mudarTemaCores(this.value)">
-                <option value="default">💖 Pink</option>
-                <option value="rosegold">🌸 Rose</option>
-                <option value="purple">💜 Purple</option>
-            </select>
-            <button class="btn-action btn-outline-dark" style="padding:5px 8px; font-size:0.7rem;" onclick="recarregarDadosCompletos()">🔄</button>
-            <button class="btn-logout" onclick="logout()">Sair</button>
-        </div>
-    </div>
-
-    <!-- SIDEBAR (DESKTOP) -->
-    <aside class="sidebar">
-        <div>
-            <div class="brand">
-                <div class="brand-logo">N</div>
-                <div>
-                    <span class="brand-title">NailBoss</span>
-                    <span class="brand-badge" id="planBadge">STARTER</span>
-                </div>
+    <!-- PAINEL PRINCIPAL DO APP -->
+    <div id="app-layout">
+        <!-- TOP BAR CELULAR COM BOTÃO DE COR -->
+        <div class="mobile-top-bar" style="width:100%;">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <div class="brand-logo" style="width:30px; height:30px; font-size:0.9rem;">N</div>
+                <strong style="font-size:0.95rem; color:var(--text-main);" id="mobileStudioName">NailBoss</strong>
             </div>
-
-            <div style="margin-bottom: 20px; background: var(--input-bg); padding: 10px; border-radius: 12px; border: 1px solid var(--card-border);">
-                <label style="font-size: 0.7rem; color: var(--text-muted); font-weight: bold; display: block; margin-bottom: 4px;">🎨 TEMA DE CORES</label>
-                <select id="themeSelector" style="width: 100%; background: transparent; border: none; color: var(--text-main); font-size: 0.82rem; font-weight: bold; outline: none; cursor: pointer;" onchange="mudarTemaCores(this.value)">
-                    <option value="default" style="background:var(--card-bg); color:var(--text-main);">💖 Pink Neon (Dark)</option>
-                    <option value="rosegold" style="background:var(--card-bg); color:var(--text-main);">🌸 Rose Gold (Light)</option>
-                    <option value="purple" style="background:var(--card-bg); color:var(--text-main);">💜 Purple Luxury (Roxo)</option>
+            <div style="display:flex; gap:6px; align-items:center;">
+                <select id="mobileThemeSelector" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); font-size:0.75rem; padding:4px; border-radius:6px; outline:none;" onchange="mudarTemaCores(this.value)">
+                    <option value="default">💖 Pink</option>
+                    <option value="rosegold">🌸 Rose</option>
+                    <option value="purple">💜 Purple</option>
                 </select>
-            </div>
-
-            <nav class="nav-menu">
-                <a class="nav-item active" id="menu-dash" onclick="navigateTo('dash', this)">📊 Dashboard 360°</a>
-                <a class="nav-item" id="menu-servicos" onclick="navigateTo('servicos', this)">💅 Serviços & Preços</a>
-                <a class="nav-item" id="menu-clientes" onclick="navigateTo('clientes', this)">👥 Clientes & Histórico</a>
-                <a class="nav-item" id="menu-agenda" onclick="navigateTo('agenda', this)">📅 Agenda & Slots</a>
-                <a class="nav-item" id="menu-financeiro" onclick="navigateTo('financeiro', this)">💳 Tesouraria & DFC</a>
-                <a class="nav-item" id="menu-crm" onclick="navigateTo('crm', this)">💬 Sumidas (CRM)</a>
-                <a class="nav-item" id="menu-conciliacao" onclick="navigateTo('conciliacao', this)">💰 Conciliação Salão</a>
-                <a class="nav-item" id="menu-estoque" onclick="navigateTo('estoque', this)">📦 Estoque & Precificação</a>
-                <a class="nav-item" id="menu-planos" onclick="navigateTo('planos', this)" style="color:var(--gold-warning);">👑 Planos & Assinatura</a>
-                
-                <a class="nav-item" id="nav-master-item" onclick="navigateTo('admin', this)" style="display:none; color: var(--gold-warning); border-top: 1px solid var(--card-border); margin-top: 12px; padding-top: 12px;">👑 Controle Master SaaS 2.0</a>
-            </nav>
-        </div>
-
-        <div class="sidebar-footer">
-            <button class="btn-upgrade-sidebar" id="btnSidebarUpgrade" onclick="navigateTo('planos')">👑 VER PLANOS & FAZER UPGRADE</button>
-            <div class="user-status">
-                <div>
-                    <small style="display:block; color:var(--text-muted);">STUDIO CONECTADO</small>
-                    <strong style="color:var(--pink-neon);" id="userRoleName">Studio Demo</strong>
-                </div>
-                <button class="btn-logout" onclick="logout()">Sair 🚪</button>
-            </div>
-        </div>
-    </aside>
-
-    <!-- MENU FLUTUANTE INFERIOR (MOBILE BOTTOM NAV) -->
-    <nav class="mobile-bottom-nav">
-        <button class="mobile-nav-btn active" id="mob-dash" onclick="navigateTo('dash', this)">
-            <span class="mobile-nav-icon">📊</span> Dash
-        </button>
-        <button class="mobile-nav-btn" id="mob-servicos" onclick="navigateTo('servicos', this)">
-            <span class="mobile-nav-icon">💅</span> Serviços
-        </button>
-        <button class="mobile-nav-btn" id="mob-agenda" onclick="navigateTo('agenda', this)">
-            <span class="mobile-nav-icon">📅</span> Agenda
-        </button>
-        <button class="mobile-nav-btn" id="mob-financeiro" onclick="navigateTo('financeiro', this)">
-            <span class="mobile-nav-icon">💳</span> Caixa
-        </button>
-        <button class="mobile-nav-btn" id="mob-clientes" onclick="navigateTo('clientes', this)">
-            <span class="mobile-nav-icon">👥</span> Clientes
-        </button>
-    </nav>
-
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="main-content">
-        <div class="top-header">
-            <div class="header-title">
-                <h1 id="pageTitle">Painel de Controle <span>360°</span></h1>
-                <p id="pageSub" style="color:var(--text-muted); font-size:0.88rem;">Resumo financeiro e gestão completa do seu studio.</p>
-            </div>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <button class="btn-action btn-green" style="padding:8px 14px; font-size:0.8rem;" onclick="recarregarDadosCompletos()">🔄 Atualizar Dados</button>
-                <button class="btn-action btn-outline-dark" style="padding:8px 12px; font-size:0.8rem;" onclick="openChangePasswordModal()">🔑 Alterar Senha</button>
-                <div class="status-pill">● Nuvem Sincronizada ☁️</div>
+                <button class="btn-action btn-outline-dark" style="padding:5px 8px; font-size:0.7rem;" onclick="recarregarDadosCompletos()">🔄</button>
+                <button class="btn-logout" onclick="logout()">Sair</button>
             </div>
         </div>
 
-        <!-- TELA 1: DASHBOARD COM GRÁFICOS INTERATIVOS -->
-        <div id="view-dash" class="view-section active">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
-                <h3 style="color:var(--pink-neon); font-size:1.1rem;">📈 Visão Geral de Tesouraria</h3>
-                <div style="display:flex; gap:8px;">
-                    <input type="date" id="dashDataDe" value="2026-10-01" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px; border-radius:8px; font-size:0.8rem;" onchange="renderDashboardData()">
-                    <input type="date" id="dashDataAte" value="2026-10-31" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px; border-radius:8px; font-size:0.8rem;" onchange="renderDashboardData()">
-                </div>
-            </div>
-
-            <div class="metrics-grid">
-                <div class="metric-card"><div class="metric-label">Faturamento Bruto</div><div class="metric-value" style="color:var(--text-main)" id="dashBruto">R$ 0,00</div></div>
-                <div class="metric-card"><div class="metric-label">Caixa Liquidado</div><div class="metric-value" style="color:var(--green-success)" id="dashCaixaEfetivo">R$ 0,00</div></div>
-                <div class="metric-card"><div class="metric-label">Pendentes</div><div class="metric-value" style="color:var(--gold-warning)" id="dashPendente">R$ 0,00</div></div>
-                <div class="metric-card"><div class="metric-label">Ticket Médio</div><div class="metric-value" style="color:var(--pink-neon)" id="dashTicketMedio">R$ 0,00</div></div>
-                <div class="metric-card"><div class="metric-label">Inadimplência</div><div class="metric-value" style="color:var(--danger)" id="dashTaxaInadimplencia">0%</div></div>
-            </div>
-
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:18px; margin-bottom:20px;">
-                <div class="content-card">
-                    <div class="card-header">📊 Desempenho Financeiro (Bruto x Efetivo)</div>
-                    <div style="height:230px; position:relative;">
-                        <canvas id="chartFinanceiro"></canvas>
+        <!-- SIDEBAR (DESKTOP) -->
+        <aside class="sidebar">
+            <div>
+                <div class="brand">
+                    <div class="brand-logo">N</div>
+                    <div>
+                        <span class="brand-title">NailBoss</span>
+                        <span class="brand-badge" id="planBadge">STARTER</span>
                     </div>
                 </div>
-                <div class="content-card">
-                    <div class="card-header">🍰 Distribuição por Serviço</div>
-                    <div style="height:230px; position:relative;">
-                        <canvas id="chartServicos"></canvas>
-                    </div>
+                <div style="margin-bottom: 20px; background: var(--input-bg); padding: 10px; border-radius: 12px; border: 1px solid var(--card-border);">
+                    <label style="font-size: 0.7rem; color: var(--text-muted); font-weight: bold; display: block; margin-bottom: 4px;">🎨 TEMA DE CORES</label>
+                    <select id="themeSelector" style="width: 100%; background: transparent; border: none; color: var(--text-main); font-size: 0.82rem; font-weight: bold; outline: none; cursor: pointer;" onchange="mudarTemaCores(this.value)">
+                        <option value="default" style="background:var(--card-bg); color:var(--text-main);">💖 Pink Neon (Dark)</option>
+                        <option value="rosegold" style="background:var(--card-bg); color:var(--text-main);">🌸 Rose Gold (Light)</option>
+                        <option value="purple" style="background:var(--card-bg); color:var(--text-main);">💜 Purple Luxury (Roxo)</option>
+                    </select>
                 </div>
-            </div>
-
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:18px;">
-                <div class="content-card">
-                    <div class="card-header">🥇 Serviços Mais Vendidos</div>
-                    <div class="table-responsive">
-                        <table>
-                            <thead><tr><th>Serviço</th><th>Receita Total</th></tr></thead>
-                            <tbody id="tbDashRankingServicos"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="content-card">
-                    <div class="card-header">💅 Custos por Insumo</div>
-                    <div class="table-responsive">
-                        <table>
-                            <thead><tr><th>Produto/Insumo</th><th>Custo Total</th></tr></thead>
-                            <tbody id="tbDashRankingInsumos"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TELA CATÁLOGO DE SERVIÇOS & TABELA DE PREÇOS -->
-        <div id="view-servicos" class="view-section">
-            <div class="content-card">
-                <div class="card-header">💅 Cadastrar Serviço no Catálogo</div>
-                <div class="form-grid">
-                    <div class="input-group"><label>Nome do Serviço</label><input type="text" id="srvNome" placeholder="Ex: Manutenção de Fibra"></div>
-                    <div class="input-group"><label>Preço Padrão (R$)</label><input type="number" id="srvValor" placeholder="120.00"></div>
-                    <div class="input-group"><label>Duração Média (Minutos)</label><input type="number" id="srvDuracao" placeholder="90" value="90"></div>
-                </div>
-                <button class="btn-action btn-green" onclick="salvarServicoCatalogo()">Salvar Serviço</button>
-            </div>
-
-            <div class="content-card">
-                <div class="card-header">📋 Tabela de Serviços e Valores</div>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nome do Serviço</th>
-                                <th>Duração</th>
-                                <th>Valor Padrão</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbServicosCatalogo"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TELA CLIENTES -->
-        <div id="view-clientes" class="view-section">
-            <div class="content-card">
-                <div class="card-header">👤 Cadastrar Novo Cliente</div>
-                <div class="form-grid">
-                    <div class="input-group"><label>Nome Completo</label><input type="text" id="cliNome" placeholder="Ex: Ana Paula Ribeiro"></div>
-                    <div class="input-group"><label>WhatsApp / Telefone</label><input type="text" id="cliWhats" placeholder="Ex: (11) 99999-8888"></div>
-                    <div class="input-group"><label>Cliente Desde (Data)</label><input type="date" id="cliDesde"></div>
-                    <div class="input-group"><label>Preferência / Estilo</label><input type="text" id="cliPref" placeholder="Ex: Fibra de Vidro"></div>
-                </div>
-                <button class="btn-action btn-green" onclick="salvarCliente()">Salvar Cliente</button>
-            </div>
-            <div class="content-card">
-                <div class="card-header">👥 Base de Clientes Cadastrados</div>
-                <div class="table-responsive">
-                    <table>
-                        <thead><tr><th>Nome</th><th>WhatsApp</th><th>Cliente Desde</th><th>Preferências</th><th>Ações</th></tr></thead>
-                        <tbody id="tbClientes"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TELA AGENDA -->
-        <div id="view-agenda" class="view-section">
-            <div class="content-card">
-                <div class="card-header">
-                    <span>📅 Novo Agendamento (Balcão)</span>
-                    <button class="btn-action btn-gold" style="font-size:0.75rem; padding:6px 12px;" onclick="gerarLinkPublicoAgendamento()">📲 Link de Agendamento</button>
-                </div>
-                <div class="form-grid">
-                    <div class="input-group"><label>Data do Serviço</label><input type="date" id="agData" onchange="renderGradeHorarios()"></div>
-                    <div class="input-group"><label>Hora Início</label><input type="time" id="agHoraInicio" value="09:00"></div>
-                    <div class="input-group"><label>Hora Fim</label><input type="time" id="agHoraFim" value="10:30"></div>
-                    <div class="input-group"><label>Nome da Cliente</label><input type="text" id="agNome" placeholder="Digite o nome..."></div>
+                <nav class="nav-menu">
+                    <a class="nav-item active" id="menu-dash" onclick="navigateTo('dash', this)">📊 Dashboard 360°</a>
+                    <a class="nav-item" id="menu-servicos" onclick="navigateTo('servicos', this)">💅 Serviços & Preços</a>
+                    <a class="nav-item" id="menu-clientes" onclick="navigateTo('clientes', this)">👥 Clientes & Histórico</a>
+                    <a class="nav-item" id="menu-agenda" onclick="navigateTo('agenda', this)">📅 Agenda & Slots</a>
+                    <a class="nav-item" id="menu-financeiro" onclick="navigateTo('financeiro', this)">💳 Tesouraria & DFC</a>
+                    <a class="nav-item" id="menu-crm" onclick="navigateTo('crm', this)">💬 Sumidas (CRM)</a>
+                    <a class="nav-item" id="menu-conciliacao" onclick="navigateTo('conciliacao', this)">💰 Conciliação Salão</a>
+                    <a class="nav-item" id="menu-estoque" onclick="navigateTo('estoque', this)">📦 Estoque & Precificação</a>
+                    <a class="nav-item" id="menu-planos" onclick="navigateTo('planos', this)" style="color:var(--gold-warning);">👑 Planos & Assinatura</a>
                     
-                    <div class="input-group">
-                        <label>Serviço (Catálogo)</label>
-                        <select id="agServicoSelect" onchange="aoSelecionarServicoAgendamento(this.value)">
-                            <option value="">Selecione um Serviço...</option>
-                        </select>
+                    <a class="nav-item" id="nav-master-item" onclick="navigateTo('admin', this)" style="display:none; color: var(--gold-warning); border-top: 1px solid var(--card-border); margin-top: 12px; padding-top: 12px;">👑 Controle Master SaaS 2.0</a>
+                </nav>
+            </div>
+            <div class="sidebar-footer">
+                <button class="btn-upgrade-sidebar" id="btnSidebarUpgrade" onclick="navigateTo('planos')">👑 VER PLANOS & FAZER UPGRADE</button>
+                <div class="user-status">
+                    <div>
+                        <small style="display:block; color:var(--text-muted);">STUDIO CONECTADO</small>
+                        <strong style="color:var(--pink-neon);" id="userRoleName">Studio Demo</strong>
                     </div>
-
-                    <div class="input-group"><label>Valor Total (R$)</label><input type="number" id="agValor" placeholder="150.00" oninput="atualizarPendenteForm()"></div>
-                    <div class="input-group"><label>Sinal PIX (R$)</label><input type="number" id="agSinal" placeholder="30.00" oninput="atualizarPendenteForm()"></div>
-                    <div class="input-group"><label>Valor Pendente (R$)</label><input type="text" id="agPendente" readonly value="R$ 0,00" style="color:var(--gold-warning); font-weight:bold;"></div>
-                </div>
-                <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                    <button class="btn-action btn-green" onclick="salvarAgendamento()">Confirmar Agendamento</button>
-                    <button class="btn-action btn-danger" onclick="abrirModalBloqueioHorario()">🔒 Bloquear Horário</button>
-                    <button class="btn-action btn-gold" onclick="abrirPopupGradeDia()">👀 Slots do Dia</button>
+                    <button class="btn-logout" onclick="logout()">Sair 🚪</button>
                 </div>
             </div>
+        </aside>
 
-            <!-- QUADRO DE HORÁRIOS BLOQUEADOS EM DESTAQUE -->
-            <div class="content-card" style="border-color: var(--danger);">
-                <div class="card-header" style="color:var(--danger)">🔒 Horários Bloqueados no Studio</div>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Período</th>
-                                <th>Motivo / Observação</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbHorariosBloqueados"></tbody>
-                    </table>
+        <!-- MENU FLUTUANTE INFERIOR (MOBILE BOTTOM NAV) -->
+        <nav class="mobile-bottom-nav">
+            <button class="mobile-nav-btn active" id="mob-dash" onclick="navigateTo('dash', this)">
+                <span class="mobile-nav-icon">📊</span> Dash
+            </button>
+            <button class="mobile-nav-btn" id="mob-servicos" onclick="navigateTo('servicos', this)">
+                <span class="mobile-nav-icon">💅</span> Serviços
+            </button>
+            <button class="mobile-nav-btn" id="mob-agenda" onclick="navigateTo('agenda', this)">
+                <span class="mobile-nav-icon">📅</span> Agenda
+            </button>
+            <button class="mobile-nav-btn" id="mob-financeiro" onclick="navigateTo('financeiro', this)">
+                <span class="mobile-nav-icon">💳</span> Caixa
+            </button>
+            <button class="mobile-nav-btn" id="mob-clientes" onclick="navigateTo('clientes', this)">
+                <span class="mobile-nav-icon">👥</span> Clientes
+            </button>
+        </nav>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="main-content">
+            <div class="top-header">
+                <div class="header-title">
+                    <h1 id="pageTitle">Painel de Controle <span>360°</span></h1>
+                    <p id="pageSub" style="color:var(--text-muted); font-size:0.88rem;">Resumo financeiro e gestão completa do seu studio.</p>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button class="btn-action btn-green" style="padding:8px 14px; font-size:0.8rem;" onclick="recarregarDadosCompletos()">🔄 Sincronizar Nuvem</button>
+                    <button class="btn-action btn-outline-dark" style="padding:8px 12px; font-size:0.8rem;" onclick="openChangePasswordModal()">🔑 Alterar Senha</button>
+                    <div class="status-pill">● Nuvem Sincronizada ☁️</div>
                 </div>
             </div>
 
-            <div class="content-card">
-                <div class="card-header">🔍 Filtros da Agenda</div>
-                <div class="form-grid">
-                    <div class="input-group"><label>Buscar por Cliente</label><input type="text" id="filAgCliente" placeholder="Digite o nome..." oninput="renderAgendaEFinanceiro()"></div>
-                    <div class="input-group"><label>Data Inicial</label><input type="date" id="filAgDe" onchange="renderAgendaEFinanceiro()"></div>
-                    <div class="input-group"><label>Data Final</label><input type="date" id="filAgAte" onchange="renderAgendaEFinanceiro()"></div>
-                </div>
-            </div>
-
-            <div class="content-card">
-                <div class="card-header">📋 Agendamentos Registrados</div>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Origem / Data</th>
-                                <th>Cliente / Whats</th>
-                                <th>Serviço</th>
-                                <th>Valor Total</th>
-                                <th>Sinal PIX</th>
-                                <th>Pendente Dia</th>
-                                <th>Status Atendimento</th>
-                                <th>Ações de Gestão</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbAgenda"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TELA TESOURARIA DFC -->
-        <div id="view-financeiro" class="view-section">
-            <div class="metrics-grid">
-                <div class="metric-card"><div class="metric-label">Caixa Liquidado</div><div class="metric-value" style="color:var(--green-success)" id="finCaixaHoje">R$ 0,00</div></div>
-                <div class="metric-card"><div class="metric-label">Pendentes / Inadimplência</div><div class="metric-value" style="color:var(--gold-warning)" id="finPendenteFuturo">R$ 0,00</div></div>
-                <div class="metric-card"><div class="metric-label">Saídas / Despesas</div><div class="metric-value" style="color:var(--danger)" id="finDespesas">R$ 0,00</div></div>
-                <div class="metric-card"><div class="metric-label">Saldo Liquido DFC</div><div class="metric-value" style="color:var(--text-main)" id="finSaldoLiquido">R$ 0,00</div></div>
-            </div>
-
-            <div class="content-card">
-                <div class="card-header">🔍 Filtro de Tesouraria</div>
-                <div class="form-grid">
-                    <div class="input-group"><label>Descrição / Texto</label><input type="text" id="finFilDesc" placeholder="Ex: Salão, Energia..." oninput="renderAgendaEFinanceiro()"></div>
-                    <div class="input-group"><label>Data Inicial</label><input type="date" id="finFilDe" value="2026-10-01" onchange="renderAgendaEFinanceiro()"></div>
-                    <div class="input-group"><label>Data Final</label><input type="date" id="finFilAte" value="2026-10-31" onchange="renderAgendaEFinanceiro()"></div>
-                    <div class="input-group"><label>Status</label>
-                        <select id="finFilStatus" onchange="renderAgendaEFinanceiro()">
-                            <option value="TODOS">Todos os Status</option>
-                            <option value="LIQUIDADO">Somente Liquidados</option>
-                            <option value="PENDENTE">Somente Pendentes</option>
-                        </select>
+            <!-- TELA 1: DASHBOARD COM GRÁFICOS INTERATIVOS -->
+            <div id="view-dash" class="view-section active">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
+                    <h3 style="color:var(--pink-neon); font-size:1.1rem;">📈 Visão Geral de Tesouraria</h3>
+                    <div style="display:flex; gap:8px;">
+                        <input type="date" id="dashDataDe" value="2026-10-01" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px; border-radius:8px; font-size:0.8rem;" onchange="renderDashboardData()">
+                        <input type="date" id="dashDataAte" value="2026-10-31" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px; border-radius:8px; font-size:0.8rem;" onchange="renderDashboardData()">
                     </div>
                 </div>
-            </div>
-
-            <div class="content-card">
-                <div class="card-header">💸 Lançamento Manual no Fluxo de Caixa (DFC)</div>
-                <div class="form-grid">
-                    <div class="input-group"><label>Tipo</label><select id="dfcTipo"><option value="despesa">Despesa (Saída)</option><option value="receita">Receita (Entrada)</option></select></div>
-                    <div class="input-group"><label>Descrição</label><input type="text" id="dfcDesc" placeholder="Ex: Aluguel Cadeira"></div>
-                    <div class="input-group"><label>Valor (R$)</label><input type="number" id="dfcValor" placeholder="50.00"></div>
-                    <div class="input-group"><label>Data Lançamento</label><input type="date" id="dfcData"></div>
+                <div class="metrics-grid">
+                    <div class="metric-card"><div class="metric-label">Faturamento Bruto</div><div class="metric-value" style="color:var(--text-main)" id="dashBruto">R$ 0,00</div></div>
+                    <div class="metric-card"><div class="metric-label">Caixa Liquidado</div><div class="metric-value" style="color:var(--green-success)" id="dashCaixaEfetivo">R$ 0,00</div></div>
+                    <div class="metric-card"><div class="metric-label">Pendentes</div><div class="metric-value" style="color:var(--gold-warning)" id="dashPendente">R$ 0,00</div></div>
+                    <div class="metric-card"><div class="metric-label">Ticket Médio</div><div class="metric-value" style="color:var(--pink-neon)" id="dashTicketMedio">R$ 0,00</div></div>
+                    <div class="metric-card"><div class="metric-label">Inadimplência</div><div class="metric-value" style="color:var(--danger)" id="dashTaxaInadimplencia">0%</div></div>
                 </div>
-                <button class="btn-action" onclick="salvarLancamentoDFC()">Lançar na Tesouraria</button>
-            </div>
-
-            <div class="content-card">
-                <div class="card-header">📊 Demonstrativo de Fluxo de Caixa (DFC)</div>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Data Vinculada</th>
-                                <th>Descrição / Origem</th>
-                                <th>Tipo</th>
-                                <th>Valor</th>
-                                <th>Status</th>
-                                <th>Ação de Baixa</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbFinanceiro"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TELA CRM -->
-        <div id="view-crm" class="view-section">
-            <div id="lockCrm" class="plan-lock-overlay" style="display:none;">
-                <div class="plan-lock-card">
-                    <h3 style="color:var(--gold-warning); margin-bottom:10px;">🔒 Recurso do Plano PRO e VIP</h3>
-                    <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">O CRM de Recuperação de Clientes Ausentes exige a assinatura do plano PRO ou VIP.</p>
-                    <button class="btn-action btn-gold" onclick="navigateTo('planos')">Faça Upgrade Agora</button>
-                </div>
-            </div>
-            <div class="content-card">
-                <div class="card-header">💬 Clientes Ausentes (+20 dias sem retorno)</div>
-                <div class="table-responsive">
-                    <table>
-                        <thead><tr><th>Cliente</th><th>Último Serviço</th><th>Dias Ausente</th><th>Disparo WhatsApp</th></tr></thead>
-                        <tbody id="tbCrmAusentes"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TELA CONCILIAÇÃO SALÃO -->
-        <div id="view-conciliacao" class="view-section">
-            <div id="lockConc" class="plan-lock-overlay" style="display:none;">
-                <div class="plan-lock-card">
-                    <h3 style="color:var(--gold-warning); margin-bottom:10px;">🔒 Recurso Exclusivo VIP</h3>
-                    <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">O módulo de Conciliação e Fechamento de Repasses do Salão exige o plano VIP.</p>
-                    <button class="btn-action btn-gold" onclick="navigateTo('planos')">Upgrade para VIP</button>
-                </div>
-            </div>
-            <div class="content-card">
-                <div class="card-header">💰 Fechamento de Repasse do Salão</div>
-                <div class="form-grid">
-                    <div class="input-group"><label>Data Inicial</label><input type="date" id="concDataDe" value="2026-10-01" onchange="atualizarConciliacaoPeriodo()"></div>
-                    <div class="input-group"><label>Data Final</label><input type="date" id="concDataAte" value="2026-10-31" onchange="atualizarConciliacaoPeriodo()"></div>
-                    <div class="input-group"><label>Taxa Salão (%)</label><input type="number" id="concTaxa" value="30" oninput="atualizarConciliacaoPeriodo()"></div>
-                </div>
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:12px; background:var(--input-bg); padding:18px; border-radius:12px; text-align:center; margin-top:15px;">
-                    <div><small style="color:var(--text-muted)">FATURAMENTO</small><br><strong id="concBrutoPeriodo" style="font-size:1.2rem; color:var(--text-main)">R$ 0,00</strong></div>
-                    <div><small style="color:var(--text-muted)">COMISSÃO SALÃO</small><br><strong id="concSalaoPeriodo" style="font-size:1.2rem; color:var(--pink-neon)">R$ 0,00</strong></div>
-                    <div><small style="color:var(--text-muted)">LÚCRO LÍQUIDO</small><br><strong id="concManicurePeriodo" style="font-size:1.2rem; color:var(--green-success)">R$ 0,00</strong></div>
-                </div>
-                <button class="btn-action btn-gold" style="margin-top:15px; width:100%;" onclick="lancarDespesaSalaoNoFinanceiro()">Lançar Repasse no DFC</button>
-            </div>
-        </div>
-
-        <!-- TELA ESTOQUE & PRECIFICAÇÃO -->
-        <div id="view-estoque" class="view-section">
-            <div id="lockEst" class="plan-lock-overlay" style="display:none;">
-                <div class="plan-lock-card">
-                    <h3 style="color:var(--gold-warning); margin-bottom:10px;">🔒 Recurso do Plano PRO e VIP</h3>
-                    <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">O Estoque com Precificação Combinada exige o plano PRO ou VIP.</p>
-                    <button class="btn-action btn-gold" onclick="navigateTo('planos')">Ver Planos de Assinatura</button>
-                </div>
-            </div>
-            <div class="content-card">
-                <div class="card-header">➕ Incluir Produto no Estoque</div>
-                <div class="form-grid">
-                    <div class="input-group"><label>Nome do Insumo</label><input type="text" id="estNome" placeholder="Ex: Gel Vòlia 24g"></div>
-                    <div class="input-group"><label>Qtd. Comprada</label><input type="number" id="estQtd" placeholder="5"></div>
-                    <div class="input-group"><label>Preço Custo Total (R$)</label><input type="number" id="estCusto" placeholder="90.00"></div>
-                    <div class="input-group"><label>Rendimento (Aplicações)</label><input type="number" id="estRendimento" placeholder="20"></div>
-                </div>
-                <button class="btn-action btn-green" onclick="salvarInsumoEstoque()">Cadastrar Produto</button>
-            </div>
-            <div class="content-card">
-                <div class="card-header">📦 Estoque Atual & Alertas</div>
-                <div class="table-responsive">
-                    <table>
-                        <thead><tr><th>Insumo</th><th>Estoque</th><th>Custo Total</th><th>Aplicações</th><th>Custo/Aplicação</th><th>Ação</th></tr></thead>
-                        <tbody id="tbEstoque"></tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="content-card" style="border-color: var(--pink-neon);">
-                <div class="card-header">🧠 Precificação Combinada por Insumos Usados</div>
-                <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:15px;">Selecione os produtos utilizados no atendimento para calcular o custo exato por aplicação (CMV):</p>
-                <div id="checkEstoqueProdutos" style="display:flex; flex-direction:column; gap:8px; margin-bottom:15px;"></div>
-                <div class="form-grid">
-                    <div class="input-group"><label>CMV Total Combinado (R$)</label><input type="text" id="prCmvCombinado" readonly value="R$ 0,00" style="color:var(--gold-warning); font-weight:bold;"></div>
-                    <div class="input-group"><label>Margem Lucro Desejada (R$)</label><input type="number" id="prLucro" value="90.00" oninput="calcularPrecoMacroSugerido()"></div>
-                    <div class="input-group"><label>Comissão Salão (%)</label><input type="number" id="prComissao" value="30" oninput="calcularPrecoMacroSugerido()"></div>
-                </div>
-                <div style="background:var(--input-bg); padding:15px; border-radius:12px; text-align:center;">
-                    <small style="color:var(--text-muted)">PREÇO FINAL SUGERIDO DE VENDA</small><br>
-                    <strong id="resPrecoMacroSugerido" style="font-size:1.6rem; color:var(--green-success)">R$ 0,00</strong>
-                </div>
-            </div>
-        </div>
-
-        <!-- TELA PLANOS DENTRO DO PAINEL -->
-        <div id="view-planos" class="view-section">
-            <div class="content-card" style="border-color:var(--gold-warning);">
-                <div class="card-header" style="color:var(--gold-warning);">👑 Escolha ou Renove seu Plano NailBoss</div>
-                <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:15px;">Efetue o pagamento via PIX e envie o comprovante para liberação imediata do seu acesso.</p>
-                
-                <div class="plans-grid">
-                    <div class="plan-card">
-                        <h3>Plano STARTER</h3>
-                        <div class="plan-price">R$ 0,00</div>
-                        <p style="font-size:0.75rem; color:var(--text-muted);">Agenda básica e controle inicial de clientes.</p>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:18px; margin-bottom:20px;">
+                    <div class="content-card">
+                        <div class="card-header">📊 Desempenho Financeiro (Bruto x Efetivo)</div>
+                        <div style="height:230px; position:relative;">
+                            <canvas id="chartFinanceiro"></canvas>
+                        </div>
                     </div>
-                    <div class="plan-card highlight">
-                        <h3>Plano PRO</h3>
-                        <div class="plan-price" id="panelPricePro">R$ 19,90/mês</div>
-                        <p style="font-size:0.75rem; color:var(--text-muted);">Tesouraria DFC, CRM e Controle de Sinal PIX.</p>
-                    </div>
-                    <div class="plan-card">
-                        <h3>Plano VIP</h3>
-                        <div class="plan-price" id="panelPriceVip">R$ 39,90/mês</div>
-                        <p style="font-size:0.75rem; color:var(--text-muted);">Acesso total, Precificação Combinada e Repasses.</p>
+                    <div class="content-card">
+                        <div class="card-header">🍰 Distribuição por Serviço</div>
+                        <div style="height:230px; position:relative;">
+                            <canvas id="chartServicos"></canvas>
+                        </div>
                     </div>
                 </div>
-
-                <div style="background:var(--input-bg); border:2px dashed var(--pink-neon); padding:20px; border-radius:12px; margin-top:20px; text-align:center;">
-                    <strong style="color:var(--gold-warning); font-size:1.1rem;">🔑 CHAVE PIX CONECTADA:</strong><br>
-                    <span style="font-size:1.4rem; font-weight:800; color:var(--text-main); letter-spacing:1px; display:block; margin:8px 0;">55-11-94788-7105</span>
-                    <button class="btn-action btn-green" style="width:100%; max-width:320px; margin-top:10px;" onclick="enviarComprovanteWhatsApp()">📲 ENVIAR COMPROVANTE NO WHATSAPP</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- TELA MASTER SAAS 2.0 -->
-        <div id="view-admin" class="view-section">
-            <div class="metrics-grid">
-                <div class="metric-card" style="border-color: var(--pink-neon);"><div class="metric-label">MRR (Recorrente Mensal)</div><div class="metric-value" style="color:var(--green-success)" id="masterMrrVal">R$ 0,00/mês</div></div>
-                <div class="metric-card" style="border-color: var(--gold-warning);"><div class="metric-label">ARR (Estimativa Anual)</div><div class="metric-value" style="color:var(--gold-warning)" id="masterArrVal">R$ 0,00/ano</div></div>
-                <div class="metric-card" style="border-color: var(--green-success);"><div class="metric-label">Estúdios Ativos</div><div class="metric-value" style="color:var(--text-main)" id="masterAtivosVal">0</div></div>
-                <div class="metric-card" style="border-color: var(--danger);"><div class="metric-label">Aguardando Aprovação</div><div class="metric-value" style="color:var(--danger)" id="masterPendenteVal">0</div></div>
-            </div>
-
-            <div class="content-card" style="border-color: var(--gold-warning);">
-                <div class="card-header" style="color: var(--gold-warning);">
-                    <span>👑 Gestão Executiva de Estúdios Cadastrados</span>
-                    <input type="text" id="filMasterBusca" placeholder="🔍 Buscar studio..." style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px 12px; border-radius:8px; font-size:0.85rem;" oninput="renderMasterSaaS()">
-                </div>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Estúdio / Responsável</th>
-                                <th>Contato</th>
-                                <th>Plano Atual</th>
-                                <th>Status</th>
-                                <th>Mensalidade</th>
-                                <th>Ações Master</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbMasterClientes"></tbody>
-                    </table>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:18px;">
+                    <div class="content-card">
+                        <div class="card-header">🥇 Serviços Mais Vendidos</div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>Serviço</th><th>Receita Total</th></tr></thead>
+                                <tbody id="tbDashRankingServicos"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-header">💅 Custos por Insumo</div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>Produto/Insumo</th><th>Custo Total</th></tr></thead>
+                                <tbody id="tbDashRankingInsumos"></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="content-card" style="border-color: var(--pink-neon);">
-                <div class="card-header">⚙️ Preços dos Planos do SaaS</div>
-                <div class="form-grid">
-                    <div class="input-group"><label>Preço Plano PRO (R$/mês)</label><input type="number" id="masterPricePro" value="19.90" onchange="salvarPrecosPlanosMaster()"></div>
-                    <div class="input-group"><label>Preço Plano VIP (R$/mês)</label><input type="number" id="masterPriceVip" value="39.90" onchange="salvarPrecosPlanosMaster()"></div>
+            <!-- TELA CATÁLOGO DE SERVIÇOS & TABELA DE PREÇOS -->
+            <div id="view-servicos" class="view-section">
+                <div class="content-card">
+                    <div class="card-header">💅 Cadastrar Serviço no Catálogo</div>
+                    <div class="form-grid">
+                        <div class="input-group"><label>Nome do Serviço</label><input type="text" id="srvNome" placeholder="Ex: Manutenção de Fibra"></div>
+                        <div class="input-group"><label>Preço Padrão (R$)</label><input type="number" id="srvValor" placeholder="120.00"></div>
+                        <div class="input-group"><label>Duração Média (Minutos)</label><input type="number" id="srvDuracao" placeholder="90" value="90"></div>
+                    </div>
+                    <button class="btn-action btn-green" onclick="salvarServicoCatalogo()">Salvar Serviço</button>
                 </div>
-                <button class="btn-action btn-green" onclick="salvarPrecosPlanosMaster()">Salvar Preços</button>
+                <div class="content-card">
+                    <div class="card-header">📋 Tabela de Serviços e Valores</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome do Serviço</th>
+                                    <th>Duração</th>
+                                    <th>Valor Padrão</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbServicosCatalogo"></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
-            <div class="content-card">
-                <div class="card-header" style="color:var(--green-success);">💸 Extrato de Mensalidades Recebidas</div>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr><th>Data</th><th>Estúdio</th><th>Plano</th><th>Valor</th><th>Status PIX</th><th>Ação</th></tr>
-                        </thead>
-                        <tbody id="tbMasterPagamentosSaaS"></tbody>
-                    </table>
+            <!-- TELA CLIENTES -->
+            <div id="view-clientes" class="view-section">
+                <div class="content-card">
+                    <div class="card-header">👤 Cadastrar Novo Cliente</div>
+                    <div class="form-grid">
+                        <div class="input-group"><label>Nome Completo</label><input type="text" id="cliNome" placeholder="Ex: Ana Paula Ribeiro"></div>
+                        <div class="input-group"><label>WhatsApp / Telefone</label><input type="text" id="cliWhats" placeholder="Ex: (11) 99999-8888"></div>
+                        <div class="input-group"><label>Cliente Desde (Data)</label><input type="date" id="cliDesde"></div>
+                        <div class="input-group"><label>Preferência / Estilo</label><input type="text" id="cliPref" placeholder="Ex: Fibra de Vidro"></div>
+                    </div>
+                    <button class="btn-action btn-green" onclick="salvarCliente()">Salvar Cliente</button>
+                </div>
+                <div class="content-card">
+                    <div class="card-header">👥 Base de Clientes Cadastrados</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Nome</th><th>WhatsApp</th><th>Cliente Desde</th><th>Preferências</th><th>Ações</th></tr></thead>
+                            <tbody id="tbClientes"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
+
+            <!-- TELA AGENDA -->
+            <div id="view-agenda" class="view-section">
+                <div class="content-card">
+                    <div class="card-header">
+                        <span>📅 Novo Agendamento (Balcão)</span>
+                        <button class="btn-action btn-gold" style="font-size:0.75rem; padding:6px 12px;" onclick="gerarLinkPublicoAgendamento()">📲 Link de Agendamento</button>
+                    </div>
+                    <div class="form-grid">
+                        <div class="input-group"><label>Data do Serviço</label><input type="date" id="agData" onchange="renderGradeHorarios()"></div>
+                        <div class="input-group"><label>Hora Início</label><input type="time" id="agHoraInicio" value="09:00"></div>
+                        <div class="input-group"><label>Hora Fim</label><input type="time" id="agHoraFim" value="10:30"></div>
+                        <div class="input-group"><label>Nome da Cliente</label><input type="text" id="agNome" placeholder="Digite o nome..."></div>
+                        
+                        <div class="input-group">
+                            <label>Serviço (Catálogo)</label>
+                            <select id="agServicoSelect" onchange="aoSelecionarServicoAgendamento(this.value)">
+                                <option value="">Selecione um Serviço...</option>
+                            </select>
+                        </div>
+                        <div class="input-group"><label>Valor Total (R$)</label><input type="number" id="agValor" placeholder="150.00" oninput="atualizarPendenteForm()"></div>
+                        <div class="input-group"><label>Sinal PIX (R$)</label><input type="number" id="agSinal" placeholder="30.00" oninput="atualizarPendenteForm()"></div>
+                        <div class="input-group"><label>Valor Pendente (R$)</label><input type="text" id="agPendente" readonly value="R$ 0,00" style="color:var(--gold-warning); font-weight:bold;"></div>
+                    </div>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="btn-action btn-green" onclick="salvarAgendamento()">Confirmar Agendamento</button>
+                        <button class="btn-action btn-danger" onclick="abrirModalBloqueioHorario()">🔒 Bloquear Horário</button>
+                        <button class="btn-action btn-gold" onclick="abrirPopupGradeDia()">👀 Slots do Dia</button>
+                    </div>
+                </div>
+                <div class="content-card" style="border-color: var(--danger);">
+                    <div class="card-header" style="color:var(--danger)">🔒 Horários Bloqueados no Studio</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Período</th>
+                                    <th>Motivo / Observação</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbHorariosBloqueados"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="card-header">🔍 Filtros da Agenda</div>
+                    <div class="form-grid">
+                        <div class="input-group"><label>Buscar por Cliente</label><input type="text" id="filAgCliente" placeholder="Digite o nome..." oninput="renderAgendaEFinanceiro()"></div>
+                        <div class="input-group"><label>Data Inicial</label><input type="date" id="filAgDe" onchange="renderAgendaEFinanceiro()"></div>
+                        <div class="input-group"><label>Data Final</label><input type="date" id="filAgAte" onchange="renderAgendaEFinanceiro()"></div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="card-header">📋 Agendamentos Registrados</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Origem / Data</th>
+                                    <th>Cliente / Whats</th>
+                                    <th>Serviço</th>
+                                    <th>Valor Total</th>
+                                    <th>Sinal PIX</th>
+                                    <th>Pendente Dia</th>
+                                    <th>Status Atendimento</th>
+                                    <th>Ações de Gestão</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbAgenda"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA TESOURARIA DFC -->
+            <div id="view-financeiro" class="view-section">
+                <div class="metrics-grid">
+                    <div class="metric-card"><div class="metric-label">Caixa Liquidado</div><div class="metric-value" style="color:var(--green-success)" id="finCaixaHoje">R$ 0,00</div></div>
+                    <div class="metric-card"><div class="metric-label">Pendentes / Inadimplência</div><div class="metric-value" style="color:var(--gold-warning)" id="finPendenteFuturo">R$ 0,00</div></div>
+                    <div class="metric-card"><div class="metric-label">Saídas / Despesas</div><div class="metric-value" style="color:var(--danger)" id="finDespesas">R$ 0,00</div></div>
+                    <div class="metric-card"><div class="metric-label">Saldo Liquido DFC</div><div class="metric-value" style="color:var(--text-main)" id="finSaldoLiquido">R$ 0,00</div></div>
+                </div>
+                <div class="content-card">
+                    <div class="card-header">🔍 Filtro de Tesouraria</div>
+                    <div class="form-grid">
+                        <div class="input-group"><label>Descrição / Texto</label><input type="text" id="finFilDesc" placeholder="Ex: Salão, Energia..." oninput="renderAgendaEFinanceiro()"></div>
+                        <div class="input-group"><label>Data Inicial</label><input type="date" id="finFilDe" value="2026-10-01" onchange="renderAgendaEFinanceiro()"></div>
+                        <div class="input-group"><label>Data Final</label><input type="date" id="finFilAte" value="2026-10-31" onchange="renderAgendaEFinanceiro()"></div>
+                        <div class="input-group"><label>Status</label>
+                            <select id="finFilStatus" onchange="renderAgendaEFinanceiro()">
+                                <option value="TODOS">Todos os Status</option>
+                                <option value="LIQUIDADO">Somente Liquidados</option>
+                                <option value="PENDENTE">Somente Pendentes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="card-header">💸 Lançamento Manual no Fluxo de Caixa (DFC)</div>
+                    <div class="form-grid">
+                        <div class="input-group"><label>Tipo</label><select id="dfcTipo"><option value="despesa">Despesa (Saída)</option><option value="receita">Receita (Entrada)</option></select></div>
+                        <div class="input-group"><label>Descrição</label><input type="text" id="dfcDesc" placeholder="Ex: Aluguel Cadeira"></div>
+                        <div class="input-group"><label>Valor (R$)</label><input type="number" id="dfcValor" placeholder="50.00"></div>
+                        <div class="input-group"><label>Data Lançamento</label><input type="date" id="dfcData"></div>
+                    </div>
+                    <button class="btn-action" onclick="salvarLancamentoDFC()">Lançar na Tesouraria</button>
+                </div>
+                <div class="content-card">
+                    <div class="card-header">📊 Demonstrativo de Fluxo de Caixa (DFC)</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data Vinculada</th>
+                                    <th>Descrição / Origem</th>
+                                    <th>Tipo</th>
+                                    <th>Valor</th>
+                                    <th>Status</th>
+                                    <th>Ação de Baixa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbFinanceiro"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA CRM -->
+            <div id="view-crm" class="view-section">
+                <div id="lockCrm" class="plan-lock-overlay" style="display:none;">
+                    <div class="plan-lock-card">
+                        <h3 style="color:var(--gold-warning); margin-bottom:10px;">🔒 Recurso do Plano PRO e VIP</h3>
+                        <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">O CRM de Recuperação de Clientes Ausentes exige a assinatura do plano PRO ou VIP.</p>
+                        <button class="btn-action btn-gold" onclick="navigateTo('planos')">Faça Upgrade Agora</button>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="card-header">💬 Clientes Ausentes (+20 dias sem retorno)</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Cliente</th><th>Último Serviço</th><th>Dias Ausente</th><th>Disparo WhatsApp</th></tr></thead>
+                            <tbody id="tbCrmAusentes"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA CONCILIAÇÃO SALÃO -->
+            <div id="view-conciliacao" class="view-section">
+                <div id="lockConc" class="plan-lock-overlay" style="display:none;">
+                    <div class="plan-lock-card">
+                        <h3 style="color:var(--gold-warning); margin-bottom:10px;">🔒 Recurso Exclusivo VIP</h3>
+                        <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">O módulo de Conciliação e Fechamento de Repasses do Salão exige o plano VIP.</p>
+                        <button class="btn-action btn-gold" onclick="navigateTo('planos')">Upgrade para VIP</button>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="card-header">💰 Fechamento de Repasse do Salão</div>
+                    <div class="form-grid">
+                        <div class="input-group"><label>Data Inicial</label><input type="date" id="concDataDe" value="2026-10-01" onchange="atualizarConciliacaoPeriodo()"></div>
+                        <div class="input-group"><label>Data Final</label><input type="date" id="concDataAte" value="2026-10-31" onchange="atualizarConciliacaoPeriodo()"></div>
+                        <div class="input-group"><label>Taxa Salão (%)</label><input type="number" id="concTaxa" value="30" oninput="atualizarConciliacaoPeriodo()"></div>
+                    </div>
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:12px; background:var(--input-bg); padding:18px; border-radius:12px; text-align:center; margin-top:15px;">
+                        <div><small style="color:var(--text-muted)">FATURAMENTO</small><br><strong id="concBrutoPeriodo" style="font-size:1.2rem; color:var(--text-main)">R$ 0,00</strong></div>
+                        <div><small style="color:var(--text-muted)">COMISSÃO SALÃO</small><br><strong id="concSalaoPeriodo" style="font-size:1.2rem; color:var(--pink-neon)">R$ 0,00</strong></div>
+                        <div><small style="color:var(--text-muted)">LÚCRO LÍQUIDO</small><br><strong id="concManicurePeriodo" style="font-size:1.2rem; color:var(--green-success)">R$ 0,00</strong></div>
+                    </div>
+                    <button class="btn-action btn-gold" style="margin-top:15px; width:100%;" onclick="lancarDespesaSalaoNoFinanceiro()">Lançar Repasse no DFC</button>
+                </div>
+            </div>
+
+            <!-- TELA ESTOQUE & PRECIFICAÇÃO -->
+            <div id="view-estoque" class="view-section">
+                <div id="lockEst" class="plan-lock-overlay" style="display:none;">
+                    <div class="plan-lock-card">
+                        <h3 style="color:var(--gold-warning); margin-bottom:10px;">🔒 Recurso do Plano PRO e VIP</h3>
+                        <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">O Estoque com Precificação Combinada exige o plano PRO ou VIP.</p>
+                        <button class="btn-action btn-gold" onclick="navigateTo('planos')">Ver Planos de Assinatura</button>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="card-header">➕ Incluir Produto no Estoque</div>
+                    <div class="form-grid">
+                        <div class="input-group"><label>Nome do Insumo</label><input type="text" id="estNome" placeholder="Ex: Gel Vòlia 24g"></div>
+                        <div class="input-group"><label>Qtd. Comprada</label><input type="number" id="estQtd" placeholder="5"></div>
+                        <div class="input-group"><label>Preço Custo Total (R$)</label><input type="number" id="estCusto" placeholder="90.00"></div>
+                        <div class="input-group"><label>Rendimento (Aplicações)</label><input type="number" id="estRendimento" placeholder="20"></div>
+                    </div>
+                    <button class="btn-action btn-green" onclick="salvarInsumoEstoque()">Cadastrar Produto</button>
+                </div>
+                <div class="content-card">
+                    <div class="card-header">📦 Estoque Atual & Alertas</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Insumo</th><th>Estoque</th><th>Custo Total</th><th>Aplicações</th><th>Custo/Aplicação</th><th>Ação</th></tr></thead>
+                            <tbody id="tbEstoque"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="content-card" style="border-color: var(--pink-neon);">
+                    <div class="card-header">🧠 Precificação Combinada por Insumos Usados</div>
+                    <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:15px;">Selecione os produtos utilizados no atendimento para calcular o custo exato por aplicação (CMV):</p>
+                    <div id="checkEstoqueProdutos" style="display:flex; flex-direction:column; gap:8px; margin-bottom:15px;"></div>
+                    <div class="form-grid">
+                        <div class="input-group"><label>CMV Total Combinado (R$)</label><input type="text" id="prCmvCombinado" readonly value="R$ 0,00" style="color:var(--gold-warning); font-weight:bold;"></div>
+                        <div class="input-group"><label>Margem Lucro Desejada (R$)</label><input type="number" id="prLucro" value="90.00" oninput="calcularPrecoMacroSugerido()"></div>
+                        <div class="input-group"><label>Comissão Salão (%)</label><input type="number" id="prComissao" value="30" oninput="calcularPrecoMacroSugerido()"></div>
+                    </div>
+                    <div style="background:var(--input-bg); padding:15px; border-radius:12px; text-align:center;">
+                        <small style="color:var(--text-muted)">PREÇO FINAL SUGERIDO DE VENDA</small><br>
+                        <strong id="resPrecoMacroSugerido" style="font-size:1.6rem; color:var(--green-success)">R$ 0,00</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA PLANOS DENTRO DO PAINEL -->
+            <div id="view-planos" class="view-section">
+                <div class="content-card" style="border-color:var(--gold-warning);">
+                    <div class="card-header" style="color:var(--gold-warning);">👑 Escolha ou Renove seu Plano NailBoss</div>
+                    <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:15px;">Efetue o pagamento via PIX e envie o comprovante para liberação imediata do seu acesso.</p>
+                    
+                    <div class="plans-grid">
+                        <div class="plan-card">
+                            <h3>Plano STARTER</h3>
+                            <div class="plan-price">R$ 0,00</div>
+                            <p style="font-size:0.75rem; color:var(--text-muted);">Agenda básica e controle inicial de clientes.</p>
+                        </div>
+                        <div class="plan-card highlight">
+                            <h3>Plano PRO</h3>
+                            <div class="plan-price" id="panelPricePro">R$ 19,90/mês</div>
+                            <p style="font-size:0.75rem; color:var(--text-muted);">Tesouraria DFC, CRM e Controle de Sinal PIX.</p>
+                        </div>
+                        <div class="plan-card">
+                            <h3>Plano VIP</h3>
+                            <div class="plan-price" id="panelPriceVip">R$ 39,90/mês</div>
+                            <p style="font-size:0.75rem; color:var(--text-muted);">Acesso total, Precificação Combinada e Repasses.</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--input-bg); border:2px dashed var(--pink-neon); padding:20px; border-radius:12px; margin-top:20px; text-align:center;">
+                        <strong style="color:var(--gold-warning); font-size:1.1rem;">🔑 CHAVE PIX CONECTADA:</strong><br>
+                        <span style="font-size:1.4rem; font-weight:800; color:var(--text-main); letter-spacing:1px; display:block; margin:8px 0;">55-11-94788-7105</span>
+                        <button class="btn-action btn-green" style="width:100%; max-width:320px; margin-top:10px;" onclick="enviarComprovanteWhatsApp()">📲 ENVIAR COMPROVANTE NO WHATSAPP</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA MASTER SAAS 2.0 -->
+            <div id="view-admin" class="view-section">
+                <div class="metrics-grid">
+                    <div class="metric-card" style="border-color: var(--pink-neon);"><div class="metric-label">MRR (Recorrente Mensal)</div><div class="metric-value" style="color:var(--green-success)" id="masterMrrVal">R$ 0,00/mês</div></div>
+                    <div class="metric-card" style="border-color: var(--gold-warning);"><div class="metric-label">ARR (Estimativa Anual)</div><div class="metric-value" style="color:var(--gold-warning)" id="masterArrVal">R$ 0,00/ano</div></div>
+                    <div class="metric-card" style="border-color: var(--green-success);"><div class="metric-label">Estúdios Ativos</div><div class="metric-value" style="color:var(--text-main)" id="masterAtivosVal">0</div></div>
+                    <div class="metric-card" style="border-color: var(--danger);"><div class="metric-label">Aguardando Aprovação</div><div class="metric-value" style="color:var(--danger)" id="masterPendenteVal">0</div></div>
+                </div>
+                <div class="content-card" style="border-color: var(--gold-warning);">
+                    <div class="card-header" style="color: var(--gold-warning);">
+                        <span>👑 Gestão Executiva de Estúdios Cadastrados</span>
+                        <input type="text" id="filMasterBusca" placeholder="🔍 Buscar studio..." style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-main); padding:6px 12px; border-radius:8px; font-size:0.85rem;" oninput="renderMasterSaaS()">
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Estúdio / Responsável</th>
+                                    <th>Contato</th>
+                                    <th>Plano Atual</th>
+                                    <th>Status</th>
+                                    <th>Mensalidade</th>
+                                    <th>Ações Master</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbMasterClientes"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="content-card" style="border-color: var(--pink-neon);">
+                    <div class="card-header">⚙️ Preços dos Planos do SaaS</div>
+                    <div class="form-grid">
+                        <div class="input-group"><label>Preço Plano PRO (R$/mês)</label><input type="number" id="masterPricePro" value="19.90" onchange="salvarPrecosPlanosMaster()"></div>
+                        <div class="input-group"><label>Preço Plano VIP (R$/mês)</label><input type="number" id="masterPriceVip" value="39.90" onchange="salvarPrecosPlanosMaster()"></div>
+                    </div>
+                    <button class="btn-action btn-green" onclick="salvarPrecosPlanosMaster()">Salvar Preços</button>
+                </div>
+                <div class="content-card">
+                    <div class="card-header" style="color:var(--green-success);">💸 Extrato de Mensalidades Recebidas</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Data</th><th>Estúdio</th><th>Plano</th><th>Valor</th><th>Status PIX</th><th>Ação</th></tr>
+                            </thead>
+                            <tbody id="tbMasterPagamentosSaaS"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
     <!-- MODAL POPUP PARA BLOQUEIO DE HORÁRIO -->
     <div class="modal-overlay" id="blockTimeModal">
@@ -904,7 +920,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal-overlay" id="historyModal"><div class="modal-card"><div class="modal-title" id="histTitle">Histórico</div><div class="modal-msg" id="histContent" style="text-align:left; max-height:250px; overflow-y:auto;"></div><div class="modal-actions" style="margin-top:15px;"><button class="btn-modal-cancel" onclick="fecharHistoricoModal()">Fechar</button></div></div></div>
     <div class="modal-overlay" id="customModal"><div class="modal-card"><div class="modal-title" id="modalTitle">Confirmação</div><div class="modal-msg" id="modalMsg">Deseja prosseguir?</div><div class="modal-actions"><button class="btn-modal-cancel" id="btnModalCancel">Cancelar</button><button class="btn-modal-confirm" id="btnModalConfirm">Confirmar</button></div></div></div>
     <div class="modal-overlay" id="changePassModal"><div class="modal-card"><div class="modal-title">🔑 Alterar Senha</div><div class="input-group" style="margin-bottom:12px; text-align:left;"><label>Senha Atual</label><input type="password" id="passCurrent"></div><div class="input-group" style="margin-bottom:20px; text-align:left;"><label>Nova Senha</label><input type="password" id="passNew"></div><div class="modal-actions"><button class="btn-modal-cancel" onclick="closeChangePasswordModal()">Cancelar</button><button class="btn-modal-confirm" onclick="saveNewPassword()">Salvar</button></div></div></div>
@@ -917,7 +932,6 @@
         let regSelectedPlan = "PRO";
         let onConfirmCallback = null;
         let selectedPublicSlotTime = null;
-
         let chartFinInstance = null;
         let chartServInstance = null;
 
@@ -954,17 +968,15 @@
                 msg.innerHTML = `<strong>${info.cliente}</strong> agendou <strong>${info.servico}</strong> para <strong>${formatDateBR(info.data)} às ${info.horaInicio}</strong>!`;
                 toast.style.display = 'flex';
                 
-                // Toca alerta sonoro discreto do navegador se permitido
                 try {
                     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                     const osc = audioCtx.createOscillator();
                     osc.type = 'sine';
-                    osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+                    osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
                     osc.connect(audioCtx.destination);
                     osc.start();
                     osc.stop(audioCtx.currentTime + 0.3);
                 } catch(e) {}
-
                 setTimeout(() => { fecharToast(); }, 12000);
             }
         }
@@ -981,6 +993,23 @@
             return dateStr;
         }
 
+        function abrirTelaLogin() {
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'flex';
+            showAuthInputs('studio');
+        }
+
+        function abrirTelaCadastroStudio() {
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'flex';
+            showRegisterForm();
+        }
+
+        function voltarHome() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('landing-page').style.display = 'flex';
+        }
+
         function mudarTemaCores(themeKey) {
             document.body.classList.remove('theme-rosegold', 'theme-purple');
             if (themeKey === 'rosegold') document.body.classList.add('theme-rosegold');
@@ -990,7 +1019,6 @@
             const selMob = document.getElementById('mobileThemeSelector');
             if (selDesk) selDesk.value = themeKey;
             if (selMob) selMob.value = themeKey;
-
             localStorage.setItem('nailboss_preferred_theme', themeKey);
             renderCharts();
         }
@@ -1011,12 +1039,10 @@
         }
 
         let masterPrices = JSON.parse(localStorage.getItem('nailboss_master_prices')) || { PRO: 19.90, VIP: 39.90 };
-
         let baseMasterSaaS = JSON.parse(localStorage.getItem('nailboss_global_master')) || [
-            { id: 1, estudio: "Studio Bella Unhas", email: "bella@unhas.com", whats: "11977776666", plano: "PRO", status: "AGUARDANDO_APROVACAO" },
+            { id: 1, estudio: "Studio Bella Unhas", email: "bella@unhas.com", whats: "11977776666", plano: "PRO", status: "ATIVO" },
             { id: 2, estudio: "Elegance Nails", email: "contato@elegance.com", whats: "11988885555", plano: "VIP", status: "ATIVO" }
         ];
-
         let basePagamentosSaaS = JSON.parse(localStorage.getItem('nailboss_master_pagamentos')) || [
             { id: 1, data: "2026-10-08", estudio: "Elegance Nails", plano: "VIP", valor: 39.90, status: "LIQUIDADO" },
             { id: 2, data: "2026-10-09", estudio: "Studio Bella Unhas", plano: "PRO", valor: 19.90, status: "PENDENTE" }
@@ -1039,7 +1065,6 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.mobile-nav-btn').forEach(el => el.classList.remove('active'));
-
             const targetView = document.getElementById(`view-${viewId}`);
             if (targetView) targetView.classList.add('active');
             
@@ -1051,30 +1076,25 @@
                 const navMob = document.getElementById(`mob-${viewId}`);
                 if (navMob) navMob.classList.add('active');
             }
-
             localStorage.setItem('nailboss_active_view', viewId);
             applyPlanPermissions();
             recarregarDadosCompletos();
         }
 
-        /* VERIFICAÇÃO DE LINK PÚBLICO E CARREGAMENTO */
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const isBooking = urlParams.get('agendar');
             const targetStudio = urlParams.get('studio') || "Studio Bella Unhas";
-
             if (isBooking) {
-                // Abrir diretamente a tela de agendamento do cliente
+                document.getElementById('landing-page').style.display = 'none';
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('public-booking-screen').style.display = 'block';
                 document.getElementById('pubStudioTitle').innerText = targetStudio;
                 
-                // Define tenant ID padrão para gravação da agenda
                 currentTenantId = targetStudio.toLowerCase().replace(/[^a-z0-9]/g, '');
                 
                 const hojeStr = new Date().toISOString().split('T')[0];
                 document.getElementById('pubCliData').value = hojeStr;
-
                 carregarServicosPublicos();
                 renderPublicTimeSlots();
                 return;
@@ -1086,8 +1106,9 @@
                 currentRole = session.role;
                 currentTenantId = session.tenantId || "";
                 currentPlan = session.plan || "STARTER";
-
+                document.getElementById('landing-page').style.display = 'none';
                 document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('app-layout').style.display = 'flex';
 
                 if (currentRole === 'master') {
                     document.getElementById('userRoleName').innerText = 'Proprietário SaaS 👑';
@@ -1100,23 +1121,19 @@
                     document.getElementById('nav-master-item').style.display = 'none';
                     document.getElementById('btnSidebarUpgrade').style.display = 'block';
                 }
-
                 const savedView = localStorage.getItem('nailboss_active_view') || (currentRole === 'master' ? 'admin' : 'dash');
                 navigateTo(savedView);
             }
         });
 
-        /* FUNÇÕES DA TELA PÚBLICA DE AGENDAMENTO CLIENTE */
         function carregarServicosPublicos() {
             const select = document.getElementById('pubCliServico');
             select.innerHTML = '<option value="">Selecione um serviço...</option>';
-
             let servicos = getTenantData('servicos_catalogo', [
                 { id: 1, nome: "Pé e Mão Completo", valor: 70.00, duracao: 60 },
                 { id: 2, nome: "Alongamento em Gel", valor: 150.00, duracao: 120 },
                 { id: 3, nome: "Manutenção Fibra de Vidro", valor: 100.00, duracao: 90 }
             ]);
-
             servicos.forEach(s => {
                 const opt = document.createElement('option');
                 opt.value = s.nome;
@@ -1140,24 +1157,20 @@
             const dataSel = document.getElementById('pubCliData').value || new Date().toISOString().split('T')[0];
             let agenda = getTenantData('agenda', []);
             const slots = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
-
             const container = document.getElementById('pubSlotsContainer');
             container.innerHTML = '';
             selectedPublicSlotTime = null;
-
             slots.forEach(h => {
                 const item = agenda.find(a => a.data === dataSel && a.horaInicio === h);
                 const div = document.createElement('div');
                 let statusClass = '';
                 let label = 'Livre';
-
                 if (item) {
                     if (item.cliente === 'BLOQUEADO' || item.ehBloqueio) { statusClass = 'blocked'; label = '🔒 Ocupado'; }
                     else { statusClass = 'occupied'; label = 'Ocupado'; }
                 } else {
                     div.onclick = () => selectPublicSlot(div, h);
                 }
-
                 div.className = `time-slot-card ${statusClass}`;
                 div.innerHTML = `<strong>${h}</strong><br><small style="font-size:0.68rem;">${label}</small>`;
                 container.appendChild(div);
@@ -1175,27 +1188,22 @@
             const whats = document.getElementById('pubCliWhats').value.trim();
             const servicoSelect = document.getElementById('pubCliServico').value;
             const data = document.getElementById('pubCliData').value;
-
             if (!nome || !whats || !servicoSelect || !data) {
                 alert('Por favor, preencha seu Nome, WhatsApp, Serviço e escolha uma Data.');
                 return;
             }
-
             if (!selectedPublicSlotTime) {
                 alert('Selecione um horário disponível verde no quadro de horários.');
                 return;
             }
-
             const select = document.getElementById('pubCliServico');
             const selectedOpt = select.options[select.selectedIndex];
             const totalVal = selectedOpt ? (parseFloat(selectedOpt.getAttribute('data-valor')) || 0) : 0;
             const sinalVal = Math.min(30, totalVal);
             const pendenteVal = Math.max(0, totalVal - sinalVal);
 
-            // Grava a reserva direta no banco do studio com marcação de Link Público
             let agenda = getTenantData('agenda', []);
             let dfc = getTenantData('dfc', []);
-
             const agId = Date.now();
             const novoAgendamento = {
                 id: agId,
@@ -1210,18 +1218,13 @@
                 quitado: false,
                 origemLink: true
             };
-
             agenda.push(novoAgendamento);
-
             if (sinalVal > 0) dfc.push({ id: Date.now(), agId: agId, data: data, desc: `Sinal PIX Web - ${nome} (${servicoSelect})`, tipo: "receita", valor: sinalVal, status: "PENDENTE" });
             if (pendenteVal > 0) dfc.push({ id: Date.now() + 1, agId: agId, data: data, desc: `Saldo Pendente Web - ${nome} (${servicoSelect})`, tipo: "receita", valor: pendenteVal, status: "PENDENTE" });
-
             setTenantData('agenda', agenda, novoAgendamento);
             setTenantData('dfc', dfc);
 
-            // Abre o WhatsApp do Studio para confirmar e mandar o comprovante PIX
             const msgWhatsApp = `Olá! Fiz meu agendamento no site!\n\n👤 *Cliente:* ${nome}\n📱 *WhatsApp:* ${whats}\n💅 *Serviço:* ${servicoSelect}\n📅 *Data:* ${formatDateBR(data)} às ${selectedPublicSlotTime}\n💰 *Valor Sinal PIX:* R$ ${sinalVal.toFixed(2)}\n🔑 *Chave PIX:* 55-11-94788-7105\n\nSegue em anexo o meu comprovante de pagamento do Sinal PIX para confirmar a reserva!`;
-            
             window.location.href = `https://wa.me/5511947887105?text=${encodeURIComponent(msgWhatsApp)}`;
         }
 
@@ -1241,18 +1244,15 @@
 
         function applyPlanPermissions() {
             document.getElementById('planBadge').innerText = currentPlan;
-
             const lockCrm = document.getElementById('lockCrm');
             const lockConc = document.getElementById('lockConc');
             const lockEst = document.getElementById('lockEst');
-
             if (currentRole === 'master') {
                 if (lockCrm) lockCrm.style.display = 'none';
                 if (lockConc) lockConc.style.display = 'none';
                 if (lockEst) lockEst.style.display = 'none';
                 return;
             }
-
             if (currentPlan === 'STARTER') {
                 if (lockCrm) lockCrm.style.display = 'flex';
                 if (lockConc) lockConc.style.display = 'flex';
@@ -1302,9 +1302,21 @@
         }
 
         function avancarParaEscolhaPlano() {
-            const studio = document.getElementById('regStudio').value;
-            const email = document.getElementById('regEmail').value;
-            if (!studio || !email) { showConfirm('Atenção', 'Preencha nome e e-mail do studio.', null, false); return; }
+            const studio = document.getElementById('regStudio').value.trim();
+            const email = document.getElementById('regEmail').value.trim().toLowerCase();
+            if (!studio || !email) { 
+                showConfirm('Atenção', 'Preencha nome e e-mail do studio.', null, false); 
+                return; 
+            }
+
+            // TRAVA DE DUPLICIDADE DE E-MAIL (NOVO)
+            syncFromCloudGlobal();
+            const emailExiste = baseMasterSaaS.some(item => item.email.toLowerCase() === email);
+            if (emailExiste) {
+                showConfirm('E-mail Já Cadastrado', 'Este e-mail já pertence a outro Studio. Utilize outro e-mail para continuar.', null, false);
+                return;
+            }
+
             document.getElementById('loginStepRegister').style.display = 'none';
             document.getElementById('loginStepSelectPlan').style.display = 'block';
         }
@@ -1319,7 +1331,6 @@
             document.getElementById('cardPlanStarter').classList.remove('selected');
             document.getElementById('cardPlanPro').classList.remove('selected');
             document.getElementById('cardPlanVip').classList.remove('selected');
-
             if (plano === 'STARTER') document.getElementById('cardPlanStarter').classList.add('selected');
             if (plano === 'PRO') document.getElementById('cardPlanPro').classList.add('selected');
             if (plano === 'VIP') document.getElementById('cardPlanVip').classList.add('selected');
@@ -1327,34 +1338,29 @@
 
         function finalizarCadastroEAtivar() {
             const studio = document.getElementById('regStudio').value.trim();
-            const email = document.getElementById('regEmail').value.trim();
+            const email = document.getElementById('regEmail').value.trim().toLowerCase();
             const whats = document.getElementById('regWhats').value.trim();
-
             if (!studio || !email) { showConfirm('Atenção', 'Informe o nome do studio e seu e-mail.', null, false); return; }
-
             syncFromCloudGlobal();
             
-            const novoItem = { id: Date.now(), estudio: studio, email: email, whats: whats, plano: regSelectedPlan, status: "AGUARDANDO_APROVACAO" };
+            const novoItem = { id: Date.now(), estudio: studio, email: email, whats: whats, plano: regSelectedPlan, status: "ATIVO" };
             baseMasterSaaS.push(novoItem);
             
             const valorPlano = regSelectedPlan === 'VIP' ? masterPrices.VIP : (regSelectedPlan === 'PRO' ? masterPrices.PRO : 0);
             if (valorPlano > 0) {
-                basePagamentosSaaS.push({ id: Date.now(), data: new Date().toISOString().split('T')[0], estudio: studio, plano: regSelectedPlan, valor: valorPlano, status: "PENDENTE" });
+                basePagamentosSaaS.push({ id: Date.now(), data: new Date().toISOString().split('T')[0], estudio: studio, plano: regSelectedPlan, valor: valorPlano, status: "LIQUIDADO" });
             }
-
             saveMasterGlobal();
-
-            showConfirm('Solicitação Enviada!', 'Seu cadastro foi gravado com sucesso! O seu acesso será liberado assim que o Master aprovar a conta.', () => {
-                if (valorPlano > 0) enviarComprovanteWhatsApp();
-                resetLoginStep();
+            showConfirm('Cadastro Concluído!', 'Seu estúdio foi cadastrado e liberado com sucesso! Agora você já pode fazer o login.', () => {
+                showAuthInputs('studio');
+                document.getElementById('loginEmail').value = email;
             }, false);
         }
 
         function executeLogin() {
             syncFromCloudGlobal();
-            const email = document.getElementById('loginEmail').value.trim();
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
             const pass = document.getElementById('loginPassword').value.trim();
-
             if (targetAuthRole === 'master') {
                 if (pass === 'admin123' || email.includes('5511947887105')) {
                     loginAs('master');
@@ -1362,35 +1368,26 @@
                     showConfirm('Acesso Negado', 'Senha Master incorreta.', null, false);
                 }
             } else {
-                const user = baseMasterSaaS.find(u => u.email.toLowerCase() === email.toLowerCase());
-
+                const user = baseMasterSaaS.find(u => u.email.toLowerCase() === email);
                 if (!user) {
                     showConfirm('Acesso Não Autorizado', 'E-mail não encontrado. Faça seu cadastro primeiro.', null, false);
                     return;
                 }
-
-                if (user.status === 'AGUARDANDO_APROVACAO') {
-                    showConfirm('Aguardando Aprovação ⏳', 'Seu estúdio está aguardando liberação do administrador Master. Caso já tenha feito o PIX, envie o comprovante no WhatsApp.', () => {
-                        enviarComprovanteWhatsApp();
-                    }, true);
-                    return;
-                }
-
                 if (user.status === 'BLOQUEADO') {
                     showConfirm('Acesso Suspenso', 'Sua conta está suspensa. Entre em contato com o suporte.', null, false);
                     return;
                 }
-
-                currentTenantId = email.toLowerCase().replace(/[^a-z0-9]/g, '');
+                currentTenantId = email.replace(/[^a-z0-9]/g, '');
                 currentPlan = user.plano || "STARTER";
                 loginAs('studio', user.estudio);
             }
         }
 
         function loginAs(role, studioName = "Studio Demo") {
+            document.getElementById('landing-page').style.display = 'none';
             document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('app-layout').style.display = 'flex';
             currentRole = role;
-
             localStorage.setItem('nailboss_active_session', JSON.stringify({
                 role: role,
                 tenantId: currentTenantId,
@@ -1421,8 +1418,8 @@
                 currentTenantId = "";
                 localStorage.removeItem('nailboss_active_session');
                 localStorage.removeItem('nailboss_active_view');
-                resetLoginStep();
-                document.getElementById('login-screen').style.display = 'flex';
+                document.getElementById('app-layout').style.display = 'none';
+                document.getElementById('landing-page').style.display = 'flex';
             });
         }
 
@@ -1443,21 +1440,16 @@
             document.getElementById('customModal').style.display = 'none';
         };
 
-        /* CATÁLOGO DE SERVIÇOS & VALORES AUTOMÁTICOS */
         function salvarServicoCatalogo() {
             const nome = document.getElementById('srvNome').value.trim();
             const valor = parseFloat(document.getElementById('srvValor').value) || 0;
             const duracao = parseInt(document.getElementById('srvDuracao').value) || 60;
-
             if (!nome || valor <= 0) { showConfirm('Atenção', 'Informe o nome do serviço e valor válido.', null, false); return; }
-
             let servicos = getTenantData('servicos_catalogo', []);
             servicos.push({ id: Date.now(), nome, valor, duracao });
             setTenantData('servicos_catalogo', servicos);
-
             document.getElementById('srvNome').value = '';
             document.getElementById('srvValor').value = '';
-
             renderTabelaServicosCatalogo();
             showConfirm('Sucesso', 'Serviço cadastrado no catálogo!', null, false);
         }
@@ -1475,16 +1467,13 @@
             const tbody = document.getElementById('tbServicosCatalogo');
             const selectAg = document.getElementById('agServicoSelect');
             if (!tbody || !selectAg) return;
-
             tbody.innerHTML = '';
             selectAg.innerHTML = '<option value="">Selecione um Serviço...</option>';
-
             let servicos = getTenantData('servicos_catalogo', [
                 { id: 1, nome: "Pé e Mão Completo", valor: 70.00, duracao: 60 },
                 { id: 2, nome: "Alongamento em Gel", valor: 150.00, duracao: 120 },
                 { id: 3, nome: "Manutenção Fibra de Vidro", valor: 100.00, duracao: 90 }
             ]);
-
             servicos.forEach(s => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -1494,7 +1483,6 @@
                     <td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="excluirServicoCatalogo(${s.id})">🗑️ Excluir</button></td>
                 `;
                 tbody.appendChild(tr);
-
                 const opt = document.createElement('option');
                 opt.value = s.nome;
                 opt.setAttribute('data-valor', s.valor);
@@ -1520,7 +1508,6 @@
             document.getElementById('agPendente').value = `R$ ${pendente.toFixed(2).replace('.', ',')}`;
         }
 
-        /* MODAL DE BLOQUEIO DE HORÁRIO */
         function abrirModalBloqueioHorario() {
             const dataAtual = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
             document.getElementById('blockDate').value = dataAtual;
@@ -1536,13 +1523,10 @@
             const inicio = document.getElementById('blockStart').value;
             const fim = document.getElementById('blockEnd').value;
             const motivo = document.getElementById('blockReason').value || 'Horário Bloqueado';
-
             if (!data || !inicio) { showConfirm('Atenção', 'Informe data e horário.', null, false); return; }
-
             let agenda = getTenantData('agenda', []);
             agenda.push({ id: Date.now(), data, horaInicio: inicio, horaFim: fim, cliente: "BLOQUEADO", servico: motivo, total: 0, sinal: 0, pendente: 0, quitado: true, ehBloqueio: true });
             setTenantData('agenda', agenda);
-
             fecharModalBloqueioHorario();
             renderAgendaEFinanceiro();
             showConfirm('Horário Bloqueado', `Bloqueio realizado para ${inicio} às ${fim} em ${formatDateBR(data)}.`, null, false);
@@ -1557,18 +1541,15 @@
             });
         }
 
-        /* CLIENTES */
         function salvarCliente() {
             const nome = document.getElementById('cliNome').value;
             const whats = document.getElementById('cliWhats').value;
             const desde = document.getElementById('cliDesde').value || new Date().toISOString().split('T')[0];
             const pref = document.getElementById('cliPref').value;
             if (!nome) { showConfirm('Atenção', 'Informe o nome da cliente.', null, false); return; }
-
             let list = getTenantData('clientes', []);
             list.push({ id: Date.now(), nome, whats, desde, pref });
             setTenantData('clientes', list);
-
             renderTabelaClientes();
             document.getElementById('cliNome').value = '';
             document.getElementById('cliWhats').value = '';
@@ -1623,7 +1604,6 @@
         function fecharHistoricoModal() { document.getElementById('historyModal').style.display = 'none'; }
         function fecharSlotsModal() { document.getElementById('slotsModal').style.display = 'none'; }
 
-        /* AGENDA & SLOTS POPUP */
         function renderGradeHorarios() {
             const dataSel = document.getElementById('agData').value || new Date().toISOString().split('T')[0];
             let agenda = getTenantData('agenda', []);
@@ -1658,21 +1638,17 @@
             document.getElementById('slotsTitle').innerText = `Slots do Dia ${formatDateBR(dataSel)}`;
             let agenda = getTenantData('agenda', []);
             const slots = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
-
             const container = document.getElementById('slotsContainer');
             container.innerHTML = '';
-
             slots.forEach(h => {
                 const item = agenda.find(a => a.data === dataSel && a.horaInicio === h);
                 const div = document.createElement('div');
                 let statusClass = '';
                 let label = 'Livre';
-
                 if (item) {
                     if (item.cliente === 'BLOQUEADO' || item.ehBloqueio) { statusClass = 'blocked'; label = '🔒 Bloqueado'; }
                     else { statusClass = 'occupied'; label = item.cliente; }
                 }
-
                 div.className = `time-slot-card ${statusClass}`;
                 div.innerHTML = `<strong>${h}</strong><br><small style="font-size:0.7rem;">${label}</small>`;
                 container.appendChild(div);
@@ -1687,26 +1663,19 @@
             const total = parseFloat(document.getElementById('agValor').value) || 0;
             const sinal = parseFloat(document.getElementById('agSinal').value) || 0;
             const pendente = Math.max(0, total - sinal);
-
             if (!nome || !servicoSelect || total <= 0) { showConfirm('Atenção', 'Selecione um serviço do catálogo, informe a cliente e o valor.', null, false); return; }
-
             let agenda = getTenantData('agenda', []);
             let dfc = getTenantData('dfc', []);
-
             const agId = Date.now();
             agenda.push({ id: agId, data, horaInicio, cliente: nome, servico: servicoSelect, total, sinal, pendente, quitado: false });
-
             if (sinal > 0) dfc.push({ id: Date.now(), agId: agId, data: data, desc: `Sinal PIX - ${nome} (${servicoSelect})`, tipo: "receita", valor: sinal, status: "LIQUIDADO" });
             if (pendente > 0) dfc.push({ id: Date.now() + 1, agId: agId, data: data, desc: `Saldo Pendente - ${nome} (${servicoSelect})`, tipo: "receita", valor: pendente, status: "PENDENTE" });
-
             setTenantData('agenda', agenda);
             setTenantData('dfc', dfc);
-
             document.getElementById('agNome').value = '';
             document.getElementById('agValor').value = '';
             document.getElementById('agSinal').value = '';
             atualizarPendenteForm();
-
             renderAgendaEFinanceiro();
             renderDashboardData();
             showConfirm('Sucesso', 'Agendamento gravado e linkado à tesouraria!', null, false);
@@ -1716,13 +1685,10 @@
             showConfirm('Excluir Agendamento', 'Deseja remover este agendamento?', () => {
                 let agenda = getTenantData('agenda', []);
                 let dfc = getTenantData('dfc', []);
-
                 agenda = agenda.filter(a => a.id !== agId);
                 dfc = dfc.filter(d => d.agId !== agId);
-
                 setTenantData('agenda', agenda);
                 setTenantData('dfc', dfc);
-
                 renderAgendaEFinanceiro();
                 renderDashboardData();
             });
@@ -1732,28 +1698,22 @@
             const studioName = document.getElementById('mobileStudioName').innerText;
             const baseUrl = window.location.origin + window.location.pathname;
             const fullLink = `${baseUrl}?studio=${encodeURIComponent(studioName)}&agendar=true`;
-
             showConfirm('📲 Link Direto de Agendamento', `Copie o link abaixo para enviar aos seus clientes:\n\n${fullLink}`, () => {
                 navigator.clipboard.writeText(fullLink);
             }, false);
         }
 
-        /* TESOURARIA - LANÇAMENTO MANUAL & BAIXA */
         function salvarLancamentoDFC() {
             const tipo = document.getElementById('dfcTipo').value;
             const desc = document.getElementById('dfcDesc').value;
             const valor = parseFloat(document.getElementById('dfcValor').value) || 0;
             const data = document.getElementById('dfcData').value || new Date().toISOString().split('T')[0];
-
             if (!desc || valor <= 0) { showConfirm('Atenção', 'Informe a descrição e o valor.', null, false); return; }
-
             let dfc = getTenantData('dfc', []);
             dfc.push({ id: Date.now(), data, desc, tipo, valor, status: "PENDENTE" });
             setTenantData('dfc', dfc);
-
             document.getElementById('dfcDesc').value = '';
             document.getElementById('dfcValor').value = '';
-
             renderAgendaEFinanceiro();
             renderDashboardData();
             showConfirm('Lançado', 'Lançamento registrado como PENDENTE!', null, false);
@@ -1763,11 +1723,9 @@
             showConfirm('Dar Baixa na Tesouraria', 'Confirmar o recebimento e quitação do valor pendente?', () => {
                 let dfc = getTenantData('dfc', []);
                 let agenda = getTenantData('agenda', []);
-
                 const itemDFC = dfc.find(d => d.id === id);
                 if (itemDFC && itemDFC.status === 'PENDENTE') {
                     itemDFC.status = 'LIQUIDADO';
-
                     if (itemDFC.agId) {
                         const agItem = agenda.find(a => a.id === itemDFC.agId);
                         if (agItem) {
@@ -1775,10 +1733,8 @@
                             agItem.pendente = 0;
                         }
                     }
-
                     setTenantData('dfc', dfc);
                     setTenantData('agenda', agenda);
-
                     renderAgendaEFinanceiro();
                     renderDashboardData();
                 }
@@ -1790,19 +1746,15 @@
             const tbFin = document.getElementById('tbFinanceiro');
             const tbBloq = document.getElementById('tbHorariosBloqueados');
             if (!tbAgenda || !tbFin) return;
-
             tbAgenda.innerHTML = '';
             tbFin.innerHTML = '';
             if (tbBloq) tbBloq.innerHTML = '';
-
             let agenda = getTenantData('agenda', []);
             let dfc = getTenantData('dfc', []);
 
-            // AGENDA & BLOQUEIOS
             const filCliente = document.getElementById('filAgCliente') ? document.getElementById('filAgCliente').value.toLowerCase() : '';
             const filAgDe = document.getElementById('filAgDe') ? document.getElementById('filAgDe').value : '';
             const filAgAte = document.getElementById('filAgAte') ? document.getElementById('filAgAte').value : '';
-
             let temBloqueio = false;
 
             agenda.forEach(item => {
@@ -1820,18 +1772,15 @@
                     }
                     return;
                 }
-
                 if (filCliente && !item.cliente.toLowerCase().includes(filCliente)) return;
                 if (filAgDe && item.data < filAgDe) return;
                 if (filAgAte && item.data > filAgAte) return;
-
                 const trAg = document.createElement('tr');
                 const tagOrigem = item.origemLink ? '<span class="badge-status badge-link">⚡ Link Público</span>' : '<span class="badge-status badge-gold">🏢 Balcão</span>';
                 
                 const btnWhatsConfirm = item.whats 
                     ? `<button class="btn-action" style="padding:4px 8px; font-size:0.72rem; background:#25D366; color:white;" onclick="confirmarAgendamentoWhats('${item.whats}', '${item.cliente}', '${item.data}', '${item.horaInicio}', '${item.servico}')">💬 Whats</button>`
                     : '';
-
                 trAg.innerHTML = `
                     <td>${tagOrigem}<br><small style="font-weight:bold;">${formatDateBR(item.data)} (${item.horaInicio})</small></td>
                     <td><strong>${item.cliente}</strong><br><small style="color:var(--text-muted);">${item.whats || ''}</small></td>
@@ -1849,12 +1798,10 @@
                 tbBloq.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted)">Nenhum horário bloqueado.</td></tr>';
             }
 
-            // TESOURARIA (DFC)
             const finDesc = document.getElementById('finFilDesc') ? document.getElementById('finFilDesc').value.toLowerCase() : '';
             const finDe = document.getElementById('finFilDe') ? document.getElementById('finFilDe').value : '';
             const finAte = document.getElementById('finFilAte') ? document.getElementById('finFilAte').value : '';
             const finStatus = document.getElementById('finFilStatus') ? document.getElementById('finFilStatus').value : 'TODOS';
-
             let caixaTotal = 0;
             let pendenteTotal = 0;
             let despesasTotal = 0;
@@ -1864,19 +1811,16 @@
                 if (finDe && d.data < finDe) return;
                 if (finAte && d.data > finAte) return;
                 if (finStatus !== 'TODOS' && d.status !== finStatus) return;
-
                 if (d.status === 'LIQUIDADO') {
                     if (d.tipo === 'receita') caixaTotal += d.valor;
                     else despesasTotal += d.valor;
                 } else {
                     if (d.tipo === 'receita') pendenteTotal += d.valor;
                 }
-
                 const trFin = document.createElement('tr');
                 const btnAcao = d.status === 'PENDENTE'
                     ? `<button class="btn-action btn-green" style="padding:4px 8px; font-size:0.72rem;" onclick="darBaixaDFC(${d.id})">💵 Dar Baixa</button>`
                     : `<span class="badge-status badge-green">Liquidado ✓</span>`;
-
                 trFin.innerHTML = `
                     <td>${formatDateBR(d.data)}</td>
                     <td>${d.desc}</td>
@@ -1887,12 +1831,10 @@
                 `;
                 tbFin.appendChild(trFin);
             });
-
             document.getElementById('finCaixaHoje').innerText = `R$ ${caixaTotal.toFixed(2).replace('.', ',')}`;
             document.getElementById('finPendenteFuturo').innerText = `R$ ${pendenteTotal.toFixed(2).replace('.', ',')}`;
             document.getElementById('finDespesas').innerText = `R$ ${despesasTotal.toFixed(2).replace('.', ',')}`;
             document.getElementById('finSaldoLiquido').innerText = `R$ ${(caixaTotal - despesasTotal).toFixed(2).replace('.', ',')}`;
-
             atualizarConciliacaoPeriodo();
         }
 
@@ -1902,15 +1844,12 @@
             window.open(`https://wa.me/55${num}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        /* CRM DE CLIENTES AUSENTES */
         function renderCrmAusentes() {
             const tbody = document.getElementById('tbCrmAusentes');
             if (!tbody) return;
             tbody.innerHTML = '';
-
             let agenda = getTenantData('agenda', []);
             const hoje = new Date();
-
             const ultimosAtend = {};
             agenda.forEach(a => {
                 if (a.cliente === 'BLOQUEADO' || a.ehBloqueio) return;
@@ -1919,64 +1858,51 @@
                     ultimosAtend[a.cliente] = { data: d, servico: a.servico, dataStr: a.data };
                 }
             });
-
             Object.keys(ultimosAtend).forEach(c => {
                 const diffTime = Math.abs(hoje - ultimosAtend[c].data);
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
                 if (diffDays >= 20) {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `<td>${c}</td><td>${ultimosAtend[c].servico}</td><td>${diffDays} dias</td><td><button class="btn-action btn-green" style="padding:6px 12px; font-size:0.75rem;" onclick="dispararWhats('${c}')">Enviar Mensagem</button></td>`;
                     tbody.appendChild(tr);
                 }
             });
-
             if (tbody.children.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted)">Nenhuma cliente ausente há mais de 20 dias.</td></tr>';
             }
         }
 
-        /* DASHBOARD KPIS & GRÁFICOS VISUAIS CHART.JS */
         function renderDashboardData() {
             let agenda = getTenantData('agenda', []);
             let dfc = getTenantData('dfc', []);
-
             const de = document.getElementById('dashDataDe').value;
             const ate = document.getElementById('dashDataAte').value;
-
             let bruto = 0;
             let liquidado = 0;
             let pendente = 0;
             let totalAtend = 0;
             const servicosCount = {};
-
             agenda.forEach(a => {
                 if (de && a.data < de) return;
                 if (ate && a.data > ate) return;
                 if (a.cliente === 'BLOQUEADO' || a.ehBloqueio) return;
-
                 bruto += a.total;
                 pendente += a.pendente;
                 totalAtend++;
                 servicosCount[a.servico] = (servicosCount[a.servico] || 0) + a.total;
             });
-
             dfc.forEach(d => {
                 if (de && d.data < de) return;
                 if (ate && d.data > ate) return;
                 if (d.status === 'LIQUIDADO' && d.tipo === 'receita') liquidado += d.valor;
             });
-
             document.getElementById('dashBruto').innerText = `R$ ${bruto.toFixed(2).replace('.', ',')}`;
             document.getElementById('dashCaixaEfetivo').innerText = `R$ ${liquidado.toFixed(2).replace('.', ',')}`;
             document.getElementById('dashPendente').innerText = `R$ ${pendente.toFixed(2).replace('.', ',')}`;
-
             const ticket = totalAtend > 0 ? bruto / totalAtend : 0;
             document.getElementById('dashTicketMedio').innerText = `R$ ${ticket.toFixed(2).replace('.', ',')}`;
-
             const taxaInad = bruto > 0 ? (pendente / bruto) * 100 : 0;
             document.getElementById('dashTaxaInadimplencia').innerText = `${taxaInad.toFixed(1)}%`;
-
             const tbServ = document.getElementById('tbDashRankingServicos');
             if (tbServ) {
                 tbServ.innerHTML = '';
@@ -1986,7 +1912,6 @@
                     tbServ.appendChild(tr);
                 });
             }
-
             renderCharts(bruto, liquidado, pendente, servicosCount);
         }
 
@@ -1994,10 +1919,8 @@
             const ctxFin = document.getElementById('chartFinanceiro');
             const ctxServ = document.getElementById('chartServicos');
             if (!ctxFin || !ctxServ) return;
-
             if (chartFinInstance) chartFinInstance.destroy();
             if (chartServInstance) chartServInstance.destroy();
-
             chartFinInstance = new Chart(ctxFin, {
                 type: 'bar',
                 data: {
@@ -2019,10 +1942,8 @@
                     }
                 }
             });
-
             const servLabels = Object.keys(servicosCount);
             const servData = Object.values(servicosCount);
-
             chartServInstance = new Chart(ctxServ, {
                 type: 'doughnut',
                 data: {
@@ -2041,25 +1962,20 @@
             });
         }
 
-        /* CONCILIAÇÃO SALÃO */
         function atualizarConciliacaoPeriodo() {
             const de = document.getElementById('concDataDe').value;
             const ate = document.getElementById('concDataAte').value;
             const taxa = parseFloat(document.getElementById('concTaxa').value) || 0;
-
             let agenda = getTenantData('agenda', []);
             let bruto = 0;
-
             agenda.forEach(a => {
                 if (de && a.data < de) return;
                 if (ate && a.data > ate) return;
                 if (a.cliente === 'BLOQUEADO' || a.ehBloqueio) return;
                 bruto += a.total;
             });
-
             const salao = (bruto * taxa) / 100;
             const manicure = bruto - salao;
-
             document.getElementById('concBrutoPeriodo').innerText = `R$ ${bruto.toFixed(2).replace('.', ',')}`;
             document.getElementById('concSalaoPeriodo').innerText = `R$ ${salao.toFixed(2).replace('.', ',')}`;
             document.getElementById('concManicurePeriodo').innerText = `R$ ${manicure.toFixed(2).replace('.', ',')}`;
@@ -2070,7 +1986,6 @@
             const ate = document.getElementById('concDataAte').value;
             const valorStr = document.getElementById('concSalaoPeriodo').innerText.replace('R$ ', '').replace(',', '.');
             const valor = parseFloat(valorStr) || 0;
-
             showConfirm('Lançar Repasse', `Lançar despesa de R$ ${valor.toFixed(2)} na Tesouraria como PENDENTE?`, () => {
                 let dfc = getTenantData('dfc', []);
                 dfc.push({ id: Date.now(), data: new Date().toISOString().split('T')[0], desc: `Repasse Salão (${formatDateBR(de)} a ${formatDateBR(ate)})`, tipo: "despesa", valor: valor, status: "PENDENTE" });
@@ -2080,24 +1995,19 @@
             });
         }
 
-        /* ESTOQUE & PRECIFICAÇÃO */
         function salvarInsumoEstoque() {
             const nome = document.getElementById('estNome').value;
             const qtd = parseInt(document.getElementById('estQtd').value) || 1;
             const custo = parseFloat(document.getElementById('estCusto').value) || 0;
             const rendimento = parseFloat(document.getElementById('estRendimento').value) || 1;
-
             if (!nome || custo <= 0) { showConfirm('Atenção', 'Informe nome e custo.', null, false); return; }
-
             let est = getTenantData('estoque', []);
             est.push({ id: Date.now(), nome, qtd, custo, rendimento, custoAplicacao: custo / rendimento });
             setTenantData('estoque', est);
-
             document.getElementById('estNome').value = '';
             document.getElementById('estQtd').value = '';
             document.getElementById('estCusto').value = '';
             document.getElementById('estRendimento').value = '';
-
             renderTabelaEstoque();
             showConfirm('Sucesso', 'Insumo cadastrado!', null, false);
         }
@@ -2106,16 +2016,13 @@
             const tbody = document.getElementById('tbEstoque');
             const checkCont = document.getElementById('checkEstoqueProdutos');
             if (!tbody || !checkCont) return;
-
             tbody.innerHTML = '';
             checkCont.innerHTML = '';
-
             let est = getTenantData('estoque', []);
             est.forEach((e, idx) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${e.nome}</td><td><span class="badge-status ${e.qtd <= 2 ? 'badge-danger' : 'badge-green'}">${e.qtd} Un.</span></td><td>R$ ${e.custo.toFixed(2)}</td><td>${e.rendimento} Aplicações</td><td style="color:var(--gold-warning); font-weight:bold;">R$ ${e.custoAplicacao.toFixed(2)}</td><td><button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="excluirInsumo(${idx})">Excluir</button></td>`;
                 tbody.appendChild(tr);
-
                 const lbl = document.createElement('label');
                 lbl.style.fontSize = '0.85rem';
                 lbl.innerHTML = `<input type="checkbox" value="${e.custoAplicacao}" onchange="calcularPrecoMacroSugerido()"> ${e.nome} (Custo/Aplicação: R$ ${e.custoAplicacao.toFixed(2)})`;
@@ -2136,35 +2043,27 @@
             let cmvTotal = 0;
             const checkboxes = document.querySelectorAll('#checkEstoqueProdutos input[type="checkbox"]:checked');
             checkboxes.forEach(c => cmvTotal += parseFloat(c.value) || 0);
-
             document.getElementById('prCmvCombinado').value = `R$ ${cmvTotal.toFixed(2).replace('.', ',')}`;
-
             const lucroDesejado = parseFloat(document.getElementById('prLucro').value) || 0;
             const comissaoPct = parseFloat(document.getElementById('prComissao').value) || 0;
-
             const precoIdeal = (cmvTotal + lucroDesejado) / (1 - (comissaoPct / 100));
             document.getElementById('resPrecoMacroSugerido').innerText = `R$ ${precoIdeal.toFixed(2).replace('.', ',')}`;
         }
 
-        /* PAINEL MASTER SAAS 2.0 */
         function renderMasterSaaS() {
             syncFromCloudGlobal();
             const tbody = document.getElementById('tbMasterClientes');
             const tbPag = document.getElementById('tbMasterPagamentosSaaS');
             if (!tbody || !tbPag) return;
-
             const busca = document.getElementById('filMasterBusca') ? document.getElementById('filMasterBusca').value.toLowerCase() : '';
             
             tbody.innerHTML = '';
             tbPag.innerHTML = '';
-
             let mrr = 0;
             let ativos = 0;
             let pendentes = 0;
-
             baseMasterSaaS.forEach(m => {
                 if (busca && !m.estudio.toLowerCase().includes(busca) && !m.email.toLowerCase().includes(busca)) return;
-
                 const precoPlano = m.plano === 'VIP' ? masterPrices.VIP : (m.plano === 'PRO' ? masterPrices.PRO : 0);
                 if (m.status === 'ATIVO') {
                     mrr += precoPlano;
@@ -2172,21 +2071,17 @@
                 } else if (m.status === 'AGUARDANDO_APROVACAO') {
                     pendentes++;
                 }
-
                 const tr = document.createElement('tr');
                 const selectPlano = `<select style="background:var(--input-bg); color:var(--text-main); border:1px solid var(--card-border); padding:4px; border-radius:6px; font-size:0.75rem;" onchange="alterarPlanoEstudioMaster(${m.id}, this.value)">
                     <option value="STARTER" ${m.plano === 'STARTER' ? 'selected' : ''}>STARTER (R$ 0)</option>
                     <option value="PRO" ${m.plano === 'PRO' ? 'selected' : ''}>PRO (R$ ${masterPrices.PRO.toFixed(2)})</option>
                     <option value="VIP" ${m.plano === 'VIP' ? 'selected' : ''}>VIP (R$ ${masterPrices.VIP.toFixed(2)})</option>
                 </select>`;
-
                 const btnStatusAcao = m.status === 'ATIVO'
                     ? `<button class="btn-action btn-gold" style="padding:4px 8px; font-size:0.72rem;" onclick="alterarStatusEstudioMaster(${m.id}, 'BLOQUEADO')">🔒 Bloquear</button>`
                     : `<button class="btn-action btn-green" style="padding:4px 8px; font-size:0.72rem;" onclick="alterarStatusEstudioMaster(${m.id}, 'ATIVO')">✅ Aprovar / Liberar</button>`;
-
                 const btnExcluir = `<button class="btn-action btn-danger" style="padding:4px 8px; font-size:0.72rem;" onclick="excluirStudioMaster(${m.id})">🗑️ Excluir</button>`;
                 const btnWhats = `<button class="btn-action" style="padding:4px 8px; font-size:0.72rem; background:#25D366; color:white;" onclick="abrirWhatsEstudio('${m.whats}', '${m.estudio}')">💬 Whats</button>`;
-
                 tr.innerHTML = `
                     <td><strong>${m.estudio}</strong></td>
                     <td>${m.email}<br><small style="color:var(--text-muted)">${m.whats || '-'}</small></td>
@@ -2197,13 +2092,11 @@
                 `;
                 tbody.appendChild(tr);
             });
-
             basePagamentosSaaS.forEach(p => {
                 const trP = document.createElement('tr');
                 const btnBaixa = p.status === 'PENDENTE'
                     ? `<button class="btn-action btn-green" style="padding:4px 8px; font-size:0.72rem;" onclick="darBaixaPagamentoSaaS(${p.id})">💵 Liquidar PIX</button>`
                     : `<span class="badge-status badge-green">Liquidado ✓</span>`;
-
                 trP.innerHTML = `
                     <td>${formatDateBR(p.data)}</td>
                     <td><strong>${p.estudio}</strong></td>
@@ -2214,7 +2107,6 @@
                 `;
                 tbPag.appendChild(trP);
             });
-
             document.getElementById('masterMrrVal').innerText = `R$ ${mrr.toFixed(2).replace('.', ',')}/mês`;
             document.getElementById('masterArrVal').innerText = `R$ ${(mrr * 12).toFixed(2).replace('.', ',')}/ano`;
             document.getElementById('masterAtivosVal').innerText = `${ativos} Estúdios`;
@@ -2263,15 +2155,12 @@
         function salvarPrecosPlanosMaster() {
             const pro = parseFloat(document.getElementById('masterPricePro').value) || 19.90;
             const vip = parseFloat(document.getElementById('masterPriceVip').value) || 39.90;
-
             masterPrices = { PRO: pro, VIP: vip };
             localStorage.setItem('nailboss_master_prices', JSON.stringify(masterPrices));
-
             const panelPro = document.getElementById('panelPricePro');
             const panelVip = document.getElementById('panelPriceVip');
             if (panelPro) panelPro.innerText = `R$ ${pro.toFixed(2)}/mês`;
             if (panelVip) panelVip.innerText = `R$ ${vip.toFixed(2)}/mês`;
-
             renderMasterSaaS();
             showConfirm('Preços Salvos', 'Tabela de preços atualizada no sistema!', null, false);
         }
